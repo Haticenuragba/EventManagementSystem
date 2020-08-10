@@ -17,7 +17,7 @@ import java.util.Set;
 @SequenceGenerator(name = "idgen", sequenceName = "EVENT_SEQ")
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "applications", callSuper = true)
+@EqualsAndHashCode(exclude = "applications", callSuper = false)
 public class Event extends BaseEntity {
 
     @Column(name = "TITLE", unique = true)
@@ -55,8 +55,7 @@ public class Event extends BaseEntity {
         }
     }
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Application> applications;
 
 

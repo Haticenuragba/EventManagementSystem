@@ -1,9 +1,6 @@
 package yte.intern.project.EventManagementSystem.usecases.manageapplications.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import yte.intern.project.EventManagementSystem.common.entity.BaseEntity;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
@@ -18,9 +15,10 @@ import java.util.Set;
 @SequenceGenerator(name = "idgen", sequenceName = "APPLICATION_SEQ")
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "event", callSuper = true)
+@EqualsAndHashCode(exclude = "event", callSuper = false)
 public class Application extends BaseEntity {
 
+    //TC Kimlik no
     @Column(name = "ID_NUMBER", unique = true)
     private String idNumber;
 
@@ -44,7 +42,7 @@ public class Application extends BaseEntity {
         }
     }
 
-    @JsonBackReference
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EVENT_ID")
     private Event event;

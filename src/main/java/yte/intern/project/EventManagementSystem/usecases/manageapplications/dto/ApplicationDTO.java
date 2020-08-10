@@ -1,6 +1,7 @@
 package yte.intern.project.EventManagementSystem.usecases.manageapplications.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -33,7 +34,7 @@ public class ApplicationDTO {
     @Size(max = 255, min = 2, message = "Length of surname should be in between 2-255")
     private String surname;
 
-
+    @JsonIgnoreProperties("applications")
     private EventDTO event;
 
     private List<ApplicationCustomAttributeDTO> applicationCustomAttributes;

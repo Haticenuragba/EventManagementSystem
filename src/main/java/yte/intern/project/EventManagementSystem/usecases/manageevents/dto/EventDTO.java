@@ -1,4 +1,5 @@
 package yte.intern.project.EventManagementSystem.usecases.manageevents.dto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,7 +49,7 @@ public class EventDTO {
 
     private List<CustomAttributeDTO> customAttributes;
 
-
+    @JsonIgnoreProperties("event")
     private List<ApplicationDTO> applications = new ArrayList<ApplicationDTO>();
 
     @AssertTrue
