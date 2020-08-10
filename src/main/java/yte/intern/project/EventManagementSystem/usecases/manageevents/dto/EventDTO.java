@@ -1,4 +1,5 @@
 package yte.intern.project.EventManagementSystem.usecases.manageevents.dto;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,6 +8,7 @@ import yte.intern.project.EventManagementSystem.usecases.manageapplications.dto.
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,7 +48,8 @@ public class EventDTO {
 
     private List<CustomAttributeDTO> customAttributes;
 
-    private List<ApplicationDTO> applications;
+
+    private List<ApplicationDTO> applications = new ArrayList<ApplicationDTO>();
 
     @AssertTrue
     public boolean isEndDateValid() {

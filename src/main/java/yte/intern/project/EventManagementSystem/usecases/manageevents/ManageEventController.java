@@ -3,6 +3,7 @@ package yte.intern.project.EventManagementSystem.usecases.manageevents;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import yte.intern.project.EventManagementSystem.common.mapper.CycleAvoidingMappingContext;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.dto.CustomAttributeDTO;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.dto.EventDTO;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.CustomAttribute;
@@ -25,21 +26,21 @@ public class ManageEventController {
 
     @PostMapping
     public EventDTO addEvent(@Valid @RequestBody EventDTO eventDTO) {
-        Event event = eventMapper.mapToEntity(eventDTO);
+        Event event = eventMapper.mapToEntity(eventDTO, new CycleAvoidingMappingContext());
         Event addedEvent = manageEventService.addEvent(event);
-        return eventMapper.mapToDto(addedEvent);
+        return eventMapper.mapToDto(addedEvent, new CycleAvoidingMappingContext());
     }
 
     @GetMapping
     public List<EventDTO> getAllEvents() {
         List<Event> events = manageEventService.getAllEvents();
-        return eventMapper.mapToDto(events);
+        return eventMapper.mapToDto(events, new CycleAvoidingMappingContext());
     }
 
     @GetMapping("/{title}")
     public EventDTO getEventByEventTitle(@PathVariable @Size(max = 255, min = 3) String title) {
         Event event = manageEventService.getEventByTitle(title);
-        return eventMapper.mapToDto(event);
+        return eventMapper.mapToDto(event, new CycleAvoidingMappingContext());
     }
 
     @GetMapping("/{title}/attributes")
@@ -50,10 +51,10 @@ public class ManageEventController {
 
     @PutMapping("/{title}")
     public EventDTO updateEvent(@PathVariable @Size(max = 255, min = 3) String title, @Valid @RequestBody EventDTO eventDTO) {
-        Event event = eventMapper.mapToEntity(eventDTO);
+        Event event = eventMapper.mapToEntity(eventDTO, new CycleAvoidingMappingContext());
         System.out.println(event);
         Event updatedEvent = manageEventService.updateEvent(title, event);
-        return eventMapper.mapToDto(updatedEvent);
+        return eventMapper.mapToDto(updatedEvent, new CycleAvoidingMappingContext());
     }
 
     @DeleteMapping("/{title}")

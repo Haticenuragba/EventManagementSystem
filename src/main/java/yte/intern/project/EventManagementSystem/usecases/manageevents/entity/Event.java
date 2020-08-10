@@ -1,5 +1,6 @@
 package yte.intern.project.EventManagementSystem.usecases.manageevents.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import yte.intern.project.EventManagementSystem.common.entity.BaseEntity;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.entity.Application;
@@ -7,6 +8,7 @@ import yte.intern.project.EventManagementSystem.usecases.manageapplications.enti
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,7 +17,7 @@ import java.util.Set;
 @SequenceGenerator(name = "idgen", sequenceName = "EVENT_SEQ")
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@EqualsAndHashCode(exclude = "applications", callSuper = true)
 public class Event extends BaseEntity {
 
     @Column(name = "TITLE", unique = true)
@@ -53,8 +55,10 @@ public class Event extends BaseEntity {
         }
     }
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Application> applications = new HashSet<Application>();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Application> applications;
+
 
     public void addApplication(Application application) {
         if (applications != null) {

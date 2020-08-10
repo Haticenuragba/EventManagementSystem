@@ -1,8 +1,11 @@
 package yte.intern.project.EventManagementSystem.usecases.manageapplications.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import yte.intern.project.EventManagementSystem.common.entity.BaseEntity;
-import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.CustomAttribute;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
 
 import javax.persistence.*;
@@ -15,7 +18,7 @@ import java.util.Set;
 @SequenceGenerator(name = "idgen", sequenceName = "APPLICATION_SEQ")
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@EqualsAndHashCode(exclude = "event", callSuper = true)
 public class Application extends BaseEntity {
 
     @Column(name = "ID_NUMBER", unique = true)
@@ -41,7 +44,11 @@ public class Application extends BaseEntity {
         }
     }
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EVENT_ID")
     private Event event;
+
+
+
 }
