@@ -1,15 +1,9 @@
 package yte.intern.project.EventManagementSystem.usecases.manageapplications.dto;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import yte.intern.project.EventManagementSystem.usecases.manageevents.dto.CustomAttributeDTO;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.dto.EventDTO;
-import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
-
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

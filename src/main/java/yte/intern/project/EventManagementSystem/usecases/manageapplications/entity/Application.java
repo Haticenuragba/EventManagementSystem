@@ -18,8 +18,7 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = "event", callSuper = false)
 public class Application extends BaseEntity {
 
-    //TC Kimlik no
-    @Column(name = "ID_NUMBER", unique = true)
+    @Column(name = "ID_NUMBER")
     private String idNumber;
 
     @Column(name = "EMAIL")

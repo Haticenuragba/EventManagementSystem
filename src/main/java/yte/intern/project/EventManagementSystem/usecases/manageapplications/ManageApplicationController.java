@@ -12,6 +12,7 @@ import yte.intern.project.EventManagementSystem.usecases.manageevents.dto.EventD
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,5 +29,24 @@ public class ManageApplicationController {
         Application application = applicationMapper.mapToEntity(applicationDTO, new CycleAvoidingMappingContext());
         Application addedApplication = manageApplicationService.addApplication(application, title);
         return applicationMapper.mapToDto(addedApplication, new CycleAvoidingMappingContext());
+    }
+
+    @GetMapping("/{title}")
+    public List<ApplicationDTO> getApplicationsOfEvent(@PathVariable String title){
+        return applicationMapper.mapToDto(manageApplicationService.getAllApplicationsOfEvent(title), new CycleAvoidingMappingContext());
+    }
+
+    @GetMapping
+    public List<ApplicationDTO> getAllApplicattions(){
+        return applicationMapper.mapToDto(manageApplicationService.getAllApplications(), new CycleAvoidingMappingContext());
+    }
+
+    @GetMapping("/{title}/{idNumber}")
+    public ApplicationDTO getApplicationOfEventByIdNumber(@PathVariable String title, @PathVariable String idNumber){
+        return applicationMapper.mapToDto(manageApplicationService.getApplicationOfEvent(title, idNumber), new CycleAvoidingMappingContext());
+    }
+    @GetMapping("/applications/{idNumber}")
+    public List<ApplicationDTO> getApplicationsByIdNumber(@PathVariable String idNumber){
+        return applicationMapper.mapToDto(manageApplicationService.getApplicationsByIdNumber(idNumber), new CycleAvoidingMappingContext());
     }
 }
