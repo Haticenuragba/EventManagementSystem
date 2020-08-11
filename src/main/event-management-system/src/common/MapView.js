@@ -28,6 +28,7 @@ const MapView = (props) => {
         <>
             <MapPicker defaultLocation={defaultLocation}
                        zoom={zoom}
+                       style={{height: "45vh"}}
                        onChangeLocation={handleChangeLocation}
                        onChangeZoom={handleChangeZoom}
                        apiKey='AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8'/>

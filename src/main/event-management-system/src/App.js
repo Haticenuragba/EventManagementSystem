@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import EventsGrid from "./usecases/end-user/list-all-events/EventsGrid";
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import {AppBar} from "@material-ui/core";
 import CustomAppBar from "./common/CustomAppBar";
 import {getIsDark, setIsDark} from "./common/Utils";
+import EventDetail from "./usecases/end-user/event-application/EventDetail";
+import AddEventForm from "./usecases/admin/add-event/AddEventForm";
 
 
 function App(factory, deps) {
@@ -26,14 +25,14 @@ function App(factory, deps) {
         setState({});
     }
 
-        return (
-            <ThemeProvider theme={theme}>
-                <CssBaseline/>
-                {/*<AddEventForm data={{isUpdate:false, eventTitleToUpdate: 'Deneme'}}/>*/}
-                <CustomAppBar onModeChange={handleModeChange}/>
-                <EventsGrid/>
-            </ThemeProvider>
-        );
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline/>
+            <CustomAppBar onModeChange={handleModeChange}/>
+            {/*<AddEventForm data={{isUpdate:false, eventTitleToUpdate: 'Deneme'}}/>*/}
+            <EventDetail/>
+        </ThemeProvider>
+    );
 }
 
 export default App;
