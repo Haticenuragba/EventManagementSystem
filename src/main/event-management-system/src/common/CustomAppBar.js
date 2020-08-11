@@ -2,16 +2,14 @@ import React from 'react';
 import {fade, makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import FormGroup from "@material-ui/core/FormGroup";
 import InputBase from "@material-ui/core/InputBase";
-import {isDark} from "./Utils";
+import {getIsDark, setIsDark} from "./Utils";
 import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 
 
@@ -96,12 +94,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function CustomAppBar() {
+
+export default function CustomAppBar(props) {
     const classes = useStyles();
+    const [state, setState] = React.useState({
+    });
+
+    const handleModeChange = (event) => {
+        props.onModeChange(event.target.checked);
+    };
 
     return (
         <div className={classes.root} >
-            <AppBar position="static" color={isDark ? "default" : "primary"}>
+            <AppBar position="static" color={getIsDark() ? "default" : "primary"}>
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
                         Etkinlik Yönetimi
@@ -160,6 +165,7 @@ export default function CustomAppBar() {
                         <FormControlLabel
                             control={<Switch aria-label="login switch"/>}
                             label="Gece Modu"
+                            onChange={handleModeChange}
                         />
                     </FormGroup>
                 </Toolbar>

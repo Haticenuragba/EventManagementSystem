@@ -5,7 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {AppBar} from "@material-ui/core";
 import CustomAppBar from "./common/CustomAppBar";
-import {isDark} from "./common/Utils";
+import {getIsDark, setIsDark} from "./common/Utils";
 
 
 function App(factory, deps) {
@@ -14,16 +14,23 @@ function App(factory, deps) {
         () =>
             createMuiTheme({
                 palette: {
-                    type: isDark ? "dark" : "light",
+                    type: getIsDark() ? "dark" : "light",
                 },
             }),
     );
+
+    const [state, setState] = React.useState({});
+
+    const handleModeChange = (isDark) => {
+        setIsDark(isDark);
+        setState({});
+    }
 
         return (
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
                 {/*<AddEventForm data={{isUpdate:false, eventTitleToUpdate: 'Deneme'}}/>*/}
-                <CustomAppBar/>
+                <CustomAppBar onModeChange={handleModeChange}/>
                 <EventsGrid/>
             </ThemeProvider>
         );

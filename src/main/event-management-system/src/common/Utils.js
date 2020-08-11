@@ -10,5 +10,13 @@ export function getDateOfToday() {
 
 export const defaultImageUrl = 'https://res.cloudinary.com/diijhkryx/image/upload/v1596781090/no-image_q20lwb.png'
 
-export var isDark = false;
+let isDark = false;
+
+export function setIsDark(booleanExpression) {
+    isDark = booleanExpression;
+}
+
+export function getIsDark() {
+    return isDark;
+}
 
