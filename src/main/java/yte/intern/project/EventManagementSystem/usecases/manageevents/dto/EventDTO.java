@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.hibernate.validator.constraints.URL;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.dto.ApplicationDTO;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class EventDTO {
     @Min(value = -180, message = "Longitude cannot be smaller than -180")
     private Double longitude;
 
+    @Valid
     private List<CustomAttributeDTO> customAttributes;
 
     @Max(value = 0)

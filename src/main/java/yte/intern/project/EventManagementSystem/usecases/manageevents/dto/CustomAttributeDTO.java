@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 @Getter
 @Setter
 @ToString
+@Valid
 public class CustomAttributeDTO {
 
     @NotBlank
@@ -18,5 +20,10 @@ public class CustomAttributeDTO {
 
     @NotBlank
     private String type;
+
+    @AssertTrue
+    public boolean isTypeValid() {
+        return this.type.equals("text") || this.type.equals("number") || this.type.equals("date");
+    }
 
 }

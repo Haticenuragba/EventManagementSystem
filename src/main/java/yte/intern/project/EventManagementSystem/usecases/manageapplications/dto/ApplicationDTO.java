@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.validation.IDNumber;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.dto.EventDTO;
+
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -33,5 +35,6 @@ public class ApplicationDTO {
     @JsonIgnoreProperties("applications")
     private EventDTO event;
 
+    @Valid
     private List<ApplicationCustomAttributeDTO> applicationCustomAttributes;
 }

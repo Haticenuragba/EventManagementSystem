@@ -152,12 +152,12 @@ class EventDetail extends Component {
                                                 <Grid container spacing={4}>
                                                     <Grid item md={12}>
                                                         <TextField
+                                                            InputLabelProps={customAttribute.type === "date" ?  {shrink: true }: {}}
                                                             required
                                                             onChange={(e) => {this.handleCustomAttributeChange(e, customAttribute, index)}}
                                                             type={customAttribute.type}
                                                             fullWidth
                                                             label={customAttribute.question}
-                                                            defaultValue={customAttribute.type === "date" ? getDateOfToday() : null}
                                                         />
                                                     </Grid>
                                                 </Grid>
