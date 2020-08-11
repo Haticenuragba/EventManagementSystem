@@ -23,6 +23,7 @@ export default class EventsGrid extends Component{
     }
     render() {
         return (
+            <div>
             <Grid container spacing={2}>
                 {this.state.events.map(anEvent => (
                     <Grid item xs={12} sm={6} md={3}>
@@ -31,6 +32,7 @@ export default class EventsGrid extends Component{
                 ))
                 }
             </Grid>
+            </div>
         );
     }
 

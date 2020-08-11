@@ -162,7 +162,8 @@ class AddEventForm extends Component {
             <Grid container spacing={2} alignItems={"center"} justify={"center"}
                   style={{
                       backgroundImage: "url(" + this.backgroundImage + ")",
-                      backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center", backgroundSize: "cover"
+                      backgroundRepeat: "no-repeat", backgroundAttachment: "fixed",
+                      backgroundPosition: "center", backgroundSize: "cover"
                   }}>
                 <Grid item md={7}>
                     <Card>

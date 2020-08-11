@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import yte.intern.project.EventManagementSystem.usecases.manageapplications.validation.IDNumber;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.dto.EventDTO;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ import java.util.List;
 @ToString
 public class ApplicationDTO {
 
+    @IDNumber
     private String idNumber;
 
     @Email

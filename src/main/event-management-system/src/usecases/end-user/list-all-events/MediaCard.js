@@ -41,7 +41,7 @@ export default function MediaCard({event}) {
                     <Grid md={7}>
                     </Grid>
                     <Grid md={5}>
-                        <Button size="small" color="primary">
+                        <Button size="small">
                             Daha Fazla Bilgi Edin
                         </Button>
                     </Grid>
