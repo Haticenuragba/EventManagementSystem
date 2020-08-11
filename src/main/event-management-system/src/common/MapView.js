@@ -24,9 +24,10 @@ const MapView = (props) => {
         setZoom(DefaultZoom);
     }
 
+
     return (
         <>
-            <MapPicker defaultLocation={defaultLocation}
+            <MapPicker defaultLocation={{lat: props.data.lat, lng: props.data.lng}}
                        zoom={zoom}
                        style={{height: "45vh"}}
                        onChangeLocation={handleChangeLocation}

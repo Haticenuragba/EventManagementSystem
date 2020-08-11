@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
         display: "inherit",
         [theme.breakpoints.up('sm')]: {
             display: 'block',
+            width: "10vw"
         },
     },
     search: {
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         marginRight: theme.spacing(2),
         marginLeft: 0,
-        width: '30ch',
+        width: '15vw',
         verticalAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center',
@@ -79,14 +80,13 @@ const useStyles = makeStyles((theme) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('md')]: {
-            width: '100ch',
+            width: '35vw',
         },
     },
     switch: {
         position: 'relative',
         marginRight: theme.spacing(2),
         marginLeft: 0,
-        width: '20ch',
         verticalAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center'
