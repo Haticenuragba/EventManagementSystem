@@ -44,6 +44,9 @@ public class Event extends BaseEntity {
     @Column(name = "LONGITUDE")
     private Double longitude;
 
+    @Column(name = "ATTENDANT_NUMBER")
+    private Integer attendantNumber = 0;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "EVENT_ID")
     private Set<CustomAttribute> customAttributes = new HashSet<CustomAttribute>();
@@ -62,6 +65,7 @@ public class Event extends BaseEntity {
     public void addApplication(Application application) {
         if (applications != null) {
             this.applications.add(application);
+            this.attendantNumber++;
             application.setEvent(this);
         }
     }

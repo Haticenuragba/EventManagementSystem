@@ -14,7 +14,7 @@ class App extends Component {
     render() {
         return (
             <div>
-            <AddEventForm data={{isUpdate:false, eventTitleToUpdate: ''}}/>
+            <AddEventForm data={{isUpdate:false, eventTitleToUpdate: 'Deneme'}}/>
           {/* <EventsGrid/>*/}
             </div>
         );

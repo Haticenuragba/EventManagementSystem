@@ -20,9 +20,11 @@ class AddEventForm extends Component {
     customAttribute = {question: "", type: 0}
     isUpdate = false;
     eventTitleToUpdate = '';
+    backgroundImage = require('../../../images/background9.jpg');
 
     constructor(props) {
         super(props);
+
         this.isUpdate = props.data.isUpdate;
         this.eventTitleToUpdate = props.data.eventTitleToUpdate;
         this.state = {
@@ -43,10 +45,10 @@ class AddEventForm extends Component {
     }
 
     componentDidMount() {
-        if(this.isUpdate){
+        if (this.isUpdate) {
             axios.get("/events/" + this.eventTitleToUpdate)
                 .then(response => {
-                    if(response.status === 200){
+                    if (response.status === 200) {
                         let newState = this.state;
                         newState.event = response.data;
                         this.setState({
@@ -70,7 +72,7 @@ class AddEventForm extends Component {
             })
     }
 
-    updateExistingEvent(e){
+    updateExistingEvent(e) {
         axios.put("/events/" + this.eventTitleToUpdate, e)
             .then(response => {
                 console.log(response);
@@ -91,16 +93,16 @@ class AddEventForm extends Component {
 
     handleImage = (url) => {
         let newState = this.state;
-        if(url === 'error' || url === '' || !url){
+        if (url === 'error' || url === '' || !url) {
             newState.event['image'] = utils.defaultImageUrl;
-        }
-        else{
+        } else {
             newState.event['image'] = url;
+            this.backgroundImage = url;
         }
         this.setState({
             newState
         });
-        console.log(this.state.event);
+
     }
 
     handleInputChange = e => {
@@ -116,7 +118,7 @@ class AddEventForm extends Component {
 
     handleQuestionCountSelection = e => {
         let count = e.target.value;
-        if (count != "" && count>=0) {
+        if (count != "" && count >= 0) {
             let newState = this.state;
 
             let prev = this.state.prevCount;
@@ -124,7 +126,7 @@ class AddEventForm extends Component {
                 newState.event.customAttributes.pop();
             }
             for (let i = prev; i < count; i++) {
-                newState.event.customAttributes[i] = { ...this.customAttribute};
+                newState.event.customAttributes[i] = {...this.customAttribute};
             }
             newState.prevCount = count;
             this.setState({
@@ -157,7 +159,11 @@ class AddEventForm extends Component {
 
     render() {
         return (
-            <Grid container spacing={4} alignItems={"center"} justify={"center"}>
+            <Grid container spacing={2} alignItems={"center"} justify={"center"}
+                  style={{
+                      backgroundImage: "url(" + this.backgroundImage + ")",
+                      backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center", backgroundSize: "cover"
+                  }}>
                 <Grid item md={7}>
                     <Card>
                         <CardContent>
@@ -173,14 +179,14 @@ class AddEventForm extends Component {
 
                                 <TextField fullWidth required name="startDate" label="Etkinlik Başlangıç Tarihi"
                                            type="date" value={this.state.event.startDate}
-                                           defaultValue={utils.getDateOfToday()} onChange={this.handleInputChange}/>
+                                           onChange={this.handleInputChange}/>
                             </div>
                             <br/>
                             <div>
 
                                 <TextField fullWidth required name="endDate" label="Etkinlik Bitiş Tarihi" type="date"
                                            value={this.state.event.endDate}
-                                           defaultValue={utils.getDateOfToday()} onChange={this.handleInputChange}/>
+                                           onChange={this.handleInputChange}/>
                             </div>
                             <br/>
                             <div>
@@ -215,7 +221,8 @@ class AddEventForm extends Component {
                                 </Typography>
                             </div>
                             <div>
-                                <MapView onLocationChange={this.handleLocation} data={{lat: this.state.event.latitude, lng: this.state.event.longitude}}/>
+                                <MapView onLocationChange={this.handleLocation}
+                                         data={{lat: this.state.event.latitude, lng: this.state.event.longitude}}/>
                             </div>
                             <br/>
                             <div>
@@ -224,7 +231,6 @@ class AddEventForm extends Component {
                                     fullWidth
                                     label="Eklemek istediğiniz soru sayısını seçin."
                                     onChange={this.handleQuestionCountSelection}
-                                    defaultValue={0}
                                     value={this.state.event.customAttributes.length}
                                 />
                             </div>
@@ -264,16 +270,17 @@ class AddEventForm extends Component {
                         <CardActions>
                             <Grid container alignItems={"flex-start"} justify={"flex-end"} direction={"row"}>
                                 <Grid>
-                                <Button color="secondary" variant={"contained"} endIcon={<ClearIcon/>} size={"large"}>
-                                    Formu Temizle
-                                </Button>
+                                    <Button color="secondary" variant={"contained"} endIcon={<ClearIcon/>}
+                                            size={"large"}>
+                                        Formu Temizle
+                                    </Button>
                                 </Grid>
                                 <Grid>
-                                <Button color="primary" variant={"contained"}
-                                        onClick={() => this.isUpdate ? this.updateExistingEvent(this.state.event) : this.saveNewEvent(this.state.event)}
-                                        endIcon={<SendIcon/>} size={"large"}>
-                                    Gönder
-                                </Button>
+                                    <Button color="primary" variant={"contained"}
+                                            onClick={() => this.isUpdate ? this.updateExistingEvent(this.state.event) : this.saveNewEvent(this.state.event)}
+                                            endIcon={<SendIcon/>} size={"large"}>
+                                        Gönder
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </CardActions>

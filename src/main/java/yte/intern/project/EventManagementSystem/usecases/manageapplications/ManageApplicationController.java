@@ -37,7 +37,7 @@ public class ManageApplicationController {
     }
 
     @GetMapping
-    public List<ApplicationDTO> getAllApplicattions(){
+    public List<ApplicationDTO> getAllApplications(){
         return applicationMapper.mapToDto(manageApplicationService.getAllApplications(), new CycleAvoidingMappingContext());
     }
 

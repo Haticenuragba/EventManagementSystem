@@ -9,7 +9,7 @@ import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Cus
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-08-10T13:53:34+0300",
+    date = "2020-08-10T18:58:14+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 14 (Oracle Corporation)"
 )
 @Component

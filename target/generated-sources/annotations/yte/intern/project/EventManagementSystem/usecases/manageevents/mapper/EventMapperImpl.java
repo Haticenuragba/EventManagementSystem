@@ -18,7 +18,7 @@ import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Eve
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-08-10T13:53:34+0300",
+    date = "2020-08-10T18:58:15+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 14 (Oracle Corporation)"
 )
 @Component
@@ -48,6 +48,7 @@ public class EventMapperImpl implements EventMapper {
         eventDTO.setLatitude( event.getLatitude() );
         eventDTO.setLongitude( event.getLongitude() );
         eventDTO.setCustomAttributes( customAttributeSetToCustomAttributeDTOList( event.getCustomAttributes(), cycleAvoidingMappingContext ) );
+        eventDTO.setAttendantNumber( event.getAttendantNumber() );
         eventDTO.setApplications( applicationListToApplicationDTOList( event.getApplications(), cycleAvoidingMappingContext ) );
 
         return eventDTO;
@@ -77,6 +78,7 @@ public class EventMapperImpl implements EventMapper {
         event.setQuota( eventDTO.getQuota() );
         event.setLatitude( eventDTO.getLatitude() );
         event.setLongitude( eventDTO.getLongitude() );
+        event.setAttendantNumber( eventDTO.getAttendantNumber() );
         event.setApplications( applicationDTOListToApplicationList( eventDTO.getApplications(), cycleAvoidingMappingContext ) );
 
         return event;

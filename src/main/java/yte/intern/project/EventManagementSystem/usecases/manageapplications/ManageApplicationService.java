@@ -25,14 +25,19 @@ public class ManageApplicationService {
         Optional<Event> eventOptional = eventRepository.findEventByTitle(eventTitle);
         if (eventOptional.isPresent()) {
             Event event = eventOptional.get();
-            event.addApplication(application);
-            Event savedEvent = eventRepository.save(event);
-            return savedEvent
-                    .getApplications()
-                    .stream()
-                    .filter(it -> it.getIdNumber().equals(application.getIdNumber()))
-                    .collect(toList())
-                    .get(0);
+            if(doesEventHasEnoughQuota(event)) {
+                event.addApplication(application);
+                Event savedEvent = eventRepository.save(event);
+                return savedEvent
+                        .getApplications()
+                        .stream()
+                        .filter(it -> it.getIdNumber().equals(application.getIdNumber()))
+                        .collect(toList())
+                        .get(0);
+            }
+            else {
+                return null;
+            }
         } else {
             throw new EntityNotFoundException();
         }
@@ -76,5 +81,8 @@ public class ManageApplicationService {
         }
     }
 
+    public boolean doesEventHasEnoughQuota(Event event){
+        return event.getAttendantNumber() < event.getQuota();
+    }
 
 }

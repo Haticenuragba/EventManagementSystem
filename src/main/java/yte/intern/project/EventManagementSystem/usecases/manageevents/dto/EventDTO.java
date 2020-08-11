@@ -49,6 +49,10 @@ public class EventDTO {
 
     private List<CustomAttributeDTO> customAttributes;
 
+    @Max(value = 0)
+    @Min(value = 0)
+    private Integer attendantNumber = 0;
+
     @JsonIgnoreProperties("event")
     private List<ApplicationDTO> applications = new ArrayList<ApplicationDTO>();
 
