@@ -115,9 +115,15 @@ export default function CustomAppBar(props) {
 
 
     history.listen((location, action) => {
-
+        setState({
+            visibilityOfParams: window.location.pathname === '/' ? "visible" : "hidden"
+        });
     })
 
+    const handleSearchChange = (e) => {
+        let value = e.target.value;
+        props.onSearchChanged(value);
+    }
 
     return (
         <div className={classes.root} >
@@ -129,6 +135,7 @@ export default function CustomAppBar(props) {
                             <SearchIcon />
                         </div>
                         <InputBase
+                            onChange={handleSearchChange}
                             placeholder="Etkinlik ara…"
                             classes={{
                                 root: classes.inputRoot,
@@ -188,3 +195,4 @@ export default function CustomAppBar(props) {
         </div>
     );
 }
+

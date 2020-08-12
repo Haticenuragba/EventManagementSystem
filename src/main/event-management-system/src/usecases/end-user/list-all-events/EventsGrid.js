@@ -7,11 +7,13 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
 import {withRouter} from "react-router";
 
-class EventsGrid extends Component{
+class EventsGrid extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            events: []
+            events: [],
+            textToSearch : props.textToSearch
         }
     }
 
@@ -29,7 +31,6 @@ class EventsGrid extends Component{
             .then(response => {
                 this.setState({events: response.data})
             });
-        console.log(window.location.pathname);
     }
 
     navigateToAddEvent = () => {
@@ -37,20 +38,28 @@ class EventsGrid extends Component{
     }
 
     render() {
+        console.log(this.state.textToSearch);
         return (
             <div>
-            <Box m={2}>
-            <Grid container spacing={2}>
-                {this.state.events.map((anEvent, index) => (
-                    <Grid item={true} xs={12} sm={6} md={3}  key={index}>
-                        <MediaCard event={anEvent}/>
+                <Box m={2}>
+                    <Grid container spacing={2}>
+                        {this.state.events.map((anEvent, index) =>
+                        {
+                            if (anEvent.title.includes(this.props.textToSearch)) {
+                                return (
+                                    <Grid item={true} xs={12} sm={6} md={3} key={index}>
+                                        <MediaCard event={anEvent}/>
+                                    </Grid>
+                                );
+                            }
+                        }
+
+                        )
+                        }
                     </Grid>
-                ))
-                }
-            </Grid>
-            </Box>
+                </Box>
                 <Fab color="primary" aria-label="add" style={this.fabStyle}
-                     onClick={this.navigateToAddEvent} >
+                     onClick={this.navigateToAddEvent}>
                     <AddIcon/>
                 </Fab>
             </div>
@@ -58,6 +67,6 @@ class EventsGrid extends Component{
     }
 
 
-
 }
+
 export default withRouter(EventsGrid);

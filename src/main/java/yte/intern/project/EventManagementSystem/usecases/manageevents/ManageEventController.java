@@ -62,6 +62,4 @@ public class ManageEventController {
         manageEventService.deleteEvent(title);
     }
 
-
-
 }

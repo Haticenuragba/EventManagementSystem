@@ -9,6 +9,7 @@ import EventDetail from "./usecases/end-user/event-application/EventDetail";
 import EventsGrid from "./usecases/end-user/list-all-events/EventsGrid";
 import {useHistory, withRouter} from "react-router";
 import {createBrowserHistory} from 'history';
+import {render} from "react-dom";
 
 export const customHistory = createBrowserHistory();
 
@@ -25,12 +26,19 @@ function App(factory, deps) {
             }),
     );
 
-    const [state, setState] = React.useState({});
+    let [state, setState] = React.useState({textToSearch: ''});
+
 
     const handleModeChange = (isDark) => {
         setIsDark(isDark);
         let newState = state;
-        setState({newState});
+        setState(newState);
+    }
+
+    const handleSearchChanged = (text) => {
+        let newState = state;
+        newState.textToSearch = text;
+        setState(newState);
     }
 
     const handleNavigateToHomePage = () => {
@@ -40,13 +48,11 @@ function App(factory, deps) {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
-            <CustomAppBar onModeChange={handleModeChange} onNavigateHomePage={handleNavigateToHomePage}/>
+            <CustomAppBar onModeChange={handleModeChange}
+                          onSearchChanged={handleSearchChanged}
+                          onNavigateHomePage={handleNavigateToHomePage}/>
                 <div>
-                    <Switch>
-                        <Route  path="/events/:eventTitle" component={withRouter(EventDetail)} />
-                        <Route  path="/add-event" component={withRouter(AddEventForm)} />
-                        <Route exact path="/" component={withRouter(EventsGrid)} />
-                    </Switch>
+                    <EventsGrid textToSearch={state.textToSearch} try={"Merabaaa"}/>
                 </div>
             {/*<EventDetail data={{eventTitle: "Deneme"}}/>*/}
         </ThemeProvider>

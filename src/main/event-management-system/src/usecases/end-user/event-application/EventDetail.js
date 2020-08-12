@@ -117,7 +117,7 @@ class EventDetail extends Component {
                             <img src={this.state.event.image} style={{width: "100%"}}/>
                             <br/><br/>
                             <MapView onLocationChange={this.handleLocation}
-                                     data={{lat: this.state.event.latitude, lng: this.state.event.longitude}}/>
+                                     data={{lat: this.state.event.latitude, lng: this.state.event.longitude, isConstant: true}}/>
                         </CardContent>
                     </Card>
                 </Grid>

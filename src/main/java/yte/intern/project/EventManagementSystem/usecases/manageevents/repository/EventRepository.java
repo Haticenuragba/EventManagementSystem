@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
     Optional<Event> findEventByTitle(String title);
+    Optional<Event> findByTitleContaining(String title);
     boolean existsByTitle(String title);
 }

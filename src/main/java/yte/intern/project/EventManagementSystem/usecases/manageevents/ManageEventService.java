@@ -30,6 +30,10 @@ public class ManageEventService {
         return eventRepository.findEventByTitle(title).orElseThrow(EntityNotFoundException::new);
     }
 
+    public Event searchEventByTitle(String title) {
+        return eventRepository.findByTitleContaining(title).orElseThrow(EntityNotFoundException::new);
+    }
+
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
@@ -76,4 +80,5 @@ public class ManageEventService {
         }
 
     }
+
 }
