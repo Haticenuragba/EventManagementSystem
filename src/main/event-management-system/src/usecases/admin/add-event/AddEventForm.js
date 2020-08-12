@@ -172,7 +172,7 @@ class AddEventForm extends Component {
                 backgroundImage: "url(" + this.backgroundImage + ")",
                 backgroundRepeat: "no-repeat", backgroundAttachment: "fixed",
                 backgroundPosition: "center", backgroundSize: "cover",
-                maxWidth: "100%"
+                maxWidth: "100%", marginTop: "0.7vh"
             }}>
                 <Box>
                     <Grid container spacing={2} alignItems={"center"} justify={"center"}
@@ -181,6 +181,11 @@ class AddEventForm extends Component {
                         <Grid item md={7}>
                             <Card>
                                 <CardContent>
+                                    <Box p={5}>
+                                    <Typography variant={"h5"}>
+                                        Bir Etkinlik Ekleyin
+                                    </Typography>
+                                        <br/>
                                     <div>
 
                                         <TextField required name="title" label="Etkinlik Adı" type="text" fullWidth
@@ -287,7 +292,7 @@ class AddEventForm extends Component {
                                         </div>
                                     ))}
                                     <br/>
-
+                                    </Box>
                                 </CardContent>
                                 <CardActions>
                                     <Grid container alignItems={"flex-start"} justify={"flex-end"} direction={"row"}>

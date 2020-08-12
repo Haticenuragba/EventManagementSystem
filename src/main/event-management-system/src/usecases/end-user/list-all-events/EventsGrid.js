@@ -6,6 +6,7 @@ import Box from "@material-ui/core/Box";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
 import {withRouter} from "react-router";
+import {getDistanceFromLatLonInKm} from "../../../common/Utils";
 
 class EventsGrid extends Component {
 
@@ -13,7 +14,8 @@ class EventsGrid extends Component {
         super(props);
         this.state = {
             events: [],
-            textToSearch : props.textToSearch
+            textToSearch : props.textToSearch,
+            distanceToLook: props.distanceToLook,
         }
     }
 
@@ -37,15 +39,28 @@ class EventsGrid extends Component {
         this.props.history.push('/add-event', {isUpdate: false, eventTitleToUpdate: ''});
     }
 
+    filterByTitle(event){
+        return event.title.toLowerCase().includes(this.props.textToSearch);
+    }
+
+    filterByLocation(event){
+        let value = getDistanceFromLatLonInKm(37.022195,35.293555, event.latitude, event.longitude)
+        console.log(value);
+        if(value<=this.props.distanceToLook)
+            return true;
+        else
+            return false;
+    }
+
+
     render() {
-        console.log(this.state.textToSearch);
         return (
             <div>
                 <Box m={2}>
                     <Grid container spacing={2}>
                         {this.state.events.map((anEvent, index) =>
                         {
-                            if (anEvent.title.includes(this.props.textToSearch)) {
+                            if (this.filterByTitle(anEvent) && this.filterByLocation(anEvent)) {
                                 return (
                                     <Grid item={true} xs={12} sm={6} md={3} key={index}>
                                         <MediaCard event={anEvent}/>

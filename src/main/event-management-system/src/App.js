@@ -27,7 +27,8 @@ class App extends Component{
         super(props);
 
         this.state = {
-            textToSearch: ''
+            textToSearch: '',
+            distanceToLook: 100
         }
     }
 
@@ -37,9 +38,15 @@ class App extends Component{
         this.setState(newState);
     }
 
-    handleSearchChanged = (text) => {
+    handleSearchChange = (text) => {
         let newState = this.state;
         newState.textToSearch = text;
+        this.setState(newState);
+    }
+
+    handleDistanceChange = (distance) => {
+        let newState = this.state;
+        newState.distanceToLook = distance;
         this.setState(newState);
     }
 
@@ -53,13 +60,14 @@ class App extends Component{
             <ThemeProvider theme={getIsDark() ? themeDark : themeLight}>
                 <CssBaseline/>
                 <CustomAppBar onModeChange={this.handleModeChange}
-                              onSearchChanged={this.handleSearchChanged}
+                              onSearchChange={this.handleSearchChange}
+                              onDistanceChange={this.handleDistanceChange}
                               onNavigateHomePage={this.handleNavigateToHomePage}/>
                 <div>
                     <Route  path="/events/:eventTitle" component={withRouter(EventDetail)} />
                     <Route  path="/add-event" component={withRouter(AddEventForm)} />
                     <Route exact path="/" >
-                        <EventsGrid textToSearch={this.state.textToSearch}/>
+                        <EventsGrid textToSearch={this.state.textToSearch} distanceToLook={this.state.distanceToLook}/>
                     </Route>
 
                 </div>

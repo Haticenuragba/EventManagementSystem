@@ -102,12 +102,13 @@ export default function CustomAppBar(props) {
     const classes = useStyles();
     const history = useHistory();
     const [state, setState] = React.useState({
-        visibilityOfParams: "visible"
+        visibilityOfParams: window.location.pathname === '/' ? "visible" : "hidden"
     });
 
     const handleModeChange = (event) => {
         props.onModeChange(event.target.checked);
     };
+
 
     const navigateToEventsGrid = () => {
         props.onNavigateHomePage();
@@ -115,15 +116,21 @@ export default function CustomAppBar(props) {
 
 
     history.listen((location, action) => {
+        let visibility = location.pathname === '/' ? "visible" : "hidden"
         setState({
-            visibilityOfParams: window.location.pathname === '/' ? "visible" : "hidden"
+            visibilityOfParams: visibility
         });
     })
 
     const handleSearchChange = (e) => {
         let value = e.target.value;
-        props.onSearchChanged(value);
+        props.onSearchChange(value);
     }
+
+    const handleDistanceChange = (e) => {
+        let value = e.target.value;
+        props.onDistanceChange(value);
+    };
 
     return (
         <div className={classes.root} >
@@ -169,7 +176,7 @@ export default function CustomAppBar(props) {
                         <Select
                             name="type"
                             hiddenLabel
-                            defaultValue={0}
+                            defaultValue={15000}
                             fullWidth
                             classes={{
                                 root: classes.input,
@@ -178,9 +185,11 @@ export default function CustomAppBar(props) {
                             className={classes.inputBackground}
                             disableUnderline
                             style={{visibility: state.visibilityOfParams}}
+                            onChange={handleDistanceChange}
+
                         >
-                            <MenuItem value={0}>Tüm etkinlikler</MenuItem>
-                            <MenuItem value={1}>Sadece yakınımdakiler</MenuItem>
+                            <MenuItem value={15000}>Tüm etkinlikler</MenuItem>
+                            <MenuItem value={100}>Sadece yakınımdakiler</MenuItem>
                         </Select>
                     </div>
                     <FormGroup className={classes.switch}>
