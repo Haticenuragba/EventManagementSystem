@@ -172,10 +172,9 @@ export default function CustomAppBar(props) {
                         style={{visibility: state.visibilityOfParams}}
                         onChange={handleDateSelectionChange}
                     >
-                        <MenuItem value={0} disabled>Etkinlik Zamanı</MenuItem>
+                        <MenuItem value={0} >Tüm tarihler</MenuItem>
                         <MenuItem value={1}>Bir hafta içinde</MenuItem>
                         <MenuItem value={2}>Bir ay içinde</MenuItem>
-                        <MenuItem value={3}>Daha ileri tarihte</MenuItem>
                     </Select>
                     </div>
                     <div className={classes.dropdown}>

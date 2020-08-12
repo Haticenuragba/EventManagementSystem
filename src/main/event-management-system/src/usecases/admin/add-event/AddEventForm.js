@@ -25,7 +25,7 @@ class AddEventForm extends Component {
     customAttribute = {question: "", type: 0}
     isUpdate = false;
     eventTitleToUpdate = '';
-    backgroundImage = require('../../../images/background-dark.jpg');
+    backgroundImage = require('../../../images/background10.jpg');
 
     constructor(props) {
         super(props);

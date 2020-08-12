@@ -47,7 +47,7 @@ class EventsGrid extends Component {
     }
 
     filterByTitle(event) {
-        return event.title.toLowerCase().includes(this.props.textToSearch);
+        return event.title.toLowerCase().includes(this.props.textToSearch.toLowerCase());
     }
 
     filterByLocation(event) {
