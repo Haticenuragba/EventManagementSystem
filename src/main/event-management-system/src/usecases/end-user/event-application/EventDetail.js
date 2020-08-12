@@ -21,7 +21,7 @@ class EventDetail extends Component {
 
     constructor(props) {
         super(props);
-        this.eventTitle = props.data.eventTitle;
+        this.eventTitle = props.match.params.eventTitle;
         this.state = {
             event: {
                 customAttributes: [{}]

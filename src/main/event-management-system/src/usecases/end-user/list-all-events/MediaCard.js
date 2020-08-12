@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from "@material-ui/core/Grid";
+import {useHistory} from "react-router";
 
 const useStyles = makeStyles({
     root: {},
@@ -18,6 +19,11 @@ const useStyles = makeStyles({
 
 export default function MediaCard({event}) {
     const classes = useStyles();
+    const history = useHistory();
+
+    const navigateToEventDetail = (title) => {
+        history.push('/events/' + title);
+    }
 
     return (
         <Card className={classes.root}>
@@ -38,11 +44,11 @@ export default function MediaCard({event}) {
             </CardActionArea>
             <CardActions>
                 <Grid container>
-                    <Grid md={7}>
+                    <Grid md={6}>
                     </Grid>
-                    <Grid md={5}>
-                        <Button size="small">
-                            Daha Fazla Bilgi Edin
+                    <Grid md={6}>
+                        <Button size="small" onClick={() => navigateToEventDetail(event.title)}>
+                            Daha Fazla Bilgi Edinin
                         </Button>
                     </Grid>
 

@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ImageUploader from "../../../common/ImageUploader";
 import SendIcon from '@material-ui/icons/Send';
 import ClearIcon from '@material-ui/icons/Clear';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 
 class AddEventForm extends Component {
@@ -25,8 +26,8 @@ class AddEventForm extends Component {
     constructor(props) {
         super(props);
 
-        this.isUpdate = props.data.isUpdate;
-        this.eventTitleToUpdate = props.data.eventTitleToUpdate;
+        this.isUpdate = props.location.state.isUpdate;
+        this.eventTitleToUpdate = props.location.state.eventTitleToUpdate;
         this.state = {
             prevCount: 0,
             event: {
@@ -169,9 +170,11 @@ class AddEventForm extends Component {
                     <Card>
                         <CardContent>
                             <div>
+
                                 <TextField required name="title" label="Etkinlik Adı" type="text" fullWidth
                                            value={this.state.event.title}
-                                           onChange={this.handleInputChange}/>
+                                           onChange={this.handleInputChange}
+                                validators={['required']}/>
 
 
                             </div>
