@@ -2,14 +2,27 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 import 'sweetalert2/src/sweetalert2.scss'
 
+
+
 export function getDateOfToday() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
 
     today = yyyy + '-' + mm + '-' + dd;
     return today;
+}
+
+export function getDaysLaterInMilliseconds(n) {
+    let today = new Date();
+    return new Date(today.getTime() + n * 24 * 60 * 60 * 1000).getTime();
+}
+
+export function dateStringToObject(string) {
+    let from = string.split("-");
+    return new Date(from[0], from[1] - 1, from[2]);
+
 }
 
 export const defaultImageUrl = 'https://res.cloudinary.com/diijhkryx/image/upload/v1596781090/no-image_q20lwb.png'

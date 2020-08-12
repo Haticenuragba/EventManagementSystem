@@ -28,7 +28,8 @@ class App extends Component{
 
         this.state = {
             textToSearch: '',
-            distanceToLook: 100
+            distanceToLook: 15000,
+            dateToSeek: 0
         }
     }
 
@@ -50,6 +51,12 @@ class App extends Component{
         this.setState(newState);
     }
 
+    handleDateSelectionChange = (date) => {
+        let newState = this.state;
+        newState.dateToSeek = date;
+        this.setState(newState);
+    }
+
     handleNavigateToHomePage = () => {
         this.props.history.push('/');
     }
@@ -62,12 +69,13 @@ class App extends Component{
                 <CustomAppBar onModeChange={this.handleModeChange}
                               onSearchChange={this.handleSearchChange}
                               onDistanceChange={this.handleDistanceChange}
+                              onDateSelectionChange={this.handleDateSelectionChange}
                               onNavigateHomePage={this.handleNavigateToHomePage}/>
                 <div>
                     <Route  path="/events/:eventTitle" component={withRouter(EventDetail)} />
                     <Route  path="/add-event" component={withRouter(AddEventForm)} />
                     <Route exact path="/" >
-                        <EventsGrid textToSearch={this.state.textToSearch} distanceToLook={this.state.distanceToLook}/>
+                        <EventsGrid textToSearch={this.state.textToSearch} distanceToLook={this.state.distanceToLook} dateToSeek={this.state.dateToSeek}/>
                     </Route>
 
                 </div>

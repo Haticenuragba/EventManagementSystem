@@ -8,7 +8,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import FormGroup from "@material-ui/core/FormGroup";
 import InputBase from "@material-ui/core/InputBase";
-import {getIsDark, setIsDark} from "./Utils";
+import {getDateOfToday, getIsDark, setIsDark} from "./Utils";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import HomeIcon from '@material-ui/icons/Home';
@@ -132,6 +132,11 @@ export default function CustomAppBar(props) {
         props.onDistanceChange(value);
     };
 
+    const handleDateSelectionChange = (e) => {
+        let value = e.target.value;
+        props.onDateSelectionChange(value);
+    };
+
     return (
         <div className={classes.root} >
             <AppBar position="static" color={getIsDark() ? "default" : "primary"}>
@@ -165,6 +170,7 @@ export default function CustomAppBar(props) {
                         className={classes.inputBackground}
                         disableUnderline
                         style={{visibility: state.visibilityOfParams}}
+                        onChange={handleDateSelectionChange}
                     >
                         <MenuItem value={0} disabled>Etkinlik Zamanı</MenuItem>
                         <MenuItem value={1}>Bir hafta içinde</MenuItem>
