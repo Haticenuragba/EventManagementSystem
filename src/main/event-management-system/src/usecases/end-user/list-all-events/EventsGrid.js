@@ -29,7 +29,7 @@ class EventsGrid extends Component{
             .then(response => {
                 this.setState({events: response.data})
             });
-        console.log("geldi");
+        console.log(window.location.pathname);
     }
 
     navigateToAddEvent = () => {
@@ -41,8 +41,8 @@ class EventsGrid extends Component{
             <div>
             <Box m={2}>
             <Grid container spacing={2}>
-                {this.state.events.map(anEvent => (
-                    <Grid item xs={12} sm={6} md={3}>
+                {this.state.events.map((anEvent, index) => (
+                    <Grid item={true} xs={12} sm={6} md={3}  key={index}>
                         <MediaCard event={anEvent}/>
                     </Grid>
                 ))

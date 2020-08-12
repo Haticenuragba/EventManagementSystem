@@ -14,6 +14,10 @@ import ImageUploader from "../../../common/ImageUploader";
 import SendIcon from '@material-ui/icons/Send';
 import ClearIcon from '@material-ui/icons/Clear';
 import Box from "@material-ui/core/Box";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+import 'sweetalert2/src/sweetalert2.scss'
+import {showSuccessDialog} from "../../../common/Utils";
 
 
 class AddEventForm extends Component {
@@ -67,6 +71,8 @@ class AddEventForm extends Component {
         axios.post("/events", e)
             .then(response => {
                 console.log(response);
+                showSuccessDialog("Etkinlik başarıyla kaydedildi");
+                this.props.history.push('/');
             })
             .catch(error => {
                 console.log(error.response);
@@ -77,6 +83,8 @@ class AddEventForm extends Component {
         axios.put("/events/" + this.eventTitleToUpdate, e)
             .then(response => {
                 console.log(response);
+                showSuccessDialog("Etkinlik başarıyla güncellendi");
+                this.props.history.push('/events/' + e.title);
             })
             .catch(error => {
                 console.log(error.response);

@@ -11,6 +11,7 @@ import InputBase from "@material-ui/core/InputBase";
 import {getIsDark, setIsDark} from "./Utils";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import HomeIcon from '@material-ui/icons/Home';
 import {useHistory} from "react-router";
 
 
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
         display: "inherit",
         [theme.breakpoints.up('sm')]: {
             display: 'block',
-            width: "10vw"
+            width: "2vw"
         },
     },
     search: {
@@ -85,12 +86,13 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     switch: {
-        position: 'relative',
+        position: 'absolute',
         marginRight: theme.spacing(2),
         marginLeft: 0,
         verticalAlign: 'center',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        right: 0
     },
 }));
 
@@ -98,7 +100,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomAppBar(props) {
     const classes = useStyles();
+    const history = useHistory();
     const [state, setState] = React.useState({
+        visibilityOfParams: "visible"
     });
 
     const handleModeChange = (event) => {
@@ -109,14 +113,18 @@ export default function CustomAppBar(props) {
         props.onNavigateHomePage();
     }
 
+
+    history.listen((location, action) => {
+
+    })
+
+
     return (
         <div className={classes.root} >
             <AppBar position="static" color={getIsDark() ? "default" : "primary"}>
                 <Toolbar>
-                    <Typography variant="h6" className={classes.title} onClick={() => navigateToEventsGrid()}>
-                        Etkinlik Yönetimi
-                    </Typography>
-                    <div className={classes.search}>
+                    <HomeIcon className={classes.title} onClick={() => navigateToEventsGrid()}/>
+                    <div className={classes.search} style={{visibility: state.visibilityOfParams}}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
@@ -142,6 +150,7 @@ export default function CustomAppBar(props) {
                         }}
                         className={classes.inputBackground}
                         disableUnderline
+                        style={{visibility: state.visibilityOfParams}}
                     >
                         <MenuItem value={0} disabled>Etkinlik Zamanı</MenuItem>
                         <MenuItem value={1}>Bir hafta içinde</MenuItem>
@@ -161,6 +170,7 @@ export default function CustomAppBar(props) {
                             }}
                             className={classes.inputBackground}
                             disableUnderline
+                            style={{visibility: state.visibilityOfParams}}
                         >
                             <MenuItem value={0}>Tüm etkinlikler</MenuItem>
                             <MenuItem value={1}>Sadece yakınımdakiler</MenuItem>

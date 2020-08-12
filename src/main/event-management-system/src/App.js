@@ -29,14 +29,13 @@ function App(factory, deps) {
 
     const handleModeChange = (isDark) => {
         setIsDark(isDark);
-        setState({});
+        let newState = state;
+        setState({newState});
     }
 
     const handleNavigateToHomePage = () => {
         history.push('/');
     }
-
-
 
     return (
         <ThemeProvider theme={theme}>

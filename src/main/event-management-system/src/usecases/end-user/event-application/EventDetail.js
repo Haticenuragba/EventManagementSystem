@@ -13,6 +13,7 @@ import axios from "axios";
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
+import {showSuccessDialog} from "../../../common/Utils";
 
 const dateFormat = require('dateformat');
 
@@ -97,6 +98,8 @@ class EventDetail extends Component {
         axios.post("/events-application" + "/" + this.eventTitle, this.state.application)
             .then(response => {
                 console.log(response);
+                showSuccessDialog("Etkinliğe başarıyla kaydoldunuz");
+                this.props.history.push('/');
             })
             .catch(error => {
                 console.log(error.response);

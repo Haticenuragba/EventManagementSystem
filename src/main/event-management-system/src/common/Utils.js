@@ -1,3 +1,7 @@
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+import 'sweetalert2/src/sweetalert2.scss'
+
 export function getDateOfToday() {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -18,5 +22,15 @@ export function setIsDark(booleanExpression) {
 
 export function getIsDark() {
     return isDark;
+}
+
+export function showSuccessDialog(text) {
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: text,
+        showConfirmButton: false,
+        timer: 1500
+    })
 }
 
