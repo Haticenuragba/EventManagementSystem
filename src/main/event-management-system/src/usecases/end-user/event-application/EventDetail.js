@@ -14,6 +14,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import {showSuccessDialog} from "../../../common/Utils";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Box from "@material-ui/core/Box";
 
 const dateFormat = require('dateformat');
 
@@ -42,6 +44,7 @@ class EventDetail extends Component {
                 email: "",
                 name: "",
                 surname: "",
+                attendantNumber: "",
                 applicationCustomAttributes: []
             }
         }
@@ -135,6 +138,27 @@ class EventDetail extends Component {
                                 Etkinlik {dateFormat(this.state.event.startDate, "dd/mm/yyyy")} - {dateFormat(this.state.event.endDate, "dd/mm/yyyy")} tarihleri
                                 arasında gerçekleşecektir.
                             </Typography>
+
+                            <br/>
+                            <Grid container spacing={2}>
+                                <Grid item>
+                                    <Typography>Kaydolan Kişi: {this.state.event.attendantNumber}</Typography>
+                                </Grid>
+                                <Grid item md={9}>
+                                    <Box p={1}>
+                            <LinearProgress variant={"determinate"} value={(this.state.event.attendantNumber / this.state.event.quota) *100}/>
+                                    </Box>
+                                </Grid>
+                                <Grid item>
+                                    <Typography>Kalan Kontenjan: {this.state.event.quota - this.state.event.attendantNumber}</Typography>
+                                </Grid>
+                            </Grid>
+                         {/*   <Typography gutterBottom>
+                                Etkinlik Kontenjanı: {this.state.event.quota}
+                            </Typography>
+                            <Typography gutterBottom>
+                                Etkinliğe Kaydolan Kişi Sayısı: {this.state.event.attendantNumber}
+                            </Typography>*/}
                             <br/>
                             <Typography variant="h5" gutterBottom>
                                 Hemen Kaydolun
