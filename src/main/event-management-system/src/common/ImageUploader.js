@@ -7,15 +7,14 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ClearIcon from '@material-ui/icons/Clear';
+import {getIsDark} from "./Utils";
 
 const CLOUDINARY_UPLOAD_PRESET = 'oyzzlogh';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/diijhkryx/upload';
 const dropZoneStyle = {
     textAlign: "center",
     padding: "20px",
-    border: "3px dashed #eeeeee",
-    backgroundColor: "#fafafa",
-    color: "#717070"
+    border: "3px dashed #eeeeee"
 };
 
 export default class ImageUploadTry extends React.Component {

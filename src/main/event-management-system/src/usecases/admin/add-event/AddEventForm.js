@@ -13,7 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ImageUploader from "../../../common/ImageUploader";
 import SendIcon from '@material-ui/icons/Send';
 import ClearIcon from '@material-ui/icons/Clear';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import Box from "@material-ui/core/Box";
 
 
 class AddEventForm extends Component {
@@ -21,7 +21,7 @@ class AddEventForm extends Component {
     customAttribute = {question: "", type: 0}
     isUpdate = false;
     eventTitleToUpdate = '';
-    backgroundImage = require('../../../images/background.jpg');
+    backgroundImage = require('../../../images/background-dark.jpg');
 
     constructor(props) {
         super(props);
@@ -160,12 +160,16 @@ class AddEventForm extends Component {
 
     render() {
         return (
+            <div style={{
+                backgroundImage: "url(" + this.backgroundImage + ")",
+                backgroundRepeat: "no-repeat", backgroundAttachment: "fixed",
+                backgroundPosition: "center", backgroundSize: "cover",
+                maxWidth: "100%"
+            }}>
+            <Box>
             <Grid container spacing={2} alignItems={"center"} justify={"center"}
-                  style={{
-                      backgroundImage: "url(" + this.backgroundImage + ")",
-                      backgroundRepeat: "no-repeat", backgroundAttachment: "fixed",
-                      backgroundPosition: "center", backgroundSize: "cover"
-                  }}>
+                  style={{maxWidth: "100%"}}
+                  >
                 <Grid item md={7}>
                     <Card>
                         <CardContent>
@@ -293,6 +297,8 @@ class AddEventForm extends Component {
 
 
             </Grid>
+            </Box>
+            </div>
         );
     }
 }

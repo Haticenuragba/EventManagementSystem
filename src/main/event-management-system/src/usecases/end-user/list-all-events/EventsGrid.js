@@ -5,8 +5,9 @@ import axios from "axios";
 import Box from "@material-ui/core/Box";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
+import {withRouter} from "react-router";
 
-export default class EventsGrid extends Component{
+class EventsGrid extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -15,10 +16,8 @@ export default class EventsGrid extends Component{
     }
 
     fabStyle = {
-        borderTop: "1px solid #E7E7E7",
         textAlign: "center",
-        padding: "20px",
-        margin: "20px",
+        margin: "4vh",
         position: "fixed",
         right: "0",
         bottom: "0",
@@ -33,14 +32,14 @@ export default class EventsGrid extends Component{
         console.log("geldi");
     }
 
-    navigateToAddEvent = (title) => {
+    navigateToAddEvent = () => {
         this.props.history.push('/add-event', {isUpdate: false, eventTitleToUpdate: ''});
     }
 
     render() {
         return (
             <div>
-            <Box m={2} style={{width:"90vw", height: "80vh"}}>
+            <Box m={2}>
             <Grid container spacing={2}>
                 {this.state.events.map(anEvent => (
                     <Grid item xs={12} sm={6} md={3}>
@@ -50,8 +49,9 @@ export default class EventsGrid extends Component{
                 }
             </Grid>
             </Box>
-                <Fab color="primary" aria-label="add" style={this.fabStyle}>
-                    <AddIcon onClick={this.navigateToAddEvent} />
+                <Fab color="primary" aria-label="add" style={this.fabStyle}
+                     onClick={this.navigateToAddEvent} >
+                    <AddIcon/>
                 </Fab>
             </div>
         );
@@ -60,3 +60,4 @@ export default class EventsGrid extends Component{
 
 
 }
+export default withRouter(EventsGrid);

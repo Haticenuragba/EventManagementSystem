@@ -11,6 +11,7 @@ import InputBase from "@material-ui/core/InputBase";
 import {getIsDark, setIsDark} from "./Utils";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import {useHistory} from "react-router";
 
 
 
@@ -104,11 +105,15 @@ export default function CustomAppBar(props) {
         props.onModeChange(event.target.checked);
     };
 
+    const navigateToEventsGrid = () => {
+        props.onNavigateHomePage();
+    }
+
     return (
         <div className={classes.root} >
             <AppBar position="static" color={getIsDark() ? "default" : "primary"}>
                 <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography variant="h6" className={classes.title} onClick={() => navigateToEventsGrid()}>
                         Etkinlik Yönetimi
                     </Typography>
                     <div className={classes.search}>

@@ -32,6 +32,7 @@ export default function MediaCard({event}) {
                     className={classes.media}
                     image={event.image}
                     title={event.title}
+                    onClick={() => navigateToEventDetail(event.title)}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
@@ -44,11 +45,11 @@ export default function MediaCard({event}) {
             </CardActionArea>
             <CardActions>
                 <Grid container>
-                    <Grid md={6}>
+                    <Grid md={8}>
                     </Grid>
-                    <Grid md={6}>
+                    <Grid md={4}>
                         <Button size="small" onClick={() => navigateToEventDetail(event.title)}>
-                            Daha Fazla Bilgi Edinin
+                            Daha Fazla Bilgi
                         </Button>
                     </Grid>
 

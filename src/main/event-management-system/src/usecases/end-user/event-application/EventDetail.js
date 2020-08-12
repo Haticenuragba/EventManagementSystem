@@ -10,14 +10,24 @@ import SendIcon from '@material-ui/icons/Send';
 import ClearIcon from '@material-ui/icons/Clear';
 import MapView from "../../../common/MapView";
 import axios from "axios";
-import MenuItem from "@material-ui/core/MenuItem";
-import {getDateOfToday} from "../../../common/Utils";
+import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from "@material-ui/icons/Add";
+import Fab from "@material-ui/core/Fab";
 
 const dateFormat = require('dateformat');
 
 class EventDetail extends Component {
 
     eventTitle = '';
+
+    fabStyle = {
+        textAlign: "center",
+        margin: "4vh",
+        position: "fixed",
+        right: "0",
+        bottom: "0",
+        zIndex: 100
+    }
 
     constructor(props) {
         super(props);
@@ -56,6 +66,10 @@ class EventDetail extends Component {
     handleLocation = (lat, lng) => {
     }
 
+    navigateToUpdateEvent = (title) => {
+        this.props.history.push('/add-event', {isUpdate: true, eventTitleToUpdate: title});
+    }
+
     handleInputChange = e => {
         let newState = this.state;
         const name = e.target.name;
@@ -92,6 +106,7 @@ class EventDetail extends Component {
 
     render() {
         return (
+            <div>
             <Grid container alignItems={"center"} justify={"center"}>
                 <Grid item md={4} style={{padding: "1vh"}}>
                     <Card style={{height: "90vh"}}>
@@ -191,6 +206,12 @@ class EventDetail extends Component {
 
 
             </Grid>
+                <Fab color="primary" aria-label="edit" style={this.fabStyle}
+                     onClick={() => this.navigateToUpdateEvent(this.eventTitle)} >
+                    <EditIcon/>
+                </Fab>
+            </div>
+
         );
     }
 }
