@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from 'react';
+import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import * as utils from '../../../common/Utils'
 import Button from "@material-ui/core/Button";
@@ -14,7 +14,6 @@ import ImageUploader from "../../../common/ImageUploader";
 import SendIcon from '@material-ui/icons/Send';
 import ClearIcon from '@material-ui/icons/Clear';
 import Box from "@material-ui/core/Box";
-import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 import 'sweetalert2/src/sweetalert2.scss'
 import {showSuccessDialog} from "../../../common/Utils";
@@ -80,6 +79,10 @@ class AddEventForm extends Component {
     }
 
     updateExistingEvent(e) {
+        console.log("This is event in state  ")
+        console.log(this.state.event);
+        console.log("This is event in function  ")
+        console.log(e);
         axios.put("/events/" + this.eventTitleToUpdate, e)
             .then(response => {
                 console.log(response);
@@ -103,9 +106,9 @@ class AddEventForm extends Component {
     handleImage = (url) => {
         let newState = this.state;
         if (url === 'error' || url === '' || !url) {
-            newState.event['image'] = utils.defaultImageUrl;
+            newState.event.image = utils.defaultImageUrl;
         } else {
-            newState.event['image'] = url;
+            newState.event.image = url;
             this.backgroundImage = url;
         }
         this.setState({
@@ -127,7 +130,7 @@ class AddEventForm extends Component {
 
     handleQuestionCountSelection = e => {
         let count = e.target.value;
-        if (count != "" && count >= 0) {
+        if (count !== "" && count >= 0) {
             let newState = this.state;
 
             let prev = this.state.prevCount;
@@ -182,116 +185,117 @@ class AddEventForm extends Component {
                             <Card>
                                 <CardContent>
                                     <Box p={5}>
-                                    <Typography variant={"h5"}>
-                                        Bir Etkinlik Ekleyin
-                                    </Typography>
-                                        <br/>
-                                    <div>
-
-                                        <TextField required name="title" label="Etkinlik Adı" type="text" fullWidth
-                                                   value={this.state.event.title}
-                                                   onChange={this.handleInputChange}
-                                                   validators={['required']}/>
-
-
-                                    </div>
-                                    <br/>
-                                    <div>
-
-                                        <TextField fullWidth required name="startDate" label="Etkinlik Başlangıç Tarihi"
-                                                   type="date" value={this.state.event.startDate}
-                                                   onChange={this.handleInputChange}/>
-                                    </div>
-                                    <br/>
-                                    <div>
-
-                                        <TextField fullWidth required name="endDate" label="Etkinlik Bitiş Tarihi"
-                                                   type="date"
-                                                   value={this.state.event.endDate}
-                                                   onChange={this.handleInputChange}/>
-                                    </div>
-                                    <br/>
-                                    <div>
-                                        <TextField
-                                            required
-                                            name="description"
-                                            label="Etkinlik Açıklaması"
-                                            multiline
-                                            margin="normal"
-                                            fullWidth
-                                            onChange={this.handleInputChange}
-                                            value={this.state.event.description}
-                                        />
-                                    </div>
-                                    <br/>
-                                    <div>
-
-                                        <TextField fullWidth required name="quota" label="Maksimum Katılımcı Sayısı"
-                                                   type="number" value={this.state.event.quota}
-                                                   onChange={this.handleInputChange}/>
-                                    </div>
-                                    <br/>
-                                    <div>
-                                        <Typography color={"textSecondary"}>Lütfen Etkinlik için bir resim
-                                            ekleyin</Typography>
-                                        <ImageUploader onImageUpload={this.handleImage}/>
-                                    </div>
-                                    <br/>
-                                    <br/>
-                                    <div>
-                                        <Typography color="textSecondary" gutterBottom>
-                                            Lütfen etkinliğin gerçekleşeceği yeri haritadan seçin.*
+                                        <Typography variant={"h5"}>
+                                            Bir Etkinlik Ekleyin
                                         </Typography>
-                                    </div>
-                                    <div>
-                                        <MapView onLocationChange={this.handleLocation}
-                                                 data={{
-                                                     lat: this.state.event.latitude,
-                                                     lng: this.state.event.longitude,
-                                                     isConstant: false
-                                                 }}/>
-                                    </div>
-                                    <br/>
-                                    <div>
-                                        <TextField
-                                            type="number"
-                                            fullWidth
-                                            label="Eklemek istediğiniz soru sayısını seçin."
-                                            onChange={this.handleQuestionCountSelection}
-                                            value={this.state.event.customAttributes.length}
-                                        />
-                                    </div>
-                                    {this.state.event.customAttributes.map((customAttribute, index) => (
-                                        <div key={index}>
-                                            <Grid container spacing={4}>
-                                                <Grid item md={6}>
-                                                    <TextField
-                                                        type="text"
-                                                        fullWidth
-                                                        name="question"
-                                                        label="Sorunuz"
-                                                        onChange={(e) => this.handleQuestionChange(e, index)}
-                                                        value={this.state.event.customAttributes[index].question}
-                                                    />
-                                                </Grid>
-                                                <Grid item md={6}>
-                                                    <TextField
-                                                        select
-                                                        name="type"
-                                                        label="Cevap Türü"
-                                                        fullWidth
-                                                        onChange={(e) => this.handleTypeChange(e, index)}
-                                                        value={this.state.event.customAttributes[index].type}
-                                                    >
-                                                        <MenuItem value="text">Yazı</MenuItem>
-                                                        <MenuItem value="number">Sayı</MenuItem>
-                                                        <MenuItem value="date">Tarih</MenuItem>
-                                                    </TextField>
-                                                </Grid>
-                                            </Grid>
+                                        <br/>
+                                        <div>
+
+                                            <TextField required name="title" label="Etkinlik Adı" type="text" fullWidth
+                                                       value={this.state.event.title}
+                                                       onChange={this.handleInputChange}
+                                                       validators={['required']}/>
+
+
                                         </div>
-                                    ))}
-                                    <br/>
+                                        <br/>
+                                        <div>
+
+                                            <TextField fullWidth required name="startDate"
+                                                       label="Etkinlik Başlangıç Tarihi"
+                                                       type="date" value={this.state.event.startDate}
+                                                       onChange={this.handleInputChange}/>
+                                        </div>
+                                        <br/>
+                                        <div>
+
+                                            <TextField fullWidth required name="endDate" label="Etkinlik Bitiş Tarihi"
+                                                       type="date"
+                                                       value={this.state.event.endDate}
+                                                       onChange={this.handleInputChange}/>
+                                        </div>
+                                        <br/>
+                                        <div>
+                                            <TextField
+                                                required
+                                                name="description"
+                                                label="Etkinlik Açıklaması"
+                                                multiline
+                                                margin="normal"
+                                                fullWidth
+                                                onChange={this.handleInputChange}
+                                                value={this.state.event.description}
+                                            />
+                                        </div>
+                                        <br/>
+                                        <div>
+
+                                            <TextField fullWidth required name="quota" label="Maksimum Katılımcı Sayısı"
+                                                       type="number" value={this.state.event.quota}
+                                                       onChange={this.handleInputChange}/>
+                                        </div>
+                                        <br/>
+                                        <div>
+                                            <Typography color={"textSecondary"}>Lütfen Etkinlik için bir resim
+                                                ekleyin</Typography>
+                                            <ImageUploader onImageUpload={this.handleImage}/>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <div>
+                                            <Typography color="textSecondary" gutterBottom>
+                                                Lütfen etkinliğin gerçekleşeceği yeri haritadan seçin.*
+                                            </Typography>
+                                        </div>
+                                        <div>
+                                            <MapView onLocationChange={this.handleLocation}
+                                                     data={{
+                                                         lat: this.state.event.latitude,
+                                                         lng: this.state.event.longitude,
+                                                         isConstant: false
+                                                     }}/>
+                                        </div>
+                                        <br/>
+                                        <div>
+                                            <TextField
+                                                type="number"
+                                                fullWidth
+                                                label="Eklemek istediğiniz soru sayısını seçin."
+                                                onChange={this.handleQuestionCountSelection}
+                                                value={this.state.event.customAttributes.length}
+                                            />
+                                        </div>
+                                        {this.state.event.customAttributes.map((customAttribute, index) => (
+                                            <div key={index}>
+                                                <Grid container spacing={4}>
+                                                    <Grid item md={6}>
+                                                        <TextField
+                                                            type="text"
+                                                            fullWidth
+                                                            name="question"
+                                                            label="Sorunuz"
+                                                            onChange={(e) => this.handleQuestionChange(e, index)}
+                                                            value={this.state.event.customAttributes[index].question}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item md={6}>
+                                                        <TextField
+                                                            select
+                                                            name="type"
+                                                            label="Cevap Türü"
+                                                            fullWidth
+                                                            onChange={(e) => this.handleTypeChange(e, index)}
+                                                            value={this.state.event.customAttributes[index].type}
+                                                        >
+                                                            <MenuItem value="text">Yazı</MenuItem>
+                                                            <MenuItem value="number">Sayı</MenuItem>
+                                                            <MenuItem value="date">Tarih</MenuItem>
+                                                        </TextField>
+                                                    </Grid>
+                                                </Grid>
+                                            </div>
+                                        ))}
+                                        <br/>
                                     </Box>
                                 </CardContent>
                                 <CardActions>

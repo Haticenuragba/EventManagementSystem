@@ -7,7 +7,7 @@ const DefaultZoom = 15;
 const MapView = (props) => {
     const DefaultLocation = {lat: props.data.lat, lng: props.data.lng, isConstant: props.data.isConstant};
     const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
-    const [location, setLocation] = useState(defaultLocation);
+    const [setLocation] = useState(defaultLocation);
     const [zoom, setZoom] = useState(DefaultZoom);
 
     function handleChangeLocation(lat, lng) {

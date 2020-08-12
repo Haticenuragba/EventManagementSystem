@@ -35,7 +35,7 @@ public class ManageEventService {
     }
 
     public List<Event> getAllEvents() {
-        return eventRepository.findAll();
+        return eventRepository.findAllByOrderByCreatedDesc();
     }
 
     public List<CustomAttribute> getEventCustomAttributes(String title) {
@@ -65,6 +65,7 @@ public class ManageEventService {
         eventFromDB.setEndDate(event.getEndDate());
         eventFromDB.setQuota(event.getQuota());
         eventFromDB.setLatitude(event.getLatitude());
+        eventFromDB.setImage(event.getImage());
         eventFromDB.setLongitude(event.getLongitude());
         eventFromDB.setDescription(event.getDescription());
         eventFromDB.setCustomAttributes(event.getCustomAttributes());

@@ -1,14 +1,13 @@
 import React from 'react';
-import {fade, makeStyles, ThemeProvider} from '@material-ui/core/styles';
+import {fade, makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import FormGroup from "@material-ui/core/FormGroup";
 import InputBase from "@material-ui/core/InputBase";
-import {getDateOfToday, getIsDark, setIsDark} from "./Utils";
+import {getIsDark} from "./Utils";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import HomeIcon from '@material-ui/icons/Home';

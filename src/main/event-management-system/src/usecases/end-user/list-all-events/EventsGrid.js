@@ -8,8 +8,6 @@ import AddIcon from '@material-ui/icons/Add';
 import {withRouter} from "react-router";
 import {
     dateStringToObject,
-    getDateOfToday,
-    getDaysLater,
     getDaysLaterInMilliseconds,
     getDistanceFromLatLonInKm
 } from "../../../common/Utils";
@@ -64,6 +62,7 @@ class EventsGrid extends Component {
             case 1: return getDaysLaterInMilliseconds(7) >= dateStringToObject(event.startDate).getTime();
             case 2: return getDaysLaterInMilliseconds(30) >= dateStringToObject(event.startDate).getTime();
             case 3: return true;
+            default: return true;
         }
     }
 
@@ -80,6 +79,9 @@ class EventsGrid extends Component {
                                             <MediaCard event={anEvent}/>
                                         </Grid>
                                     );
+                                }
+                                else{
+                                    return null;
                                 }
                             }
                         )

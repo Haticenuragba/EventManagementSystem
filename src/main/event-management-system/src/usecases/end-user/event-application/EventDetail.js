@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from 'react';
+import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
@@ -11,7 +11,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 import MapView from "../../../common/MapView";
 import axios from "axios";
 import EditIcon from '@material-ui/icons/Edit';
-import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import {showSuccessDialog} from "../../../common/Utils";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -153,12 +152,6 @@ class EventDetail extends Component {
                                     <Typography>Kalan Kontenjan: {this.state.event.quota - this.state.event.attendantNumber}</Typography>
                                 </Grid>
                             </Grid>
-                         {/*   <Typography gutterBottom>
-                                Etkinlik Kontenjanı: {this.state.event.quota}
-                            </Typography>
-                            <Typography gutterBottom>
-                                Etkinliğe Kaydolan Kişi Sayısı: {this.state.event.attendantNumber}
-                            </Typography>*/}
                             <br/>
                             <Typography variant="h5" gutterBottom>
                                 Hemen Kaydolun
