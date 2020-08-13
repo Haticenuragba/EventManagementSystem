@@ -79,6 +79,7 @@ class App extends Component{
                     </Route>
 
                 </div>
+
                 {/*<EventDetail data={{eventTitle: "Deneme"}}/>*/}
             </ThemeProvider>
 
