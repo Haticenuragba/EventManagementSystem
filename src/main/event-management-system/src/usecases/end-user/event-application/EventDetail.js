@@ -12,7 +12,7 @@ import MapView from "../../../common/MapView";
 import axios from "axios";
 import EditIcon from '@material-ui/icons/Edit';
 import Fab from "@material-ui/core/Fab";
-import {showErrorDialog, showSuccessDialog} from "../../../common/Utils";
+import {showDialogWithImage, showErrorDialog, showSuccessDialog} from "../../../common/Utils";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Box from "@material-ui/core/Box";
 
@@ -100,7 +100,7 @@ class EventDetail extends Component {
     onSubmit = () => {
         axios.post("/events-application" + "/" + this.eventTitle, this.state.application)
             .then(response => {
-                showSuccessDialog("Etkinliğe başarıyla kaydoldunuz");
+                showDialogWithImage("Etkinliğe başarıyla kaydoldunuz. Kayıt bilgisi için:", response.data);
                 this.refreshPageAfterFormSubmit();
 
             })

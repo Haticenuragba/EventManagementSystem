@@ -3,9 +3,6 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import React from "react";
 
-
-
-
 export function getDateOfToday() {
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
@@ -57,6 +54,18 @@ export function showErrorDialog(text) {
         title: text,
         showConfirmButton: false,
         timer: 1500
+    })
+}
+
+export function showDialogWithImage(text, image) {
+    Swal.fire({
+        html: "<img src=\"data:image/jpg;base64, " + image + "\"/>",
+        position: 'center',
+        icon: 'success',
+        title: text,
+        width: 800,
+        showConfirmButton: true,
+        confirmButtonText: "Tamam"
     })
 }
 
