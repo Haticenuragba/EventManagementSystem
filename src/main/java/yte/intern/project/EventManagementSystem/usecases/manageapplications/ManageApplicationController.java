@@ -1,6 +1,7 @@
 package yte.intern.project.EventManagementSystem.usecases.manageapplications;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yte.intern.project.EventManagementSystem.common.mapper.CycleAvoidingMappingContext;
@@ -27,8 +28,10 @@ public class ManageApplicationController {
     @PostMapping("/{title}")
     public ApplicationDTO addApplication(@PathVariable String title, @Valid @RequestBody ApplicationDTO applicationDTO) {
         Application application = applicationMapper.mapToEntity(applicationDTO, new CycleAvoidingMappingContext());
-        Application addedApplication = manageApplicationService.addApplication(application, title);
-        return applicationMapper.mapToDto(addedApplication, new CycleAvoidingMappingContext());
+
+            Application addedApplication = manageApplicationService.addApplication(application, title);
+            return applicationMapper.mapToDto(addedApplication, new CycleAvoidingMappingContext());
+
     }
 
     @GetMapping("/{title}")

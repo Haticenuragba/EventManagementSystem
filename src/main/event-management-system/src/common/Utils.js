@@ -47,6 +47,16 @@ export function showSuccessDialog(text) {
     })
 }
 
+export function showErrorDialog(text) {
+    Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: text,
+        showConfirmButton: false,
+        timer: 1500
+    })
+}
+
 export function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     let R = 6371; // Radius of the earth in km
     let dLat = deg2rad(lat2 - lat1);  // deg2rad below

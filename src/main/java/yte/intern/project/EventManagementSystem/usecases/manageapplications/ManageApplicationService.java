@@ -3,6 +3,7 @@ package yte.intern.project.EventManagementSystem.usecases.manageapplications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.entity.Application;
+import yte.intern.project.EventManagementSystem.usecases.manageapplications.exceptions.QuotaIsFullException;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.repository.ApplicationCustomAttributeRepository;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.repository.ApplicationRepository;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
@@ -36,7 +37,7 @@ public class ManageApplicationService {
                         .get(0);
             }
             else {
-                return null;
+                throw new QuotaIsFullException("Bu etkinliğin kontenjanı dolu");
             }
         } else {
             throw new EntityNotFoundException();

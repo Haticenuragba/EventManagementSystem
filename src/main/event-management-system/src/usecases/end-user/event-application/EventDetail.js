@@ -12,7 +12,7 @@ import MapView from "../../../common/MapView";
 import axios from "axios";
 import EditIcon from '@material-ui/icons/Edit';
 import Fab from "@material-ui/core/Fab";
-import {showSuccessDialog} from "../../../common/Utils";
+import {showErrorDialog, showSuccessDialog} from "../../../common/Utils";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Box from "@material-ui/core/Box";
 
@@ -21,6 +21,14 @@ const dateFormat = require('dateformat');
 class EventDetail extends Component {
 
     eventTitle = '';
+    emptyApplication = {
+        idNumber: "",
+        email: "",
+        name: "",
+        surname: "",
+        attendantNumber: "",
+        applicationCustomAttributes: []
+    }
 
     fabStyle = {
         textAlign: "center",
@@ -38,14 +46,7 @@ class EventDetail extends Component {
             event: {
                 customAttributes: [{}]
             },
-            application: {
-                idNumber: "",
-                email: "",
-                name: "",
-                surname: "",
-                attendantNumber: "",
-                applicationCustomAttributes: []
-            }
+            application: {...this.emptyApplication}
         }
     }
 
@@ -96,138 +97,167 @@ class EventDetail extends Component {
         });
     }
 
-    onSubmit = () =>{
+    onSubmit = () => {
         axios.post("/events-application" + "/" + this.eventTitle, this.state.application)
             .then(response => {
-                console.log(response);
                 showSuccessDialog("Etkinliğe başarıyla kaydoldunuz");
-                this.props.history.push('/');
+                this.refreshPageAfterFormSubmit();
+
             })
             .catch(error => {
-                console.log(error.response);
+                showErrorDialog(error.response.data.message);
             })
+    }
+
+    refreshPageAfterFormSubmit() {
+        let newState = this.state;
+        newState.event.attendantNumber++;
+        this.state.application = {...this.emptyApplication};
+        this.setState({newState});
+    }
+
+    clearForm = () => {
+        this.applicationFormRef.reset();
     }
 
 
     render() {
         return (
             <div>
-            <Grid container alignItems={"center"} justify={"center"}>
-                <Grid item md={4} style={{padding: "1vh"}}>
-                    <Card style={{height: "90vh"}}>
-                        <CardContent>
-                            <img src={this.state.event.image} style={{width: "100%"}}/>
-                            <br/><br/>
-                            <MapView onLocationChange={this.handleLocation}
-                                     data={{lat: this.state.event.latitude, lng: this.state.event.longitude, isConstant: true}}/>
-                        </CardContent>
-                    </Card>
+                <Grid container alignItems={"center"} justify={"center"}>
+                    <Grid item md={4} style={{padding: "1vh"}}>
+                        <Card style={{height: "90vh"}}>
+                            <CardContent>
+                                <img src={this.state.event.image} style={{width: "100%"}}/>
+                                <br/><br/>
+                                <MapView onLocationChange={this.handleLocation}
+                                         data={{
+                                             lat: this.state.event.latitude,
+                                             lng: this.state.event.longitude,
+                                             isConstant: true
+                                         }}/>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item md={8} style={{padding: "1vh"}}>
+                        <Card style={{height: "90vh"}}>
+                            <CardContent>
+                                <Typography variant="h5" gutterBottom>
+                                    {this.state.event.title}
+                                </Typography>
+                                <Typography gutterBottom>
+                                    {this.state.event.description}
+                                </Typography>
+                                <br/>
+                                <Typography gutterBottom>
+                                    Etkinlik {dateFormat(this.state.event.startDate, "dd/mm/yyyy")} - {dateFormat(this.state.event.endDate, "dd/mm/yyyy")} tarihleri
+                                    arasında gerçekleşecektir.
+                                </Typography>
+
+                                <br/>
+                                <Grid container spacing={2}>
+                                    <Grid item>
+                                        <Typography>Kaydolan Kişi: {this.state.event.attendantNumber}</Typography>
+                                    </Grid>
+                                    <Grid item md={9}>
+                                        <Box p={1}>
+                                            <LinearProgress variant={"determinate"}
+                                                            value={(this.state.event.attendantNumber / this.state.event.quota) * 100}/>
+                                        </Box>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography>Kalan
+                                            Kontenjan: {this.state.event.quota - this.state.event.attendantNumber}</Typography>
+                                    </Grid>
+                                </Grid>
+                                <br/>
+                                <Typography variant="h5" gutterBottom>
+                                    Hemen Kaydolun
+                                </Typography>
+                                <form ref={(el) => this.applicationFormRef = el}>
+                                    <div>
+                                        <Grid spacing={4} container>
+                                            <Grid item md={6}>
+                                                <TextField name="name" onChange={this.handleInputChange} required
+                                                           value={this.state.application.name}
+                                                           label="Adınız"
+                                                           type="text" fullWidth/>
+                                            </Grid>
+                                            <Grid item md={6}>
+                                                <TextField name="surname" onChange={this.handleInputChange} required
+                                                           value={this.state.application.surname}
+                                                           label="Soyadınız" type="text" fullWidth
+                                                />
+                                            </Grid>
+                                        </Grid>
+                                        <Grid spacing={4} container>
+                                            <Grid item md={6}>
+                                                <TextField name="email" onChange={this.handleInputChange} required
+                                                           value={this.state.application.email}
+                                                           label="Email Adresiniz" type="email" fullWidth/>
+                                            </Grid>
+                                            <Grid item md={6}>
+                                                <TextField name="idNumber" onChange={this.handleInputChange} required
+                                                           value={this.state.application.idNumber}
+                                                           label="T.C. Kimlik Numaranız" type="number" fullWidth
+                                                />
+                                            </Grid>
+                                        </Grid>
+
+                                        <div>
+                                            {
+                                                this.state.event.customAttributes.map((customAttribute, index) => (
+                                                    <div key={index}>
+                                                        <Grid container spacing={4}>
+                                                            <Grid item md={12}>
+                                                                <TextField
+                                                                    InputLabelProps={customAttribute.type === "date" ? {shrink: true} : {}}
+                                                                    required
+                                                                    onChange={(e) => {
+                                                                        this.handleCustomAttributeChange(e, customAttribute, index)
+                                                                    }}
+                                                                    value={(this.state.application.applicationCustomAttributes[index]) ?
+                                                                        this.state.application.applicationCustomAttributes[index].answer :
+                                                                        ''}
+                                                                    type={customAttribute.type}
+                                                                    fullWidth
+                                                                    label={customAttribute.question}
+                                                                />
+                                                            </Grid>
+                                                        </Grid>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </CardContent>
+                            <CardActions>
+                                <Grid container alignItems={"flex-start"} justify={"flex-end"} direction={"row"}>
+
+                                    <Grid>
+                                        <Button color="secondary" variant={"contained"} endIcon={<ClearIcon/>}
+                                                size={"large"}>
+                                            Formu Temizle
+                                        </Button>
+                                    </Grid>
+                                    <Grid>
+                                        <Button color="primary" variant={"contained"}
+                                                onClick={this.onSubmit}
+                                                endIcon={<SendIcon/>} size={"large"}>
+                                            Kaydol
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+
+
                 </Grid>
-                <Grid item md={8} style={{padding: "1vh"}}>
-                    <Card style={{height: "90vh"}}>
-                        <CardContent>
-                            <Typography variant="h5" gutterBottom>
-                                {this.state.event.title}
-                            </Typography>
-                            <Typography gutterBottom>
-                                {this.state.event.description}
-                            </Typography>
-                            <br/>
-                            <Typography gutterBottom>
-                                Etkinlik {dateFormat(this.state.event.startDate, "dd/mm/yyyy")} - {dateFormat(this.state.event.endDate, "dd/mm/yyyy")} tarihleri
-                                arasında gerçekleşecektir.
-                            </Typography>
-
-                            <br/>
-                            <Grid container spacing={2}>
-                                <Grid item>
-                                    <Typography>Kaydolan Kişi: {this.state.event.attendantNumber}</Typography>
-                                </Grid>
-                                <Grid item md={9}>
-                                    <Box p={1}>
-                            <LinearProgress variant={"determinate"} value={(this.state.event.attendantNumber / this.state.event.quota) *100}/>
-                                    </Box>
-                                </Grid>
-                                <Grid item>
-                                    <Typography>Kalan Kontenjan: {this.state.event.quota - this.state.event.attendantNumber}</Typography>
-                                </Grid>
-                            </Grid>
-                            <br/>
-                            <Typography variant="h5" gutterBottom>
-                                Hemen Kaydolun
-                            </Typography>
-                            <div>
-                                <Grid spacing={4} container>
-                                    <Grid item md={6}>
-                                        <TextField name="name" onChange={this.handleInputChange} required label="Adınız"
-                                                   type="text" fullWidth/>
-                                    </Grid>
-                                    <Grid item md={6}>
-                                        <TextField name="surname" onChange={this.handleInputChange} required
-                                                   label="Soyadınız" type="text" fullWidth
-                                        />
-                                    </Grid>
-                                </Grid>
-                                <Grid spacing={4} container>
-                                    <Grid item md={6}>
-                                        <TextField name="email" onChange={this.handleInputChange} required
-                                                   label="Email Adresiniz" type="email" fullWidth/>
-                                    </Grid>
-                                    <Grid item md={6}>
-                                        <TextField name="idNumber" onChange={this.handleInputChange} required
-                                                   label="T.C. Kimlik Numaranız" type="number" fullWidth
-                                        />
-                                    </Grid>
-                                </Grid>
-
-                                <div>
-                                    {
-                                        this.state.event.customAttributes.map((customAttribute, index) => (
-                                            <div key={index}>
-                                                <Grid container spacing={4}>
-                                                    <Grid item md={12}>
-                                                        <TextField
-                                                            InputLabelProps={customAttribute.type === "date" ?  {shrink: true }: {}}
-                                                            required
-                                                            onChange={(e) => {this.handleCustomAttributeChange(e, customAttribute, index)}}
-                                                            type={customAttribute.type}
-                                                            fullWidth
-                                                            label={customAttribute.question}
-                                                        />
-                                                    </Grid>
-                                                </Grid>
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-
-                            </div>
-                        </CardContent>
-                        <CardActions>
-                            <Grid container alignItems={"flex-start"} justify={"flex-end"} direction={"row"}>
-
-                                <Grid>
-                                    <Button color="secondary" variant={"contained"} endIcon={<ClearIcon/>}
-                                            size={"large"}>
-                                        Formu Temizle
-                                    </Button>
-                                </Grid>
-                                <Grid>
-                                    <Button color="primary" variant={"contained"}
-                                            onClick={this.onSubmit}
-                                            endIcon={<SendIcon/>} size={"large"}>
-                                        Kaydol
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </CardActions>
-                    </Card>
-                </Grid>
-
-
-            </Grid>
                 <Fab color="primary" aria-label="edit" style={this.fabStyle}
-                     onClick={() => this.navigateToUpdateEvent(this.eventTitle)} >
+                     onClick={() => this.navigateToUpdateEvent(this.eventTitle)}>
                     <EditIcon/>
                 </Fab>
             </div>
