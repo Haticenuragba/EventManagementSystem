@@ -30,7 +30,7 @@ public class EmailController {
     @GetMapping
     public String sendMail(){
         try {
-            Mail mail = new Mail("hnagba@gmail.com", "sevdenuragba@gmail.com", "Kayıt Başarılı", "Tebrikler" +
+            Mail mail = new Mail("hnagba@gmail.com", "hnagba@gmail.com", "Kayıt Başarılı", "Tebrikler" +
                     " etkinliğe başarıyla kaydoldunuz. Etkinlik bilgilerine ekteki kare koddan ulaşabilirsiniz.");
             QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
             byte[] image = qrCodeGenerator.getQRCodeImage("Deneme qr", 250, 250);
