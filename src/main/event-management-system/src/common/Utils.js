@@ -42,6 +42,7 @@ export function showSuccessDialog(text) {
         icon: 'success',
         title: text,
         showConfirmButton: false,
+        background: getIsDark() ? '#1f1f1f' : '#fff',
         timer: 1500
     })
 }
@@ -52,6 +53,7 @@ export function showErrorDialog(text) {
         position: 'top-end',
         icon: 'error',
         title: text,
+        background: getIsDark() ? '#1f1f1f' : '#fff',
         showConfirmButton: false,
         timer: 1500
     })
@@ -64,6 +66,8 @@ export function showDialogWithImage(text, image) {
         icon: 'success',
         title: text,
         width: '40%',
+        background: getIsDark() ? '#1f1f1f' : '#fff',
+        confirmButtonColor: '#303f9f',
         showConfirmButton: true,
         confirmButtonText: "Tamam"
     })

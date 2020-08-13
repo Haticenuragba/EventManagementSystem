@@ -51,8 +51,6 @@ public class EventDTO {
     @Valid
     private List<CustomAttributeDTO> customAttributes;
 
-    @Max(value = 0)
-    @Min(value = 0)
     private Integer attendantNumber = 0;
 
     @JsonIgnoreProperties("event")

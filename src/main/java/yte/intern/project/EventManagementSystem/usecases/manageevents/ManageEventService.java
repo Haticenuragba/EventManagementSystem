@@ -52,7 +52,7 @@ public class ManageEventService {
     public Event updateEvent(String title, Event event) {
         Optional<Event> eventOptional = eventRepository.findEventByTitle(title);
         if (eventOptional.isPresent()) {
-            if (eventRepository.existsByTitle(event.getTitle())) {
+            if (!title.equals(event.getTitle()) && eventRepository.existsByTitle(event.getTitle())) {
                 throw new CustomException("Bu etkinlik adı zaten mevcut");
             }
             updateEventFromDB(event, eventOptional.get());
