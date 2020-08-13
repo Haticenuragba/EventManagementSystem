@@ -8,6 +8,7 @@ import yte.intern.project.EventManagementSystem.usecases.manageapplications.repo
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.repository.ApplicationRepository;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.EventRepository;
+import yte.intern.project.EventManagementSystem.usecases.sendqrcode.EmailService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
