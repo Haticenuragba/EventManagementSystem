@@ -105,8 +105,11 @@ class EventDetail extends Component {
 
             })
             .catch(error => {
-                showErrorDialog(error.response.data.message);
-            })
+                if (error.response.data.status == 406)
+                    showErrorDialog(error.response.data.message);
+                else
+                    showErrorDialog("Bir hata oluştu, lütfen bilgileri kontrol edin.");
+            });
     }
 
     refreshPageAfterFormSubmit() {

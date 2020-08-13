@@ -16,7 +16,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Box from "@material-ui/core/Box";
 
 import 'sweetalert2/src/sweetalert2.scss'
-import {showSuccessDialog} from "../../../common/Utils";
+import {showErrorDialog, showSuccessDialog} from "../../../common/Utils";
 
 
 class AddEventForm extends Component {
@@ -74,7 +74,10 @@ class AddEventForm extends Component {
                 this.props.history.push('/');
             })
             .catch(error => {
-                console.log(error.response);
+                if (error.response.data.status == 406)
+                    showErrorDialog(error.response.data.message);
+                else
+                    showErrorDialog("Bir hata oluştu, lütfen bilgileri kontrol edin.");
             })
     }
 
@@ -90,7 +93,10 @@ class AddEventForm extends Component {
                 this.props.history.push('/events/' + e.title);
             })
             .catch(error => {
-                console.log(error.response);
+                if (error.response.data.status == 406)
+                    showErrorDialog(error.response.data.message);
+                else
+                    showErrorDialog("Bir hata oluştu, lütfen bilgileri kontrol edin.");
             })
     }
 

@@ -2,6 +2,7 @@ package yte.intern.project.EventManagementSystem.usecases.manageevents;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import yte.intern.project.EventManagementSystem.common.exceptionhandling.CustomException;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.CustomAttribute;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.CustomAttributeRepository;
@@ -21,7 +22,7 @@ public class ManageEventService {
 
     public Event addEvent(Event event) {
         if (eventRepository.existsByTitle(event.getTitle())) {
-            throw new EntityExistsException();
+            throw new CustomException("Bu etkinlik adı zaten mevcut");
         }
         return eventRepository.save(event);
     }
@@ -51,6 +52,9 @@ public class ManageEventService {
     public Event updateEvent(String title, Event event) {
         Optional<Event> eventOptional = eventRepository.findEventByTitle(title);
         if (eventOptional.isPresent()) {
+            if (eventRepository.existsByTitle(event.getTitle())) {
+                throw new CustomException("Bu etkinlik adı zaten mevcut");
+            }
             updateEventFromDB(event, eventOptional.get());
             return event;
         } else {
