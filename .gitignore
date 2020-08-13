@@ -12,6 +12,8 @@ application.properties
 # production
 /build
 
+/target
+
 /main/resources/application.properties
 
 # misc
