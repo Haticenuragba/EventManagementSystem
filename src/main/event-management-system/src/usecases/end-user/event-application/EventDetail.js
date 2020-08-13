@@ -12,7 +12,7 @@ import MapView from "../../../common/MapView";
 import axios from "axios";
 import EditIcon from '@material-ui/icons/Edit';
 import Fab from "@material-ui/core/Fab";
-import {showDialogWithImage, showErrorDialog, showSuccessDialog} from "../../../common/Utils";
+import {showDialogWithImage, showErrorDialog} from "../../../common/Utils";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Box from "@material-ui/core/Box";
 
@@ -105,7 +105,7 @@ class EventDetail extends Component {
 
             })
             .catch(error => {
-                if (error.response.data.status == 406)
+                if (error.response.data.status === 406)
                     showErrorDialog(error.response.data.message);
                 else
                     showErrorDialog("Bir hata oluştu, lütfen bilgileri kontrol edin.");
@@ -115,7 +115,8 @@ class EventDetail extends Component {
     refreshPageAfterFormSubmit() {
         let newState = this.state;
         newState.event.attendantNumber++;
-        this.state.application = {...this.emptyApplication};
+        newState.application = {...this.emptyApplication};
+        newState.application.applicationCustomAttributes = [];
         this.setState({newState});
     }
 

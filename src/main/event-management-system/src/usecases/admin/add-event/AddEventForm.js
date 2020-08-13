@@ -74,7 +74,7 @@ class AddEventForm extends Component {
                 this.props.history.push('/');
             })
             .catch(error => {
-                if (error.response.data.status == 406)
+                if (error.response.data.status === 406)
                     showErrorDialog(error.response.data.message);
                 else
                     showErrorDialog("Bir hata oluştu, lütfen bilgileri kontrol edin.");
@@ -93,7 +93,7 @@ class AddEventForm extends Component {
                 this.props.history.push('/events/' + e.title);
             })
             .catch(error => {
-                if (error.response.data.status == 406)
+                if (error.response.data.status === 406)
                     showErrorDialog(error.response.data.message);
                 else
                     showErrorDialog("Bir hata oluştu, lütfen bilgileri kontrol edin.");
