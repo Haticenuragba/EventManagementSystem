@@ -59,11 +59,11 @@ export function showErrorDialog(text) {
 
 export function showDialogWithImage(text, image) {
     Swal.fire({
-        html: "<img src=\"data:image/jpg;base64, " + image + "\"/>",
+        html: "<img src=\"data:image/jpg;base64, " + image + "\" style='width: 40vh; height: 40vh'/>",
         position: 'center',
         icon: 'success',
         title: text,
-        width: 800,
+        width: '40%',
         showConfirmButton: true,
         confirmButtonText: "Tamam"
     })
