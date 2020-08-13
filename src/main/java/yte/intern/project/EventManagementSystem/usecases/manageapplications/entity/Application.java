@@ -15,7 +15,6 @@ import java.util.Set;
 @SequenceGenerator(name = "idgen", sequenceName = "APPLICATION_SEQ")
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "event", callSuper = false)
 public class Application extends BaseEntity {
 
     @Column(name = "ID_NUMBER")

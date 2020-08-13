@@ -61,4 +61,5 @@ public class EventDTO {
         return this.endDate.isAfter(this.startDate ) || this.endDate.isEqual(this.startDate);
     }
 
+
 }

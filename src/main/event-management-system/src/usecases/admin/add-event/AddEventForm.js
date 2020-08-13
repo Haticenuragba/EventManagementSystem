@@ -268,9 +268,9 @@ class AddEventForm extends Component {
                                                 fullWidth
                                                 label="Eklemek istediğiniz soru sayısını seçin."
                                                 onChange={this.handleQuestionCountSelection}
-                                                value={this.state.event.customAttributes.length}
                                             />
                                         </div>
+                                        <br/>
                                         {this.state.event.customAttributes.map((customAttribute, index) => (
                                             <div key={index}>
                                                 <Grid container spacing={4}>

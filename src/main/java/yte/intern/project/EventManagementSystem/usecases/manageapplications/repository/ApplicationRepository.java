@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     Optional<List<Application>> findApplicationByIdNumber(String idNumber);
-    boolean existsByIdNumber(String idNumber);
+    boolean existsByIdNumberAndEventTitle(String idNumber, String eventTitle);
 }
 

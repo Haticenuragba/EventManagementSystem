@@ -120,11 +120,6 @@ class EventDetail extends Component {
         this.setState({newState});
     }
 
-    clearForm = () => {
-        this.applicationFormRef.reset();
-    }
-
-
     render() {
         return (
             <div>

@@ -10,6 +10,7 @@ import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Eve
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.EventRepository;
 import yte.intern.project.EventManagementSystem.usecases.sendqrcode.EmailService;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -28,14 +29,19 @@ public class ManageApplicationService {
         if (eventOptional.isPresent()) {
             Event event = eventOptional.get();
             if(doesEventHasEnoughQuota(event)) {
-                event.addApplication(application);
-                Event savedEvent = eventRepository.save(event);
-                return savedEvent
-                        .getApplications()
-                        .stream()
-                        .filter(it -> it.getIdNumber().equals(application.getIdNumber()))
-                        .collect(toList())
-                        .get(0);
+                if(!doesIdNumberExist(application.getIdNumber(), eventTitle)) {
+                    event.addApplication(application);
+                    Event savedEvent = eventRepository.save(event);
+                    return savedEvent
+                            .getApplications()
+                            .stream()
+                            .filter(it -> it.getIdNumber().equals(application.getIdNumber()))
+                            .collect(toList())
+                            .get(0);
+                }
+                else{
+                    throw new CustomException("Etkinliğe zaten kaydoldunuz.");
+                }
             }
             else {
                 throw new CustomException("Bu etkinliğin kontenjanı dolu");
@@ -86,5 +92,7 @@ public class ManageApplicationService {
     public boolean doesEventHasEnoughQuota(Event event){
         return event.getAttendantNumber() < event.getQuota();
     }
-
+    public boolean doesIdNumberExist(String idNumber, String title){
+        return applicationRepository.existsByIdNumberAndEventTitle(idNumber, title);
+    }
 }
