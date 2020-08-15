@@ -121,6 +121,11 @@ export default function CustomAppBar(props) {
         props.onNavigateHomePage();
     }
 
+    const logout = () => {
+        localStorage.clear();
+        history.push("/");
+    }
+
 
     history.listen((location, action) => {
         let visibility = location.pathname === '/events' || location.pathname === '/event-manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden"
@@ -207,7 +212,7 @@ export default function CustomAppBar(props) {
                         </Select>
                     </div>
                     <div className={classes.dropdown}>
-                     <Button style={{visibility: state.visibilityOfLogout}} color={"secondary"} variant={"contained"}>Çıkış Yap</Button>
+                     <Button onClick={logout} style={{visibility: state.visibilityOfLogout}} color={"secondary"} variant={"contained"}>Çıkış Yap</Button>
                     </div>
                     <FormGroup className={classes.switch}>
                         <FormControlLabel
