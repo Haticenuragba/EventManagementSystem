@@ -17,6 +17,8 @@ import yte.intern.project.EventManagementSystem.usecases.manageevents.mapper.Eve
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -27,7 +29,7 @@ public class ManageEventController {
     private final ManageEventService manageEventService;
     private final EventMapper eventMapper;
     private final CustomAttributeMapper customAttributeMapper;
-    private ApplicationMapper applicationMapper;
+    private final ApplicationMapper applicationMapper;
 
     @PostMapping
     public EventDTO addEvent(@Valid @RequestBody EventDTO eventDTO) {
