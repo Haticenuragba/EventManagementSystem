@@ -21,7 +21,7 @@ public class DatabasePopulator {
     @Transactional
     public void populateDatabaseAfterInit() {
 
-        List<Authority> savedAuthorities = authorityRepository.saveAll(Set.of(new Authority(null, "ROLE_ADMIN"), new Authority(null, "ROLE_EVENT_MANAGER")));
+        List<Authority> savedAuthorities = authorityRepository.saveAll(Set.of(new Authority(null, "ADMIN"), new Authority(null, "EVENT_MANAGER")));
         Users adminUser = new Users(null, "admin", "admin", Set.of(savedAuthorities.get(0)));
         Users normalUser = new Users(null, "user", "user", Set.of(savedAuthorities.get(1)));
         Users sysUser = new Users(null, "sys", "sys", Set.of());

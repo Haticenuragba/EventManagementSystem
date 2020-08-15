@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static yte.intern.project.EventManagementSystem.usecases.managesecurity.util.Constants.SECRET_KEY;
@@ -44,6 +45,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			    for(Authority a: userDetails.getAuthorities()){
 			        simpleGrantedAuthorityList.add(new SimpleGrantedAuthority(a.getAuthority()));
                 }
+                System.out.println(simpleGrantedAuthorityList.get(0).getAuthority());
 				var token = new UsernamePasswordAuthenticationToken(userDetails, null, simpleGrantedAuthorityList);
 				token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(token);
