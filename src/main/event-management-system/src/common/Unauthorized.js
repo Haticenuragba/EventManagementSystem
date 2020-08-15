@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import Grid from "@material-ui/core/Grid";
+import {Box} from "@material-ui/core";
+import unauthorizedImage from '../images/Unauthorized403.png';
 
 class Unauthorized extends Component {
-    backgroundImage = require('../images/Unauthorized403.png');
 
     style = {
         root: {
@@ -24,25 +25,16 @@ class Unauthorized extends Component {
     constructor(props) {
         super(props);
     }
-
-    navigateToHomePage = () => {
-        this.props.history.push("/");
-    }
-
+    
     render() {
         return (
 
-            <div style={{
-                backgroundImage: "url(" + this.backgroundImage + ")",
-                backgroundRepeat: "no-repeat", backgroundAttachment: "fixed",
-                backgroundPosition: "center", backgroundSize: "cover",
-                height: "100vh"
-            }}>
-                <Grid container alignItems={"center"} justify={"center"}>
-
-
-                </Grid>
-            </div>
+            <Grid alignContent={"center"} alignItems={"center"} justify={"center"} container>
+              <Grid container p={5} style={{marginTop:"2vh", width: "90%", height: "90vh",
+                  alignContent: "center", justifyContent: "center"}}>
+                  <img src={unauthorizedImage} height={"100%"} />
+              </Grid>
+            </Grid>
         )
     }
 }

@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from "@material-ui/core/Grid";
 import {useHistory} from "react-router";
+import {ADMIN, EVENT_MANAGER, ROLE} from "../../common/Utils";
 
 const useStyles = makeStyles({
     root: {},
@@ -22,10 +23,10 @@ export default function MediaCard({event}) {
     const history = useHistory();
 
     const navigateToEventDetail = (title) => {
-        if(localStorage.getItem("role") === "ADMIN"){
+        if(localStorage.getItem(ROLE) === ADMIN){
             history.push('/admin/events/' + title);
         }
-        else if(localStorage.getItem("role") === "EVENT_MANAGER"){
+        else if(localStorage.getItem(ROLE) === EVENT_MANAGER){
             history.push('/event-manager/events/' + title);
         }
         else{

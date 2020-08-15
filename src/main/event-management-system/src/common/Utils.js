@@ -94,3 +94,8 @@ export const headers = {
     'Authorization': localStorage.getItem("token")
 }
 
+export const ROLE = "role";
+export const TOKEN = "token";
+export const ADMIN = "ADMIN";
+export const EVENT_MANAGER = "EVENT_MANAGER";
+

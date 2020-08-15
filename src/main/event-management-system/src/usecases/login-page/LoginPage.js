@@ -8,7 +8,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import {dark} from "@material-ui/core/styles/createPalette";
 import axios from "axios";
-import {showErrorDialog} from "../../common/Utils";
+import {ADMIN, EVENT_MANAGER, ROLE, showErrorDialog, TOKEN} from "../../common/Utils";
 
 const themeDark = createMuiTheme({
     palette: {
@@ -55,12 +55,12 @@ class LoginPage extends Component {
         axios.post("/login", loginUser)
             .then(response => {
                 if(response.status === 200) {
-                    localStorage.setItem("token", "Bearer " + response.data.token);
-                    localStorage.setItem("role", response.data.role.sort()[0]);
-                    if(localStorage.getItem("role") === "ADMIN"){
+                    localStorage.setItem(TOKEN, "Bearer " + response.data.token);
+                    localStorage.setItem(ROLE, response.data.role.sort()[0]);
+                    if(localStorage.getItem(ROLE) === ADMIN){
                         this.navigateToAdmin();
                     }
-                    else if(localStorage.getItem("role") === "EVENT_MANAGER"){
+                    else if(localStorage.getItem(ROLE) === EVENT_MANAGER){
                         this.navigateToManager();
                     }
                 }

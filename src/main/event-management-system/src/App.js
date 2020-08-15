@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import CustomAppBar from "./common/CustomAppBar";
-import {getIsDark, setIsDark} from "./common/Utils";
+import {ADMIN, EVENT_MANAGER, getIsDark, ROLE, setIsDark} from "./common/Utils";
 import {withRouter} from "react-router-dom";
 import {Route} from "react-router-dom";
 import EventDetailForUser from "./usecases/event-detail/EventDetailForUser";
@@ -28,7 +28,8 @@ const themeLight = createMuiTheme({
         type: "light"
     },
 });
-class App extends Component{
+
+class App extends Component {
 
     constructor(props) {
         super(props);
@@ -65,13 +66,11 @@ class App extends Component{
     }
 
     handleNavigateToHomePage = () => {
-        if(localStorage.getItem("role") === "ADMIN"){
+        if (localStorage.getItem("role") === "ADMIN") {
             this.props.history.push('/admin/events');
-        }
-        else if(localStorage.getItem("role") === "EVENT_MANAGER"){
+        } else if (localStorage.getItem("role") === "EVENT_MANAGER") {
             this.props.history.push('/event-manager/events');
-        }
-        else{
+        } else {
             this.props.history.push('/events');
         }
     }
@@ -81,40 +80,47 @@ class App extends Component{
 
             <ThemeProvider theme={getIsDark() ? themeDark : themeLight}>
                 <CssBaseline/>
-                {this.props.location.pathname !== '/' && this.props.location.pathname !== '/login'?
+                {this.props.location.pathname !== '/' && this.props.location.pathname !== '/login' ?
                     <CustomAppBar onModeChange={this.handleModeChange}
                                   onSearchChange={this.handleSearchChange}
                                   onDistanceChange={this.handleDistanceChange}
                                   onDateSelectionChange={this.handleDateSelectionChange}
                                   onNavigateHomePage={this.handleNavigateToHomePage}/>
-                                  :
+                    :
                     null
                 }
 
                 <div>
-                    <Route  path="/events/:eventTitle" component={withRouter(EventDetailForUser)} />
-                    <Route  path="/admin/events/:eventTitle" component={localStorage.getItem("role") === 'ADMIN' ? withRouter(EventDetailForAdmin): Unauthorized} />
-                    <Route  path="/event-manager/events/:eventTitle" component={localStorage.getItem("role") === 'EVENT_MANAGER' ? withRouter(EventDetailForEventManager): Unauthorized}  />
-                    <Route  path="/add-event" component={localStorage.getItem("role") === 'ADMIN' ? withRouter(AddEventForm): Unauthorized} />
-                    <Route exact path="/events" >
-                        <EventsGridForUser textToSearch={this.state.textToSearch} distanceToLook={this.state.distanceToLook} dateToSeek={this.state.dateToSeek}/>
+                    <Route path="/events/:eventTitle" component={withRouter(EventDetailForUser)}/>
+                    <Route path="/admin/events/:eventTitle"
+                           component={localStorage.getItem(ROLE) === ADMIN ? withRouter(EventDetailForAdmin) : Unauthorized}/>
+                    <Route path="/event-manager/events/:eventTitle"
+                           component={localStorage.getItem(ROLE) === EVENT_MANAGER ? withRouter(EventDetailForEventManager) : Unauthorized}/>
+                    <Route path="/add-event"
+                           component={localStorage.getItem(ROLE) === ADMIN ? withRouter(AddEventForm) : Unauthorized}/>
+                    <Route exact path="/events">
+                        <EventsGridForUser textToSearch={this.state.textToSearch}
+                                           distanceToLook={this.state.distanceToLook}
+                                           dateToSeek={this.state.dateToSeek}/>
                     </Route>
-                    <Route exact path="/admin/events" >
-                        {localStorage.getItem("role") === 'ADMIN' ?
+                    <Route exact path="/admin/events">
+                        {localStorage.getItem(ROLE) === ADMIN ?
                             <EventsGridForAdmin textToSearch={this.state.textToSearch}
                                                 distanceToLook={this.state.distanceToLook}
                                                 dateToSeek={this.state.dateToSeek}/>
                             : <Unauthorized/>
                         }
                     </Route>
-                    <Route exact path="/event-manager/events" >
-                        {localStorage.getItem("role") === 'EVENT_MANAGER' ?
-                        <EventsGridForEventManager textToSearch={this.state.textToSearch} distanceToLook={this.state.distanceToLook} dateToSeek={this.state.dateToSeek}/>
+                    <Route exact path="/event-manager/events">
+                        {localStorage.getItem(ROLE) === EVENT_MANAGER ?
+                            <EventsGridForEventManager textToSearch={this.state.textToSearch}
+                                                       distanceToLook={this.state.distanceToLook}
+                                                       dateToSeek={this.state.dateToSeek}/>
                             : <Unauthorized/>
                         }
                     </Route>
-                    <Route  path="/login" component={withRouter(LoginPage)} />
-                    <Route exact path="/" component={withRouter(WelcomePage)} />
+                    <Route path="/login" component={withRouter(LoginPage)}/>
+                    <Route exact path="/" component={withRouter(WelcomePage)}/>
 
                 </div>
             </ThemeProvider>
