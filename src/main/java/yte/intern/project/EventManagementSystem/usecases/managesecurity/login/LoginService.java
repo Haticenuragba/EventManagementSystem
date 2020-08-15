@@ -6,8 +6,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
+import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Authority;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.util.JwtUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static yte.intern.project.EventManagementSystem.usecases.managesecurity.util.Constants.SECRET_KEY;
 
@@ -24,7 +29,11 @@ public class LoginService {
 		try {
 			Authentication user = authenticationProvider.authenticate(usernamePasswordAuthenticationToken);
 			String token = JwtUtil.generateToken(user, SECRET_KEY, 15);
-			return new LoginResponse(token);
+			List<String> authorities = new ArrayList<String>();
+			for(GrantedAuthority a: user.getAuthorities()){
+			    authorities.add(a.getAuthority());
+            }
+			return new LoginResponse(token, authorities);
 		} catch (AuthenticationException e) {
 			e.printStackTrace();
 		}

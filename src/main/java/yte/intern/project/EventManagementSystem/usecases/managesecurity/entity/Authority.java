@@ -22,4 +22,5 @@ public class Authority implements GrantedAuthority {
     private Long id;
 
     private String authority;
+
 }
