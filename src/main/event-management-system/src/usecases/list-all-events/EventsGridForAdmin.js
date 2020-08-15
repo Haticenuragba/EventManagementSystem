@@ -6,6 +6,9 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import Box from "@material-ui/core/Box";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+
 import {withRouter} from "react-router";
 import {
     dateStringToObject,
@@ -27,23 +30,32 @@ class EventsGridForAdmin extends Component {
 
     addFabStyle = {
         textAlign: "center",
-        margin: "4vh",
+        margin: "2vh",
         position: "fixed",
+        marginBottom: "10vh",
         right: "0",
         bottom: "0",
         zIndex: 100
-    }
+    };
 
     statisticsFabStyle = {
         textAlign: "center",
-        margin: "4vh",
-        marginBottom: "12vh",
-        background: "#f50057",
+        margin: "2vh",
         position: "fixed",
         right: "0",
         bottom: "0",
         zIndex: 100
-    }
+    };
+
+    addManagerFabStyle = {
+        textAlign: "center",
+        margin: "2vh",
+        marginRight: "10vh",
+        position: "fixed",
+        right: "0",
+        bottom: "0",
+        zIndex: 100
+    };
 
     componentDidMount() {
         axios.get("/events")
@@ -103,11 +115,15 @@ class EventsGridForAdmin extends Component {
                         }
                     </Grid>
                 </Box>
+                <Fab color="primary" aria-label="add" style={this.addManagerFabStyle}
+                     onClick={this.navigateToAddEvent}>
+                    <PersonAddIcon/>
+                </Fab>
                 <Fab color="primary" aria-label="add" style={this.addFabStyle}
                      onClick={this.navigateToAddEvent}>
-                    <AddIcon/>
+                    <PostAddIcon/>
                 </Fab>
-                <Fab color="primary" aria-label="add" style={this.statisticsFabStyle}
+                <Fab color="secondary" aria-label="add" style={this.statisticsFabStyle}
                      onClick={this.navigateToStatistics}>
                     <BarChartIcon/>
                 </Fab>

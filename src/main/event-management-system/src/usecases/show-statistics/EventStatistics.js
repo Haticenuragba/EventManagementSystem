@@ -28,14 +28,9 @@ class EventStatistics extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataPointsForEvent: [
-            ],
-            dataPointsForApplication: [
-
-            ],
-            attendants: [
-
-            ],
+            dataPointsForEvent: [],
+            dataPointsForApplication: [],
+            attendants: [],
             selectedEventTitle: ""
         }
     }
@@ -51,9 +46,6 @@ class EventStatistics extends Component {
                 this.getAttendantsForApplication(this.state.selectedEventTitle);
             })
             .catch(error => {
-                if (error.response.data.status === 406)
-                    showErrorDialog(error.response.data.message);
-                else
                     showErrorDialog("Bir hata oluştu");
             });
 
@@ -75,14 +67,11 @@ class EventStatistics extends Component {
                 this.setState({newState});
             })
             .catch(error => {
-                if (error.response.data.status === 406)
-                    showErrorDialog(error.response.data.message);
-                else
                     showErrorDialog("Bir hata oluştu");
             });
     }
 
-    getAttendantsForApplication = (title) =>{
+    getAttendantsForApplication = (title) => {
         axios.get("/statistics/" + title + "/attendants", {headers: headers})
             .then(response => {
                 let newState = this.state;
@@ -90,13 +79,9 @@ class EventStatistics extends Component {
                 this.setState({newState});
             })
             .catch(error => {
-                if (error.response.data.status === 406)
-                    showErrorDialog(error.response.data.message);
-                else
                     showErrorDialog("Bir hata oluştu");
             });
     }
-
 
 
     render() {
@@ -128,77 +113,85 @@ class EventStatistics extends Component {
                 dataPoints: this.state.dataPointsForApplication
             }]
         }
-
-        return (
-            <div>
-                <Grid container alignItems={"center"} justify={"center"}>
-                    <Grid item md={12} style={{padding: "1vh"}}>
-                        <Card style={{height: "45vh"}}>
-                            <CardContent>
-                                <CanvasJSChart options = {optionsForEvent}
-                                    /* onRef = {ref => this.chart = ref} */
-                                />
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                    <br/>
-                    <Grid container>
-                    <Grid item md={6} style={{padding: "1vh"}}>
-                        <Card style={{height: "44vh"}}>
-                            <CardContent>
-                                <CanvasJSChart options = {optionsForApplication}
-                                    /* onRef = {ref => this.chart = ref} */
-                                />
-                            </CardContent>
-                            <CardActions>
-
-                            </CardActions>
-                        </Card>
-                    </Grid>
-                        <Grid item md={6} style={{padding: "1vh"}}>
-                            <Card style={{height: "44vh"}}>
+        if (this.state.dataPointsForEvent.length > 0) {
+            return (
+                <div>
+                    <Grid container alignItems={"center"} justify={"center"}>
+                        <Grid item md={12} style={{padding: "1vh"}}>
+                            <Card style={{height: "45vh"}}>
                                 <CardContent>
-                                    <TableContainer component={Paper} style={{maxHeight:"40vh"}}>
-                                        <Table aria-label="simple table">
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell>T.C. Kimlik No</TableCell>
-                                                    <TableCell align="right">İsim</TableCell>
-                                                    <TableCell align="right">Soyisim</TableCell>
-                                                    <TableCell align="right">Email</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                {this.state.attendants.length > 0 ?
-                                                    this.state.attendants.map((row) => (
-                                                    <TableRow key={row.name}>
-                                                        <TableCell component="th" scope="row">
-                                                            {row.idNumber}
-                                                        </TableCell>
-                                                        <TableCell align="right">{row.name}</TableCell>
-                                                        <TableCell align="right">{row.surname}</TableCell>
-                                                        <TableCell align="right">{row.email}</TableCell>
-                                                    </TableRow>
-                                                ))
-                                                :
-                                               <Grid style={{padding: "2vh"}} alignContent={"center"} justify={"center"}><Grid item><Typography variant={"subtitle2"}>Etkinliğe kimse başvuru yapmadı.</Typography></Grid></Grid>
-                                                }
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
+                                    <CanvasJSChart options={optionsForEvent}
+                                        /* onRef = {ref => this.chart = ref} */
+                                    />
                                 </CardContent>
-                                <CardActions>
-
-                                </CardActions>
                             </Card>
+                        </Grid>
+                        <br/>
+                        <Grid container>
+                            <Grid item md={6} style={{padding: "1vh"}}>
+                                <Card style={{height: "44vh"}}>
+                                    <CardContent>
+                                        <CanvasJSChart options={optionsForApplication}
+                                            /* onRef = {ref => this.chart = ref} */
+                                        />
+                                    </CardContent>
+                                    <CardActions>
+
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                            <Grid item md={6} style={{padding: "1vh"}}>
+                                <Card style={{height: "44vh"}}>
+                                    <CardContent>
+                                        <TableContainer component={Paper} style={{maxHeight: "40vh"}}>
+                                            <Table aria-label="simple table">
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell>T.C. Kimlik No</TableCell>
+                                                        <TableCell align="right">İsim</TableCell>
+                                                        <TableCell align="right">Soyisim</TableCell>
+                                                        <TableCell align="right">Email</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {this.state.attendants.length > 0 ?
+                                                        this.state.attendants.map((row) => (
+                                                            <TableRow key={row.name}>
+                                                                <TableCell component="th" scope="row">
+                                                                    {row.idNumber}
+                                                                </TableCell>
+                                                                <TableCell align="right">{row.name}</TableCell>
+                                                                <TableCell align="right">{row.surname}</TableCell>
+                                                                <TableCell align="right">{row.email}</TableCell>
+                                                            </TableRow>
+                                                        ))
+                                                        :
+                                                        <Grid style={{padding: "2vh"}} alignContent={"center"}
+                                                              justify={"center"}><Grid item><Typography
+                                                            variant={"subtitle2"}>Etkinliğe kimse başvuru
+                                                            yapmadı.</Typography></Grid></Grid>
+                                                    }
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </CardContent>
+                                    <CardActions>
+
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+
                         </Grid>
 
                     </Grid>
+                </div>
 
-                </Grid>
-            </div>
-
-        );
+            );
+        } else {
+            return <Grid container alignContent={"center"} justify={"center"}>
+                <Typography style={{marginTop: "40vh"}}>İstatistik bulunamadı</Typography>
+            </Grid>
+        }
     }
 }
 

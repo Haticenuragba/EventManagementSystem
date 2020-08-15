@@ -1,6 +1,9 @@
 package yte.intern.project.EventManagementSystem.usecases.manageevents;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yte.intern.project.EventManagementSystem.common.mapper.CycleAvoidingMappingContext;
@@ -66,8 +69,9 @@ public class ManageEventController {
     }
 
     @DeleteMapping("/{title}")
-    public void deleteEvent(@PathVariable @Size(max = 255, min = 3) String title) {
+    public ResponseEntity<String> deleteEvent(@PathVariable @Size(max = 255, min = 3) String title) {
         manageEventService.deleteEvent(title);
+        return  new ResponseEntity<String>("Etkinlik başarıyla silindi", HttpStatus.OK);
     }
 
     @GetMapping("/{title}/applications")

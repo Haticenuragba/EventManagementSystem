@@ -13,6 +13,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Box from "@material-ui/core/Box";
+import {headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";
 
 const dateFormat = require('dateformat');
 
@@ -62,6 +63,19 @@ class EventDetailForAdmin extends Component {
 
     navigateToUpdateEvent = (title) => {
         this.props.history.push('/add-event', {isUpdate: true, eventTitleToUpdate: title});
+    }
+
+    deleteEvent = (title) => {
+        axios.delete("/events/" + this.eventTitle, {headers: headers})
+            .then(response => {
+                if (response.status === 200) {
+                   showSuccessDialog("Etkinlik başarıyla silindi");
+                   this.props.history.push("/admin/events");
+                }
+            })
+            .catch(error => {
+               showErrorDialog("Bir hata oluştu");
+            })
     }
 
 
@@ -176,6 +190,11 @@ class EventDetailForAdmin extends Component {
                                 <Grid container alignItems={"flex-start"} justify={"flex-end"} direction={"row"}>
 
                                     <Grid>
+                                        <Button color="secondary" variant={"contained"}
+                                                onClick={() => this.deleteEvent(this.eventTitle)}
+                                                endIcon={<ClearIcon/>} size={"large"}>
+                                            ETKİNLİĞİ SİL
+                                        </Button>
                                         <Button color="primary" variant={"contained"}
                                                 onClick={() => this.navigateToUpdateEvent(this.eventTitle)}
                                                 endIcon={<EditIcon/>} size={"large"}>
