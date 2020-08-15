@@ -16,7 +16,8 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Box from "@material-ui/core/Box";
 
 import 'sweetalert2/src/sweetalert2.scss'
-import {showErrorDialog, showSuccessDialog} from "../../common/Utils";
+import {headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";
+
 
 
 class AddEventForm extends Component {
@@ -67,11 +68,11 @@ class AddEventForm extends Component {
     }
 
     saveNewEvent(e) {
-        axios.post("/events", e)
+        axios.post("/events", e, {headers: headers})
             .then(response => {
                 console.log(response);
                 showSuccessDialog("Etkinlik başarıyla kaydedildi");
-                this.props.history.push('/events');
+                this.props.history.push('/admin/events');
             })
             .catch(error => {
                 if (error.response.data.status === 406)
@@ -86,7 +87,7 @@ class AddEventForm extends Component {
         console.log(this.state.event);
         console.log("This is event in function  ")
         console.log(e);
-        axios.put("/events/" + this.eventTitleToUpdate, e)
+        axios.put("/events/" + this.eventTitleToUpdate, e, {headers: headers})
             .then(response => {
                 console.log(response);
                 showSuccessDialog("Etkinlik başarıyla güncellendi");

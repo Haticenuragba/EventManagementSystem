@@ -20,8 +20,8 @@ public class EventManagementSystemApplication {
         System.out.println("Try");
 
     }
-/*
 
+/*
     @PostConstruct
     public void initSecurityData() {
         databasePopulator.populateDatabaseAfterInit();

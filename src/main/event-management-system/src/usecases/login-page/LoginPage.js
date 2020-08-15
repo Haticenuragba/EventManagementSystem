@@ -42,12 +42,27 @@ class LoginPage extends Component {
 
     }
 
+    navigateToAdmin(){
+        this.props.history.push('/admin/events');
+    }
+
+    navigateToManager(){
+        this.props.history.push('/event-manager/events');
+    }
+
+
     login(loginUser){
         axios.post("/login", loginUser)
             .then(response => {
                 if(response.status === 200) {
                     localStorage.setItem("token", "Bearer " + response.data.token);
                     localStorage.setItem("role", response.data.role.sort()[0]);
+                    if(localStorage.getItem("role") === "ADMIN"){
+                        this.navigateToAdmin();
+                    }
+                    else if(localStorage.getItem("role") === "EVENT_MANAGER"){
+                        this.navigateToManager();
+                    }
                 }
             }).catch(error => {
             if (error.response.data.status === 406)
