@@ -7,6 +7,8 @@ import TextField from "@material-ui/core/TextField";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import {dark} from "@material-ui/core/styles/createPalette";
+import axios from "axios";
+import {showErrorDialog} from "../../common/Utils";
 
 const themeDark = createMuiTheme({
     palette: {
@@ -21,8 +23,39 @@ class LoginPage extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            loginUser: {
+                username: "",
+                password: ""
+            }
+        }
     }
 
+    handleInputChange = e => {
+        let newState = this.state;
+        const name = e.target.name;
+        const value = e.target.value;
+        newState.loginUser[name] = value;
+        this.setState({
+            newState
+        });
+
+    }
+
+    login(loginUser){
+        axios.post("/login", loginUser)
+            .then(response => {
+                if(response.status === 200) {
+                    localStorage.setItem("token", "Bearer " + response.data.token);
+                    localStorage.setItem("role", response.data.role.sort()[0]);
+                }
+            }).catch(error => {
+            if (error.response.data.status === 406)
+                showErrorDialog(error.response.data.message);
+            else
+                showErrorDialog("Bir hata oluştu, lütfen bilgileri kontrol edin.");
+        });
+    }
 
     render() {
         return (
@@ -46,16 +79,15 @@ class LoginPage extends Component {
                         <ThemeProvider theme={themeDark}>
                             <CssBaseline/>
                             <div>
-                                <TextField type={"text"} fullWidth label={"Kullanıcı Adı"}/>
+                                <TextField name={"username"} onChange={this.handleInputChange} type={"text"} fullWidth label={"Kullanıcı Adı"}/>
                                 <br/> <br/>
-                                <TextField type={"password"} fullWidth label={"Şifre"}/>
+                                <TextField name={"password"} onChange={this.handleInputChange} type={"password"} fullWidth label={"Şifre"}/>
                                 <br/><br/> <br/>
-                                <Button color="primary" variant={"contained"}
-                                        style={{opacity: "0.8"}}
-                                        onClick={this.navigateToEventGrid} size={"large"}>
-                                    Giriş Yap
-                                </Button>
                             </div>
+                            <Button color="primary" variant={"contained"}
+                                    onClick={() => this.login(this.state.loginUser)} size={"large"}>
+                                GİRİŞ YAP
+                            </Button>
                         </ThemeProvider>
                     </Box>
                 </Grid>

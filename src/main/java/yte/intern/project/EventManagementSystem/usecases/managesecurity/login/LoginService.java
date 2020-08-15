@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
+import yte.intern.project.EventManagementSystem.common.exceptionhandling.CustomException;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Authority;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.util.JwtUtil;
 
@@ -28,16 +29,20 @@ public class LoginService {
 
 		try {
 			Authentication user = authenticationProvider.authenticate(usernamePasswordAuthenticationToken);
-			String token = JwtUtil.generateToken(user, SECRET_KEY, 15);
-			List<String> authorities = new ArrayList<String>();
-			for(GrantedAuthority a: user.getAuthorities()){
-			    authorities.add(a.getAuthority());
+			if(user.isAuthenticated()) {
+                String token = JwtUtil.generateToken(user, SECRET_KEY, 15);
+                List<String> authorities = new ArrayList<String>();
+                for (GrantedAuthority a : user.getAuthorities()) {
+                    authorities.add(a.getAuthority());
+                }
+                return new LoginResponse(token, authorities);
             }
-			return new LoginResponse(token, authorities);
+			else{
+                throw new CustomException("Kimlik doğrulanamadı");
+            }
 		} catch (AuthenticationException e) {
-			e.printStackTrace();
+            throw new CustomException("Böyle bir kullanıcı bulunamadı");
 		}
 
-		return null;
 	}
 }

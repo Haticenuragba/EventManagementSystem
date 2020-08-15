@@ -12,7 +12,7 @@ import {
     getDistanceFromLatLonInKm
 } from "../../common/Utils";
 
-class EventsGrid extends Component {
+class EventsGridForUser extends Component {
 
     constructor(props) {
         super(props);
@@ -88,10 +88,6 @@ class EventsGrid extends Component {
                         }
                     </Grid>
                 </Box>
-                <Fab color="primary" aria-label="add" style={this.fabStyle}
-                     onClick={this.navigateToAddEvent}>
-                    <AddIcon/>
-                </Fab>
             </div>
         );
     }
@@ -99,4 +95,4 @@ class EventsGrid extends Component {
 
 }
 
-export default withRouter(EventsGrid);
+export default withRouter(EventsGridForUser);

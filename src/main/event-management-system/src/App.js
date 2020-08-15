@@ -3,13 +3,15 @@ import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import CustomAppBar from "./common/CustomAppBar";
 import {getIsDark, setIsDark} from "./common/Utils";
-import EventsGrid from "./usecases/list-all-events/EventsGrid";
 import {withRouter} from "react-router-dom";
 import {Route} from "react-router-dom";
 import EventDetail from "./usecases/event-application/EventDetail";
 import AddEventForm from "./usecases/add-event/AddEventForm";
 import WelcomePage from "./usecases/welcome-page/WelcomePage";
 import LoginPage from "./usecases/login-page/LoginPage";
+import EventsGridForUser from "./usecases/list-all-events/EventsGridForUser";
+import EventsGridForAdmin from "./usecases/list-all-events/EventsGridForAdmin";
+import EventsGridForEventManager from "./usecases/list-all-events/EventsGridForEventManager";
 
 
 const themeDark = createMuiTheme({
@@ -82,7 +84,13 @@ class App extends Component{
                     <Route  path="/events/:eventTitle" component={withRouter(EventDetail)} />
                     <Route  path="/add-event" component={withRouter(AddEventForm)} />
                     <Route exact path="/events" >
-                        <EventsGrid textToSearch={this.state.textToSearch} distanceToLook={this.state.distanceToLook} dateToSeek={this.state.dateToSeek}/>
+                        <EventsGridForUser textToSearch={this.state.textToSearch} distanceToLook={this.state.distanceToLook} dateToSeek={this.state.dateToSeek}/>
+                    </Route>
+                    <Route exact path="/admin/events" >
+                        <EventsGridForAdmin textToSearch={this.state.textToSearch} distanceToLook={this.state.distanceToLook} dateToSeek={this.state.dateToSeek}/>
+                    </Route>
+                    <Route exact path="/event-manager/events" >
+                        <EventsGridForEventManager textToSearch={this.state.textToSearch} distanceToLook={this.state.distanceToLook} dateToSeek={this.state.dateToSeek}/>
                     </Route>
                     <Route  path="/login" component={withRouter(LoginPage)} />
                     <Route exact path="/" component={withRouter(WelcomePage)} />

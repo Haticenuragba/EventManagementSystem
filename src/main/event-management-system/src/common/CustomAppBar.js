@@ -101,7 +101,10 @@ export default function CustomAppBar(props) {
     const classes = useStyles();
     const history = useHistory();
     const [state, setState] = React.useState({
-        visibilityOfParams: window.location.pathname === '/' ? "visible" : "hidden"
+        visibilityOfParams: window.location.pathname === '/events'
+        || window.location.pathname === '/event-manager/events'
+        || window.location.pathname === '/admin/events' ?
+            "visible" : "hidden"
     });
 
     const handleModeChange = (event) => {
@@ -115,7 +118,7 @@ export default function CustomAppBar(props) {
 
 
     history.listen((location, action) => {
-        let visibility = location.pathname === '/' ? "visible" : "hidden"
+        let visibility = location.pathname === '/events' || location.pathname === '/event-manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden"
         setState({
             visibilityOfParams: visibility
         });

@@ -69,7 +69,6 @@ class WelcomePage extends Component {
                             etkinlikleri keşfet, kaydol, katıl...</Typography>
                         <br/> <br/>
                         <Button color="primary" variant={"contained"}
-                                style={{opacity: "0.8"}}
                                 onClick={this.navigateToEventGrid} size={"large"}>
                             Etkinlikleri gör
                         </Button>
@@ -82,7 +81,7 @@ class WelcomePage extends Component {
                                         style={{fontStyle: "italic"}}
                                         size={"large"}
                     onClick={this.navigateToLoginPage}>
-                        Yönetici Olarak Giriş Yap
+                        YÖNETİCİ OLARAK GİRİŞ YAP
                     </Button>
                     </Grid>
 
