@@ -10,7 +10,7 @@ import {
     dateStringToObject,
     getDaysLaterInMilliseconds,
     getDistanceFromLatLonInKm
-} from "../../../common/Utils";
+} from "../../common/Utils";
 
 class EventsGrid extends Component {
 

@@ -4,6 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yte.intern.project.EventManagementSystem.common.mapper.CycleAvoidingMappingContext;
+import yte.intern.project.EventManagementSystem.usecases.manageapplications.dto.ApplicationDTO;
+import yte.intern.project.EventManagementSystem.usecases.manageapplications.entity.Application;
+import yte.intern.project.EventManagementSystem.usecases.manageapplications.mapper.ApplicationCustomAttributeMapper;
+import yte.intern.project.EventManagementSystem.usecases.manageapplications.mapper.ApplicationMapper;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.dto.CustomAttributeDTO;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.dto.EventDTO;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.CustomAttribute;
@@ -23,6 +27,7 @@ public class ManageEventController {
     private final ManageEventService manageEventService;
     private final EventMapper eventMapper;
     private final CustomAttributeMapper customAttributeMapper;
+    private ApplicationMapper applicationMapper;
 
     @PostMapping
     public EventDTO addEvent(@Valid @RequestBody EventDTO eventDTO) {
@@ -60,6 +65,17 @@ public class ManageEventController {
     @DeleteMapping("/{title}")
     public void deleteEvent(@PathVariable @Size(max = 255, min = 3) String title) {
         manageEventService.deleteEvent(title);
+    }
+
+    @GetMapping("/{title}/applications")
+    public List<ApplicationDTO> getApplicationsOfEvent(@PathVariable String title) {
+        return applicationMapper.mapToDto(manageEventService.getAllApplicationsOfEvent(title), new CycleAvoidingMappingContext());
+    }
+
+
+    @GetMapping("{title}/applications/{idNumber}")
+    public ApplicationDTO getApplicationOfEventByIdNumber(@PathVariable String title, @PathVariable String idNumber) {
+        return applicationMapper.mapToDto(manageEventService.getApplicationOfEvent(title, idNumber), new CycleAvoidingMappingContext());
     }
 
 }

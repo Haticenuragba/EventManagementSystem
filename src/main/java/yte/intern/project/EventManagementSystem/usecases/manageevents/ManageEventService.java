@@ -3,6 +3,7 @@ package yte.intern.project.EventManagementSystem.usecases.manageevents;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import yte.intern.project.EventManagementSystem.common.exceptionhandling.CustomException;
+import yte.intern.project.EventManagementSystem.usecases.manageapplications.entity.Application;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.CustomAttribute;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.CustomAttributeRepository;
@@ -12,6 +13,8 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 
 @Service
@@ -85,5 +88,31 @@ public class ManageEventService {
         }
 
     }
+
+    public List<Application> getAllApplicationsOfEvent(String eventTitle) {
+        Optional<Event> eventOptional = eventRepository.findEventByTitle(eventTitle);
+        if (eventOptional.isPresent()) {
+            Event event = eventOptional.get();
+            return event.getApplications();
+        } else {
+            throw new EntityNotFoundException();
+        }
+    }
+
+    public Application getApplicationOfEvent(String eventTitle, String idNumber) {
+        Optional<Event> eventOptional = eventRepository.findEventByTitle(eventTitle);
+        if (eventOptional.isPresent()) {
+            Event event = eventOptional.get();
+            return event.getApplications()
+                    .stream()
+                    .filter(it -> it.getIdNumber().equals(idNumber))
+                    .collect(toList())
+                    .get(0);
+
+        } else {
+            throw new EntityNotFoundException();
+        }
+    }
+
 
 }

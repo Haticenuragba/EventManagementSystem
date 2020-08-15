@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
-import * as utils from '../../../common/Utils'
+import * as utils from '../../common/Utils'
 import Button from "@material-ui/core/Button";
-import MapView from "../../../common/MapView";
+import MapView from "../../common/MapView";
 import axios from "axios";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -10,13 +10,13 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import MenuItem from "@material-ui/core/MenuItem";
-import ImageUploader from "../../../common/ImageUploader";
+import ImageUploader from "../../common/ImageUploader";
 import SendIcon from '@material-ui/icons/Send';
 import ClearIcon from '@material-ui/icons/Clear';
 import Box from "@material-ui/core/Box";
 
 import 'sweetalert2/src/sweetalert2.scss'
-import {showErrorDialog, showSuccessDialog} from "../../../common/Utils";
+import {showErrorDialog, showSuccessDialog} from "../../common/Utils";
 
 
 class AddEventForm extends Component {
@@ -24,7 +24,7 @@ class AddEventForm extends Component {
     customAttribute = {question: "", type: 0}
     isUpdate = false;
     eventTitleToUpdate = '';
-    backgroundImage = require('../../../images/background10.jpg');
+    backgroundImage = require('../../images/background10.jpg');
 
     constructor(props) {
         super(props);
@@ -71,7 +71,7 @@ class AddEventForm extends Component {
             .then(response => {
                 console.log(response);
                 showSuccessDialog("Etkinlik başarıyla kaydedildi");
-                this.props.history.push('/');
+                this.props.history.push('/events');
             })
             .catch(error => {
                 if (error.response.data.status === 406)

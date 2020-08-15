@@ -51,34 +51,7 @@ public class ManageApplicationService {
         }
     }
 
-    public List<Application> getAllApplicationsOfEvent(String eventTitle) {
-        Optional<Event> eventOptional = eventRepository.findEventByTitle(eventTitle);
-        if (eventOptional.isPresent()) {
-            Event event = eventOptional.get();
-            return event.getApplications();
-        } else {
-            throw new EntityNotFoundException();
-        }
-    }
 
-    public Application getApplicationOfEvent(String eventTitle, String idNumber) {
-        Optional<Event> eventOptional = eventRepository.findEventByTitle(eventTitle);
-        if (eventOptional.isPresent()) {
-            Event event = eventOptional.get();
-            return event.getApplications()
-                    .stream()
-                    .filter(it -> it.getIdNumber().equals(idNumber))
-                    .collect(toList())
-                    .get(0);
-
-        } else {
-            throw new EntityNotFoundException();
-        }
-    }
-
-    public List<Application> getAllApplications() {
-        return applicationRepository.findAll();
-    }
 
     public List<Application> getApplicationsByIdNumber(String idNumber) {
         Optional<List<Application>> optionalApplicationList = applicationRepository.findApplicationByIdNumber(idNumber);

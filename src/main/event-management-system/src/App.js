@@ -3,11 +3,12 @@ import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import CustomAppBar from "./common/CustomAppBar";
 import {getIsDark, setIsDark} from "./common/Utils";
-import EventsGrid from "./usecases/end-user/list-all-events/EventsGrid";
+import EventsGrid from "./usecases/list-all-events/EventsGrid";
 import {withRouter} from "react-router-dom";
 import {Route} from "react-router-dom";
-import EventDetail from "./usecases/end-user/event-application/EventDetail";
-import AddEventForm from "./usecases/admin/add-event/AddEventForm";
+import EventDetail from "./usecases/event-application/EventDetail";
+import AddEventForm from "./usecases/add-event/AddEventForm";
+import WelcomePage from "./usecases/welcome-page/WelcomePage";
 
 
 const themeDark = createMuiTheme({
@@ -66,17 +67,23 @@ class App extends Component{
 
             <ThemeProvider theme={getIsDark() ? themeDark : themeLight}>
                 <CssBaseline/>
-                <CustomAppBar onModeChange={this.handleModeChange}
-                              onSearchChange={this.handleSearchChange}
-                              onDistanceChange={this.handleDistanceChange}
-                              onDateSelectionChange={this.handleDateSelectionChange}
-                              onNavigateHomePage={this.handleNavigateToHomePage}/>
+                {this.props.location.pathname !== '/' ?
+                    <CustomAppBar onModeChange={this.handleModeChange}
+                                  onSearchChange={this.handleSearchChange}
+                                  onDistanceChange={this.handleDistanceChange}
+                                  onDateSelectionChange={this.handleDateSelectionChange}
+                                  onNavigateHomePage={this.handleNavigateToHomePage}/>
+                                  :
+                    null
+                }
+
                 <div>
                     <Route  path="/events/:eventTitle" component={withRouter(EventDetail)} />
                     <Route  path="/add-event" component={withRouter(AddEventForm)} />
-                    <Route exact path="/" >
+                    <Route exact path="/events" >
                         <EventsGrid textToSearch={this.state.textToSearch} distanceToLook={this.state.distanceToLook} dateToSeek={this.state.dateToSeek}/>
                     </Route>
+                    <Route exact path="/" component={withRouter(WelcomePage)} />
 
                 </div>
 
