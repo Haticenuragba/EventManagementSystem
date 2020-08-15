@@ -70,6 +70,9 @@ class EventsGridForAdmin extends Component {
     navigateToStatistics = () => {
         this.props.history.push('/statistics');
     }
+    navigateToAddManager = () => {
+
+    }
 
     filterByTitle(event) {
         return event.title.toLowerCase().includes(this.props.textToSearch.toLowerCase());
