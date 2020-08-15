@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.ApplicationCountByDate;
+import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.Attendant;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.EventWithAttendantNumber;
 
 import java.util.List;
@@ -26,6 +27,11 @@ public class StatisticsController {
     @GetMapping("{title}/by-date")
     public List<ApplicationCountByDate> getApplicationCountByDate(@PathVariable String title){
         return manageEventService.getApplicationsByDate(title);
+    }
+
+    @GetMapping("{title}/attendants")
+    public List<Attendant> getAttendantsOfEvent(@PathVariable String title){
+        return manageEventService.getAttendantsOfEvent(title);
     }
 
 

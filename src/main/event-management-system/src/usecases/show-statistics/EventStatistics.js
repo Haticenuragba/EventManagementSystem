@@ -14,6 +14,8 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import axios from "axios";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 
 const dateFormat = require('dateformat');
 
@@ -30,7 +32,11 @@ class EventStatistics extends Component {
             ],
             dataPointsForApplication: [
 
-            ]
+            ],
+            attendants: [
+
+            ],
+            selectedEventTitle: ""
         }
     }
 
@@ -39,8 +45,10 @@ class EventStatistics extends Component {
             .then(response => {
                 let newState = this.state;
                 newState.dataPointsForEvent = response.data;
+                newState.selectedEventTitle = newState.dataPointsForEvent[0].label;
                 this.setState({newState});
-                this.getDataForApplication(this.state.dataPointsForEvent[0].label);
+                this.getDataForApplication(this.state.selectedEventTitle);
+                this.getAttendantsForApplication(this.state.selectedEventTitle);
             })
             .catch(error => {
                 if (error.response.data.status === 406)
@@ -52,7 +60,11 @@ class EventStatistics extends Component {
     }
 
     onClickEvent = (e) => {
-        this.getDataForApplication(e.dataPoint.label);
+        let newState = this.state;
+        newState.selectedEventTitle = e.dataPoint.label;
+        this.setState({newState});
+        this.getDataForApplication(this.state.selectedEventTitle);
+        this.getAttendantsForApplication(this.state.selectedEventTitle);
     }
 
     getDataForApplication = (title) => {
@@ -70,23 +82,21 @@ class EventStatistics extends Component {
             });
     }
 
-
-    createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
+    getAttendantsForApplication = (title) =>{
+        axios.get("/statistics/" + title + "/attendants", {headers: headers})
+            .then(response => {
+                let newState = this.state;
+                newState.attendants = response.data;
+                this.setState({newState});
+            })
+            .catch(error => {
+                if (error.response.data.status === 406)
+                    showErrorDialog(error.response.data.message);
+                else
+                    showErrorDialog("Bir hata oluştu");
+            });
     }
 
-     rows = [
-        this.createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        this.createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        this.createData('Eclair', 262, 16.0, 24, 6.0),
-        this.createData('Cupcake', 305, 3.7, 67, 4.3),
-        this.createData('Gingerbread', 356, 16.0, 49, 3.9),
-         this.createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-         this.createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-         this.createData('Eclair', 262, 16.0, 24, 6.0),
-         this.createData('Cupcake', 305, 3.7, 67, 4.3),
-         this.createData('Gingerbread', 356, 16.0, 49, 3.9),
-    ];
 
 
     render() {
@@ -107,7 +117,7 @@ class EventStatistics extends Component {
 
         const optionsForApplication = {
             title: {
-                text: "etkinliğinin günlere göre başvuru dağılımı",
+                text: this.state.selectedEventTitle + " etkinliğinin günlere göre başvuru dağılımı",
                 fontSize: 24
             },
             height: 400,
@@ -159,16 +169,20 @@ class EventStatistics extends Component {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {this.rows.map((row) => (
+                                                {this.state.attendants.length > 0 ?
+                                                    this.state.attendants.map((row) => (
                                                     <TableRow key={row.name}>
                                                         <TableCell component="th" scope="row">
-                                                            {row.name}
+                                                            {row.idNumber}
                                                         </TableCell>
-                                                        <TableCell align="right">{row.calories}</TableCell>
-                                                        <TableCell align="right">{row.fat}</TableCell>
-                                                        <TableCell align="right">{row.carbs}</TableCell>
+                                                        <TableCell align="right">{row.name}</TableCell>
+                                                        <TableCell align="right">{row.surname}</TableCell>
+                                                        <TableCell align="right">{row.email}</TableCell>
                                                     </TableRow>
-                                                ))}
+                                                ))
+                                                :
+                                               <Grid style={{padding: "2vh"}} alignContent={"center"} justify={"center"}><Grid item><Typography variant={"subtitle2"}>Etkinliğe kimse başvuru yapmadı.</Typography></Grid></Grid>
+                                                }
                                             </TableBody>
                                         </Table>
                                     </TableContainer>

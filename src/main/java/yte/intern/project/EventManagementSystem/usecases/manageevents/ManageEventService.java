@@ -7,6 +7,7 @@ import yte.intern.project.EventManagementSystem.usecases.manageapplications.enti
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.CustomAttribute;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.ApplicationCountByDate;
+import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.Attendant;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.EventWithAttendantNumber;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.CustomAttributeRepository;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.EventRepository;
@@ -135,6 +136,15 @@ public class ManageEventService {
             applicationCountByDateList.add(new ApplicationCountByDate(key, applicationGrouped.get(key).size()));
         }
         return applicationCountByDateList;
+    }
+
+    public List<Attendant> getAttendantsOfEvent(String eventTitle){
+        List<Application> applications = getAllApplicationsOfEvent(eventTitle);
+        List<Attendant> attendants = new ArrayList<Attendant>();
+        for(Application a: applications){
+            attendants.add(new Attendant(a.getIdNumber(), a.getName(), a.getSurname(), a.getEmail()));
+        }
+        return attendants;
     }
 
 }
