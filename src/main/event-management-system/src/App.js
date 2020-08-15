@@ -9,6 +9,7 @@ import {Route} from "react-router-dom";
 import EventDetail from "./usecases/event-application/EventDetail";
 import AddEventForm from "./usecases/add-event/AddEventForm";
 import WelcomePage from "./usecases/welcome-page/WelcomePage";
+import LoginPage from "./usecases/login-page/LoginPage";
 
 
 const themeDark = createMuiTheme({
@@ -67,7 +68,7 @@ class App extends Component{
 
             <ThemeProvider theme={getIsDark() ? themeDark : themeLight}>
                 <CssBaseline/>
-                {this.props.location.pathname !== '/' ?
+                {this.props.location.pathname !== '/' && this.props.location.pathname !== '/login'?
                     <CustomAppBar onModeChange={this.handleModeChange}
                                   onSearchChange={this.handleSearchChange}
                                   onDistanceChange={this.handleDistanceChange}
@@ -83,6 +84,7 @@ class App extends Component{
                     <Route exact path="/events" >
                         <EventsGrid textToSearch={this.state.textToSearch} distanceToLook={this.state.distanceToLook} dateToSeek={this.state.dateToSeek}/>
                     </Route>
+                    <Route  path="/login" component={withRouter(LoginPage)} />
                     <Route exact path="/" component={withRouter(WelcomePage)} />
 
                 </div>

@@ -34,12 +34,12 @@ class WelcomePage extends Component {
         super(props);
     }
 
-    onCloseDialog = () => {
+    navigateToEventGrid = () => {
         this.props.history.push("/events");
     }
-    deneme = () => {
-        console.log("denemeeee");
-        this.props.history.push("/events/Deneme");
+
+    navigateToLoginPage= () => {
+        this.props.history.push("/login");
     }
 
     render() {
@@ -66,10 +66,11 @@ class WelcomePage extends Component {
                         <br/>
                         <Typography variant={"subtitle1"}
                                     style={{color: "rgb(255,255,255, 0.6)", fontSize: "2rem", fontStyle: "italic"}}>Çevrendeki
-                            etkinlikleri keşfet, kaydol, katıl</Typography>
+                            etkinlikleri keşfet, kaydol, katıl...</Typography>
                         <br/> <br/>
                         <Button color="primary" variant={"contained"}
-                                onClick={this.onSubmit} size={"large"}>
+                                style={{opacity: "0.8"}}
+                                onClick={this.navigateToEventGrid} size={"large"}>
                             Etkinlikleri gör
                         </Button>
                     </Box>
@@ -79,7 +80,8 @@ class WelcomePage extends Component {
 
                     <Grid item> <Button color="secondary"
                                         style={{fontStyle: "italic"}}
-                                        size={"large"}>
+                                        size={"large"}
+                    onClick={this.navigateToLoginPage}>
                         Yönetici Olarak Giriş Yap
                     </Button>
                     </Grid>
