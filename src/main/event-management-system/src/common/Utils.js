@@ -72,22 +72,6 @@ export function showDialogWithImage(text, image) {
     })
 }
 
-export function showDialog(title, text, onClose) {
-    Swal.fire({
-        position: 'center',
-        title: title,
-        text: text,
-        width: '40%',
-        background: 'rgba(0,0,0,0.70)',
-        confirmButtonColor: '#303f9f',
-        showConfirmButton: true,
-        confirmButtonText: "Keşfet",
-        onClose(popup) {
-            onClose();
-        }
-    })
-}
-
 export function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     let R = 6371; // Radius of the earth in km
     let dLat = deg2rad(lat2 - lat1);  // deg2rad below

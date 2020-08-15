@@ -22,7 +22,16 @@ export default function MediaCard({event}) {
     const history = useHistory();
 
     const navigateToEventDetail = (title) => {
-        history.push('/events/' + title);
+        if(localStorage.getItem("role") === "ADMIN"){
+            history.push('/admin/events/' + title);
+        }
+        else if(localStorage.getItem("role") === "EVENT_MANAGER"){
+            history.push('/event-manager/events/' + title);
+        }
+        else{
+            history.push('/events/' + title);
+        }
+
     }
 
     return (

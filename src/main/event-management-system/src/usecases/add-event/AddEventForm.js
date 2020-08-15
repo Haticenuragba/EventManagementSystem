@@ -17,6 +17,7 @@ import Box from "@material-ui/core/Box";
 
 import 'sweetalert2/src/sweetalert2.scss'
 import {headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";
+import Unauthorized from "../../common/Unauthorized";
 
 
 
@@ -29,22 +30,22 @@ class AddEventForm extends Component {
 
     constructor(props) {
         super(props);
+            this.isUpdate = props.location.state.isUpdate;
+            this.eventTitleToUpdate = props.location.state.eventTitleToUpdate;
+            this.state = {
+                prevCount: 0,
+                event: {
+                    title: "",
+                    description: "",
+                    quota: 0,
+                    startDate: utils.getDateOfToday(),
+                    endDate: utils.getDateOfToday(),
+                    latitude: 37.022195,
+                    longitude: 35.293555,
+                    image: utils.defaultImageUrl,
+                    customAttributes: []
+                }
 
-        this.isUpdate = props.location.state.isUpdate;
-        this.eventTitleToUpdate = props.location.state.eventTitleToUpdate;
-        this.state = {
-            prevCount: 0,
-            event: {
-                title: "",
-                description: "",
-                quota: 0,
-                startDate: utils.getDateOfToday(),
-                endDate: utils.getDateOfToday(),
-                latitude: 37.022195,
-                longitude: 35.293555,
-                image: utils.defaultImageUrl,
-                customAttributes: []
-            }
         }
 
     }
@@ -91,7 +92,7 @@ class AddEventForm extends Component {
             .then(response => {
                 console.log(response);
                 showSuccessDialog("Etkinlik başarıyla güncellendi");
-                this.props.history.push('/events/' + e.title);
+                this.props.history.push('/admin/events/' + e.title);
             })
             .catch(error => {
                 if (error.response.data.status === 406)

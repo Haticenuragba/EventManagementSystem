@@ -24,14 +24,6 @@ class EventsGridForUser extends Component {
         }
     }
 
-    fabStyle = {
-        textAlign: "center",
-        margin: "4vh",
-        position: "fixed",
-        right: "0",
-        bottom: "0",
-        zIndex: 100
-    }
 
     componentDidMount() {
         axios.get("/events")
@@ -40,9 +32,6 @@ class EventsGridForUser extends Component {
             });
     }
 
-    navigateToAddEvent = () => {
-        this.props.history.push('/add-event', {isUpdate: false, eventTitleToUpdate: ''});
-    }
 
     filterByTitle(event) {
         return event.title.toLowerCase().includes(this.props.textToSearch.toLowerCase());
@@ -58,13 +47,19 @@ class EventsGridForUser extends Component {
 
     filterByDate(event) {
         switch (this.props.dateToSeek) {
-            case 0: return true;
-            case 1: return getDaysLaterInMilliseconds(7) >= dateStringToObject(event.startDate).getTime();
-            case 2: return getDaysLaterInMilliseconds(30) >= dateStringToObject(event.startDate).getTime();
-            case 3: return true;
-            default: return true;
+            case 0:
+                return true;
+            case 1:
+                return getDaysLaterInMilliseconds(7) >= dateStringToObject(event.startDate).getTime();
+            case 2:
+                return getDaysLaterInMilliseconds(30) >= dateStringToObject(event.startDate).getTime();
+            case 3:
+                return true;
+            default:
+                return true;
         }
     }
+
 
 
     render() {
@@ -79,8 +74,7 @@ class EventsGridForUser extends Component {
                                             <MediaCard event={anEvent}/>
                                         </Grid>
                                     );
-                                }
-                                else{
+                                } else {
                                     return null;
                                 }
                             }

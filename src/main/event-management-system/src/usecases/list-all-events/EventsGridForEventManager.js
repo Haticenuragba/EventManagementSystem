@@ -3,8 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import MediaCard from "./MediaCard";
 import axios from "axios";
 import Box from "@material-ui/core/Box";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from '@material-ui/icons/Add';
 import {withRouter} from "react-router";
 import {
     dateStringToObject,
@@ -24,24 +22,11 @@ class EventsGridForEventManager extends Component {
         }
     }
 
-    fabStyle = {
-        textAlign: "center",
-        margin: "4vh",
-        position: "fixed",
-        right: "0",
-        bottom: "0",
-        zIndex: 100
-    }
-
     componentDidMount() {
         axios.get("/events")
             .then(response => {
                 this.setState({events: response.data})
             });
-    }
-
-    navigateToAddEvent = () => {
-        this.props.history.push('/add-event', {isUpdate: false, eventTitleToUpdate: ''});
     }
 
     filterByTitle(event) {
