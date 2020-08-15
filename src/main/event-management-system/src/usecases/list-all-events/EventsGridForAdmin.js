@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Grid from '@material-ui/core/Grid';
 import MediaCard from "./MediaCard";
 import axios from "axios";
+import BarChartIcon from '@material-ui/icons/BarChart';
 import Box from "@material-ui/core/Box";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
@@ -24,9 +25,20 @@ class EventsGridForAdmin extends Component {
         }
     }
 
-    fabStyle = {
+    addFabStyle = {
         textAlign: "center",
         margin: "4vh",
+        position: "fixed",
+        right: "0",
+        bottom: "0",
+        zIndex: 100
+    }
+
+    statisticsFabStyle = {
+        textAlign: "center",
+        margin: "4vh",
+        marginBottom: "12vh",
+        background: "#f50057",
         position: "fixed",
         right: "0",
         bottom: "0",
@@ -42,6 +54,9 @@ class EventsGridForAdmin extends Component {
 
     navigateToAddEvent = () => {
         this.props.history.push('/add-event', {isUpdate: false, eventTitleToUpdate: ''});
+    }
+    navigateToStatistics = () => {
+        this.props.history.push('/statistics');
     }
 
     filterByTitle(event) {
@@ -88,9 +103,13 @@ class EventsGridForAdmin extends Component {
                         }
                     </Grid>
                 </Box>
-                <Fab color="primary" aria-label="add" style={this.fabStyle}
+                <Fab color="primary" aria-label="add" style={this.addFabStyle}
                      onClick={this.navigateToAddEvent}>
                     <AddIcon/>
+                </Fab>
+                <Fab color="primary" aria-label="add" style={this.statisticsFabStyle}
+                     onClick={this.navigateToStatistics}>
+                    <BarChartIcon/>
                 </Fab>
             </div>
         );

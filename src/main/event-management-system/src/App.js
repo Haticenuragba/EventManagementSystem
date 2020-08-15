@@ -15,6 +15,8 @@ import EventsGridForEventManager from "./usecases/list-all-events/EventsGridForE
 import EventDetailForAdmin from "./usecases/event-detail/EventDetailForAdmin";
 import EventDetailForEventManager from "./usecases/event-detail/EventDetailForEventManager";
 import Unauthorized from "./common/Unauthorized";
+import BarChart from "./common/BarChart";
+import EventStatistics from "./usecases/show-statistics/EventStatistics";
 
 
 const themeDark = createMuiTheme({
@@ -98,6 +100,8 @@ class App extends Component {
                            component={localStorage.getItem(ROLE) === EVENT_MANAGER ? withRouter(EventDetailForEventManager) : Unauthorized}/>
                     <Route path="/add-event"
                            component={localStorage.getItem(ROLE) === ADMIN ? withRouter(AddEventForm) : Unauthorized}/>
+                    <Route path="/statistics"
+                           component={localStorage.getItem(ROLE) === ADMIN ? withRouter(EventStatistics) : Unauthorized}/>
                     <Route exact path="/events">
                         <EventsGridForUser textToSearch={this.state.textToSearch}
                                            distanceToLook={this.state.distanceToLook}
@@ -123,6 +127,7 @@ class App extends Component {
                     <Route exact path="/" component={withRouter(WelcomePage)}/>
 
                 </div>
+
             </ThemeProvider>
 
         );

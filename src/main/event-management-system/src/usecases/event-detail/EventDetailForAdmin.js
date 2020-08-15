@@ -176,12 +176,6 @@ class EventDetailForAdmin extends Component {
                                 <Grid container alignItems={"flex-start"} justify={"flex-end"} direction={"row"}>
 
                                     <Grid>
-                                        <Button color="secondary" variant={"contained"} endIcon={<EqualizerIcon/>}
-                                                size={"large"}>
-                                            İSTATİSTİKLERİ GÖRÜNTÜLE
-                                        </Button>
-                                    </Grid>
-                                    <Grid>
                                         <Button color="primary" variant={"contained"}
                                                 onClick={() => this.navigateToUpdateEvent(this.eventTitle)}
                                                 endIcon={<EditIcon/>} size={"large"}>
