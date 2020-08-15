@@ -12,6 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import HomeIcon from '@material-ui/icons/Home';
 import {useHistory} from "react-router";
+import Button from "@material-ui/core/Button";
 
 
 
@@ -104,8 +105,12 @@ export default function CustomAppBar(props) {
         visibilityOfParams: window.location.pathname === '/events'
         || window.location.pathname === '/event-manager/events'
         || window.location.pathname === '/admin/events' ?
-            "visible" : "hidden"
+            "visible" : "hidden",
+        visibilityOfLogout: window.location.pathname === '/event-manager/events'
+        || window.location.pathname === '/admin/events' ?
+            "visible" : "hidden",
     });
+
 
     const handleModeChange = (event) => {
         props.onModeChange(event.target.checked);
@@ -119,8 +124,10 @@ export default function CustomAppBar(props) {
 
     history.listen((location, action) => {
         let visibility = location.pathname === '/events' || location.pathname === '/event-manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden"
+        let visibilityOfLogout = location.pathname === '/event-manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden"
         setState({
-            visibilityOfParams: visibility
+            visibilityOfParams: visibility,
+            visibilityOfLogout: visibilityOfLogout
         });
     })
 
@@ -198,6 +205,9 @@ export default function CustomAppBar(props) {
                             <MenuItem value={15000}>Tüm etkinlikler</MenuItem>
                             <MenuItem value={100}>Sadece yakınımdakiler</MenuItem>
                         </Select>
+                    </div>
+                    <div className={classes.dropdown}>
+                     <Button style={{visibility: state.visibilityOfLogout}} color={"secondary"} variant={"contained"}>Çıkış Yap</Button>
                     </div>
                     <FormGroup className={classes.switch}>
                         <FormControlLabel

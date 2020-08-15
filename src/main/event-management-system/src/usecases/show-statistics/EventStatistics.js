@@ -5,7 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import BarChart from "../../common/BarChart";
 import CanvasJSReact from '../../assets/canvasjs.react';
-import {getIsDark} from "../../common/Utils";
+import {getIsDark, headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -13,6 +13,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
+import axios from "axios";
 
 const dateFormat = require('dateformat');
 
@@ -25,13 +26,50 @@ class EventStatistics extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            dataPointsForEvent: [
+            ],
+            dataPointsForApplication: [
 
+            ]
         }
     }
 
-    onClickEvent(e){
-        console.log(e.dataPoint.label);
+    componentDidMount() {
+        axios.get("/statistics/by-attendant-number", {headers: headers})
+            .then(response => {
+                let newState = this.state;
+                newState.dataPointsForEvent = response.data;
+                this.setState({newState});
+                this.getDataForApplication(this.state.dataPointsForEvent[0].label);
+            })
+            .catch(error => {
+                if (error.response.data.status === 406)
+                    showErrorDialog(error.response.data.message);
+                else
+                    showErrorDialog("Bir hata oluştu");
+            });
+
     }
+
+    onClickEvent = (e) => {
+        this.getDataForApplication(e.dataPoint.label);
+    }
+
+    getDataForApplication = (title) => {
+        axios.get("/statistics/" + title + "/by-date", {headers: headers})
+            .then(response => {
+                let newState = this.state;
+                newState.dataPointsForApplication = response.data;
+                this.setState({newState});
+            })
+            .catch(error => {
+                if (error.response.data.status === 406)
+                    showErrorDialog(error.response.data.message);
+                else
+                    showErrorDialog("Bir hata oluştu");
+            });
+    }
+
 
     createData(name, calories, fat, carbs, protein) {
         return { name, calories, fat, carbs, protein };
@@ -63,28 +101,7 @@ class EventStatistics extends Component {
                 color: "#c51162",
                 type: "column",
                 click: this.onClickEvent,
-                dataPoints: [
-                    { label: "Apple",  y: 10  },
-                    { label: "Orange", y: 15  },
-                    { label: "Banana", y: 25  },
-                    { label: "Mango",  y: 30  },
-                    { label: "Grape",  y: 28  },
-                    { label: "Apple",  y: 10  },
-                    { label: "Orange", y: 15  },
-                    { label: "Banana", y: 25  },
-                    { label: "Mango",  y: 30  },
-                    { label: "Grape",  y: 28  },
-                    { label: "Apple",  y: 10  },
-                    { label: "Orange", y: 15  },
-                    { label: "Banana", y: 25  },
-                    { label: "Mango",  y: 30  },
-                    { label: "Grape",  y: 28  },
-                    { label: "Apple",  y: 10  },
-                    { label: "Orange", y: 15  },
-                    { label: "Banana", y: 25  },
-                    { label: "Mango",  y: 30  },
-                    { label: "Grape",  y: 28  }
-                ]
+                dataPoints: this.state.dataPointsForEvent
             }]
         }
 
@@ -98,27 +115,7 @@ class EventStatistics extends Component {
             data: [{
                 type: "column",
                 color: '#7986cb',
-                click: this.onClickEvent,
-                dataPoints: [
-                    { label: "Apple",  y: 10  },
-                    { label: "Orange", y: 15  },
-                    { label: "Banana", y: 25  },
-                    { label: "Mango",  y: 30  },
-                    { label: "Grape",  y: 28  },
-                    { label: "Apple",  y: 10  },
-                    { label: "Orange", y: 15  },
-                    { label: "Banana", y: 25  },
-                    { label: "Mango",  y: 30  },
-                    { label: "Grape",  y: 28  },
-                    { label: "Apple",  y: 10  },
-                    { label: "Orange", y: 15  },
-                    { label: "Banana", y: 25  },
-                    { label: "Mango",  y: 30  },
-                    { label: "Grape",  y: 28  },
-                    { label: "Apple",  y: 10  },
-                    { label: "Orange", y: 15  },
-                    { label: "Banana", y: 25  }
-                ]
+                dataPoints: this.state.dataPointsForApplication
             }]
         }
 
