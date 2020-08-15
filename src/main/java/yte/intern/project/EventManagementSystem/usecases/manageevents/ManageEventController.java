@@ -14,6 +14,7 @@ import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Cus
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.mapper.CustomAttributeMapper;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.mapper.EventMapper;
+import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.EventWithAttendantNumber;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
@@ -79,5 +80,6 @@ public class ManageEventController {
     public ApplicationDTO getApplicationOfEventByIdNumber(@PathVariable String title, @PathVariable String idNumber) {
         return applicationMapper.mapToDto(manageEventService.getApplicationOfEvent(title, idNumber), new CycleAvoidingMappingContext());
     }
+
 
 }

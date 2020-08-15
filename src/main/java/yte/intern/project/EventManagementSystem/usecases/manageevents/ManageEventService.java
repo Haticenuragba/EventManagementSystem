@@ -6,6 +6,8 @@ import yte.intern.project.EventManagementSystem.common.exceptionhandling.CustomE
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.entity.Application;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.CustomAttribute;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
+import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.ApplicationCountByDate;
+import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.EventWithAttendantNumber;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.CustomAttributeRepository;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.EventRepository;
 
@@ -13,6 +15,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -50,6 +53,7 @@ public class ManageEventService {
             throw new EntityNotFoundException();
         }
     }
+
 
     @Transactional
     public Event updateEvent(String title, Event event) {
@@ -114,5 +118,23 @@ public class ManageEventService {
         }
     }
 
+    public List<EventWithAttendantNumber> getEventsWithAttendantNumber(){
+        List<Event> events = eventRepository.findAll();
+        List<EventWithAttendantNumber> eventWithAttendantNumberList = new ArrayList<EventWithAttendantNumber>();
+        for(Event e: events){
+            eventWithAttendantNumberList.add(new EventWithAttendantNumber(e.getTitle(), e.getAttendantNumber()));
+        }
+        return eventWithAttendantNumberList;
+    }
+
+    public List<ApplicationCountByDate> getApplicationsByDate(String eventTitle){
+        List<Application> applications = getAllApplicationsOfEvent(eventTitle);
+        List<ApplicationCountByDate> applicationCountByDateList = new ArrayList<ApplicationCountByDate>();
+        Map<String, List<Application>> applicationGrouped = applications.stream().collect(Collectors.groupingBy(a -> a.getCreated().toLocalDate().toString()));
+        for(String key: applicationGrouped.keySet()){
+            applicationCountByDateList.add(new ApplicationCountByDate(key, applicationGrouped.get(key).size()));
+        }
+        return applicationCountByDateList;
+    }
 
 }
