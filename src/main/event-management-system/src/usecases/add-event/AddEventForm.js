@@ -17,7 +17,6 @@ import Box from "@material-ui/core/Box";
 
 import 'sweetalert2/src/sweetalert2.scss'
 import {headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";
-import Unauthorized from "../../common/Unauthorized";
 
 
 

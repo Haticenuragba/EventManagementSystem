@@ -10,7 +10,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 import MapView from "../../common/MapView";
 import axios from "axios";
 import EditIcon from '@material-ui/icons/Edit';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Box from "@material-ui/core/Box";
 import {headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";

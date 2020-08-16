@@ -15,7 +15,6 @@ import EventsGridForEventManager from "./usecases/list-all-events/EventsGridForE
 import EventDetailForAdmin from "./usecases/event-detail/EventDetailForAdmin";
 import EventDetailForEventManager from "./usecases/event-detail/EventDetailForEventManager";
 import Unauthorized from "./common/Unauthorized";
-import BarChart from "./common/BarChart";
 import EventStatistics from "./usecases/show-statistics/EventStatistics";
 
 

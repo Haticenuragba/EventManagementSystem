@@ -10,8 +10,6 @@ import SendIcon from '@material-ui/icons/Send';
 import ClearIcon from '@material-ui/icons/Clear';
 import MapView from "../../common/MapView";
 import axios from "axios";
-import EditIcon from '@material-ui/icons/Edit';
-import Fab from "@material-ui/core/Fab";
 import {showDialogWithImage, showErrorDialog} from "../../common/Utils";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Box from "@material-ui/core/Box";

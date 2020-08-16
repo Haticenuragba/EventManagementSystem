@@ -3,9 +3,8 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
-import BarChart from "../../common/BarChart";
 import CanvasJSReact from '../../assets/canvasjs.react';
-import {getIsDark, headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";
+import {getIsDark, headers, showErrorDialog} from "../../common/Utils";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -15,11 +14,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import axios from "axios";
 import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 
-const dateFormat = require('dateformat');
-
-let CanvasJS = CanvasJSReact.CanvasJS;
 let CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 

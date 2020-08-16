@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import Grid from "@material-ui/core/Grid";
-import {Box} from "@material-ui/core";
 import unauthorizedImage from '../images/Unauthorized403.png';
 
 class Unauthorized extends Component {
@@ -22,10 +21,7 @@ class Unauthorized extends Component {
         },
     };
 
-    constructor(props) {
-        super(props);
-    }
-    
+
     render() {
         return (
 

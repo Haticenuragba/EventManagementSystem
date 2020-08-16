@@ -3,8 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import MediaCard from "./MediaCard";
 import axios from "axios";
 import Box from "@material-ui/core/Box";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from '@material-ui/icons/Add';
 import {withRouter} from "react-router";
 import {
     dateStringToObject,

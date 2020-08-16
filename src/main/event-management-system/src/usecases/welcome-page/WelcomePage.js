@@ -1,14 +1,8 @@
 import React, {Component} from "react";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import CardContent from "@material-ui/core/CardContent";
-import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import {showDialog, showDialogWithImage} from "../../common/Utils";
-import ClearIcon from "@material-ui/icons/Clear";
-import SendIcon from "@material-ui/icons/Send";
 
 class WelcomePage extends Component {
     backgroundImage = require('../../images/background10.jpg');
@@ -30,9 +24,6 @@ class WelcomePage extends Component {
         },
     };
 
-    constructor(props) {
-        super(props);
-    }
 
     navigateToEventGrid = () => {
         this.props.history.push("/events");

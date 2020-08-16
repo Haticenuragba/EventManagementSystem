@@ -5,16 +5,14 @@ import axios from "axios";
 import BarChartIcon from '@material-ui/icons/BarChart';
 import Box from "@material-ui/core/Box";
 import Fab from "@material-ui/core/Fab";
-import AddIcon from '@material-ui/icons/Add';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import {withRouter} from "react-router";
 import {
-    ADMIN,
     dateStringToObject,
     getDaysLaterInMilliseconds,
-    getDistanceFromLatLonInKm, ROLE
+    getDistanceFromLatLonInKm
 } from "../../common/Utils";
 import {startNotificationService} from "../push-notification/PushNotification";
 
