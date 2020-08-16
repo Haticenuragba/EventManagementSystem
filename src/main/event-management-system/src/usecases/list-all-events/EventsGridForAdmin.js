@@ -11,10 +11,12 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import {withRouter} from "react-router";
 import {
+    ADMIN,
     dateStringToObject,
     getDaysLaterInMilliseconds,
-    getDistanceFromLatLonInKm
+    getDistanceFromLatLonInKm, ROLE
 } from "../../common/Utils";
+import {startNotificationService} from "../push-notification/PushNotification";
 
 class EventsGridForAdmin extends Component {
 
@@ -62,7 +64,10 @@ class EventsGridForAdmin extends Component {
             .then(response => {
                 this.setState({events: response.data})
             });
+
+        startNotificationService();
     }
+
 
     navigateToAddEvent = () => {
         this.props.history.push('/add-event', {isUpdate: false, eventTitleToUpdate: ''});

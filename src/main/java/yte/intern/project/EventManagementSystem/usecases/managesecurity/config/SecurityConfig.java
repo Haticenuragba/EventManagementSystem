@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/events-application/**").permitAll()
                 .antMatchers("/events/*/applications").hasAnyAuthority("ADMIN", "EVENT_MANAGER")
                 .antMatchers("/statistics/**").hasAnyAuthority("ADMIN")
-                .antMatchers("/notifications").hasAuthority("ADMIN")
+                .antMatchers("/notifications").permitAll()
                 .antMatchers(HttpMethod.GET, "/events/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/events/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/events/**").hasAuthority("ADMIN")

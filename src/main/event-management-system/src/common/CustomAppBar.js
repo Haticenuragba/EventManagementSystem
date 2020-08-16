@@ -13,6 +13,7 @@ import Select from "@material-ui/core/Select";
 import HomeIcon from '@material-ui/icons/Home';
 import {useHistory} from "react-router";
 import Button from "@material-ui/core/Button";
+import {stopNotificationService} from "../usecases/push-notification/PushNotification";
 
 
 
@@ -125,6 +126,7 @@ export default function CustomAppBar(props) {
         localStorage.removeItem(TOKEN);
         localStorage.removeItem(ROLE);
         history.push("/");
+        stopNotificationService();
     }
 
 
@@ -217,6 +219,7 @@ export default function CustomAppBar(props) {
                     </div>
                     <FormGroup className={classes.switch}>
                         <FormControlLabel
+                            checked={getIsDark()}
                             control={<Switch aria-label="login switch"/>}
                             label="Gece Modu"
                             onChange={handleModeChange}

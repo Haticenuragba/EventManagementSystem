@@ -43,6 +43,7 @@ class App extends Component {
         }
     }
 
+
     handleModeChange = (isDark) => {
         setIsDark(isDark);
         let newState = this.state;
