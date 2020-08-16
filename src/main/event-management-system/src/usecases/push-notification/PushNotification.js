@@ -15,8 +15,7 @@ export function startNotificationService() {
             if (newData.id !== currentData.id && localStorage.getItem(ROLE) === ADMIN) {
 
                 if (currentData.id !== "") {
-                    showNotification(newData.name + " " + newData.surname + " isimli kullanıcı " +
-                        newData.idNumber + " T.C Kimlik Numarası ile " + newData.eventTitle + " etkinliğine kaydoldu");
+                    showNotification(generateText(newData));
                 }
                 currentData = newData;
             }
@@ -31,8 +30,13 @@ export function stopNotificationService() {
     eventSource.close();
 }
 
+function generateText(newData) {
+    return newData.name + " " + newData.surname + " isimli kullanıcı " +
+        newData.idNumber + " T.C Kimlik Numarası ile " + newData.eventTitle + " etkinliğine kaydoldu"
+}
 
-const Toast  = Swal.mixin({
+
+const Toast = Swal.mixin({
     toast: true,
     position: 'bottom-start',
     showConfirmButton: false,

@@ -156,7 +156,7 @@ class EventStatistics extends Component {
                                                 <TableBody>
                                                     {this.state.attendants.length > 0 ?
                                                         this.state.attendants.map((row) => (
-                                                            <TableRow key={row.name}>
+                                                            <TableRow key={row.idNumber}>
                                                                 <TableCell component="th" scope="row">
                                                                     {row.idNumber}
                                                                 </TableCell>
