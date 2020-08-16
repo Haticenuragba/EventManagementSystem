@@ -12,7 +12,7 @@ export function startNotificationService() {
         eventSource = new EventSource("http://localhost:8080/notifications");
         eventSource.onmessage = (event) => {
             const newData = JSON.parse(event.data);
-            if (newData.id !== currentData.id) {
+            if (newData.id !== currentData.id && localStorage.getItem(ROLE) === ADMIN) {
 
                 if (currentData.id !== "") {
                     showNotification(newData.name + " " + newData.surname + " isimli kullanıcı " +
