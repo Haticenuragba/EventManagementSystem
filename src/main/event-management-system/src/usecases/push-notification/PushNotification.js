@@ -1,15 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {ADMIN, ROLE} from "../../common/Utils";
+import * as Swal from "sweetalert2";
 
 
 let eventSource = undefined;
 
+let currentData = {id: "", eventTitle: "", idNumber: "", name: "", surname: ""};
+
 export function startNotificationService() {
-    if(localStorage.getItem(ROLE) === ADMIN) {
+    if (localStorage.getItem(ROLE) === ADMIN) {
         eventSource = new EventSource("http://localhost:8080/notifications");
         eventSource.onmessage = (event) => {
-            const usage = JSON.parse(event.data);
-            console.log(usage);
+            const newData = JSON.parse(event.data);
+            if (newData.id !== currentData.id) {
+
+                if (currentData.id !== "") {
+                    showNotification(newData.name + " " + newData.surname + " isimli kullanıcı " +
+                        newData.idNumber + " T.C Kimlik Numarası ile " + newData.eventTitle + " etkinliğine kaydoldu");
+                }
+                currentData = newData;
+            }
+
+
         }
     }
     return eventSource;
@@ -17,6 +29,26 @@ export function startNotificationService() {
 
 export function stopNotificationService() {
     eventSource.close();
+}
+
+
+const Toast  = Swal.mixin({
+    toast: true,
+    position: 'bottom-start',
+    showConfirmButton: false,
+    timer: 5000,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
+
+export function showNotification(text) {
+    Toast.fire({
+        icon: 'info',
+        title: "",
+        text: text
+    })
 }
 
 
