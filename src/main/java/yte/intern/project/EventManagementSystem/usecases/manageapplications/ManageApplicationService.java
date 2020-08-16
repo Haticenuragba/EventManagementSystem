@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import yte.intern.project.EventManagementSystem.common.exceptionhandling.CustomException;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.entity.Application;
+import yte.intern.project.EventManagementSystem.usecases.manageapplications.objects.LatestApplication;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.repository.ApplicationCustomAttributeRepository;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.repository.ApplicationRepository;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
@@ -12,6 +13,7 @@ import yte.intern.project.EventManagementSystem.usecases.sendqrcode.EmailService
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +60,18 @@ public class ManageApplicationService {
         if (optionalApplicationList.isPresent()) {
             return applicationRepository.findApplicationByIdNumber(idNumber).get();
         } else {
+            throw new EntityNotFoundException();
+        }
+    }
+
+
+    public LatestApplication getLatestApplication(){
+        Optional<Application> applicationOptional = applicationRepository.findFirstByOrderByCreatedDesc();
+        if(applicationOptional.isPresent()){
+            Application application = applicationOptional.get();
+            return new LatestApplication(application.getEvent().getTitle(), application.getIdNumber(), application.getName(), application.getSurname());
+        }
+        else{
             throw new EntityNotFoundException();
         }
     }

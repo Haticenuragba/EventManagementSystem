@@ -25,14 +25,17 @@ export function dateStringToObject(string) {
 
 export const defaultImageUrl = 'https://res.cloudinary.com/diijhkryx/image/upload/v1596781090/no-image_q20lwb.png'
 
-let isDark = false;
 
 export function setIsDark(booleanExpression) {
-    isDark = booleanExpression;
+    localStorage.setItem("isDark", booleanExpression);
 }
 
 export function getIsDark() {
-    return isDark;
+    if (localStorage.getItem("isDark") === null)
+        setIsDark(false);
+
+    return (localStorage.getItem("isDark") === "true");
+
 }
 
 export function showSuccessDialog(text) {
@@ -72,7 +75,7 @@ export function showDialogWithImage(text, image) {
     })
 }
 
-export function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     let R = 6371; // Radius of the earth in km
     let dLat = deg2rad(lat2 - lat1);  // deg2rad below
     let dLon = deg2rad(lon2 - lon1);
@@ -87,8 +90,9 @@ export function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
 }
 
 function deg2rad(deg) {
-    return deg * (Math.PI/180)
+    return deg * (Math.PI / 180)
 }
+
 export const headers = {
     'Content-Type': 'application/json',
     'Authorization': localStorage.getItem("token")

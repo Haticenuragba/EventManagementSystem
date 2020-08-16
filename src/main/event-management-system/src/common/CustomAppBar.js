@@ -7,7 +7,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import FormGroup from "@material-ui/core/FormGroup";
 import InputBase from "@material-ui/core/InputBase";
-import {getIsDark} from "./Utils";
+import {getIsDark, ROLE, TOKEN} from "./Utils";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import HomeIcon from '@material-ui/icons/Home';
@@ -122,7 +122,8 @@ export default function CustomAppBar(props) {
     }
 
     const logout = () => {
-        localStorage.clear();
+        localStorage.removeItem(TOKEN);
+        localStorage.removeItem(ROLE);
         history.push("/");
     }
 

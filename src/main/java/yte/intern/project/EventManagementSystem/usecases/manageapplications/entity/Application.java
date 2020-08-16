@@ -29,7 +29,7 @@ public class Application extends BaseEntity {
     @Column(name = "SURNAME")
     private String surname;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "APPLICATION_ID")
     private Set<ApplicationCustomAttribute> applicationCustomAttributes = new HashSet<ApplicationCustomAttribute>();
 
@@ -41,7 +41,7 @@ public class Application extends BaseEntity {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "EVENT_ID")
     private Event event;
 

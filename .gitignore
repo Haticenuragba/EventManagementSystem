@@ -15,7 +15,6 @@ application.properties
 /target
 
 /main/resources/application.properties
-
 # misc
 .DS_Store
 .env.local

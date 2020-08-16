@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     Optional<List<Application>> findApplicationByIdNumber(String idNumber);
+    Optional<Application> findFirstByOrderByCreatedDesc();
     boolean existsByIdNumberAndEventTitle(String idNumber, String eventTitle);
+
 }
 
