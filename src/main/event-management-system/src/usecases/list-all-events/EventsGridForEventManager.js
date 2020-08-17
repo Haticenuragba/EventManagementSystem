@@ -23,8 +23,9 @@ class EventsGridForEventManager extends Component {
     }
 
     componentDidMount() {
+        let auth = headers;
         let managerName = localStorage.getItem(USERNAME);
-        axios.get("/event-managers/" + managerName, {headers: headers})
+        axios.get("/event-managers/" + managerName, {headers: auth})
             .then(response => {
                 this.setState({events: response.data.events});
             });

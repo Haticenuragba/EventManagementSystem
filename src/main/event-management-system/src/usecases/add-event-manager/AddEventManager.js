@@ -40,7 +40,8 @@ class AddEventManager extends Component {
     }
 
     saveEventManager(eventManager) {
-        axios.post("/event-managers", eventManager, {headers: headers})
+        let auth = headers;
+        axios.post("/event-managers", eventManager, {headers: auth})
             .then(response => {
                 if (response.status === 200) {
                     showSuccessDialog("Etkinlik sorumlusu başarıyla eklendi");

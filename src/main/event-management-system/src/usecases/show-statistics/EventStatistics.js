@@ -31,7 +31,8 @@ class EventStatistics extends Component {
     }
 
     componentDidMount() {
-        axios.get("/statistics/by-attendant-number", {headers: headers})
+        let auth = headers;
+        axios.get("/statistics/by-attendant-number", {headers: auth})
             .then(response => {
                 let newState = this.state;
                 newState.dataPointsForEvent = response.data;
@@ -41,7 +42,7 @@ class EventStatistics extends Component {
                 this.getAttendantsForApplication(this.state.selectedEventTitle);
             })
             .catch(error => {
-                    showErrorDialog("Bir hata oluştu");
+                    console.log(error);
             });
 
     }
@@ -55,7 +56,8 @@ class EventStatistics extends Component {
     }
 
     getDataForApplication = (title) => {
-        axios.get("/statistics/" + title + "/by-date", {headers: headers})
+        let auth = headers;
+        axios.get("/statistics/" + title + "/by-date", {headers: auth})
             .then(response => {
                 let newState = this.state;
                 newState.dataPointsForApplication = response.data;
@@ -67,7 +69,8 @@ class EventStatistics extends Component {
     }
 
     getAttendantsForApplication = (title) => {
-        axios.get("/statistics/" + title + "/attendants", {headers: headers})
+        let auth = headers;
+        axios.get("/statistics/" + title + "/attendants", {headers: auth})
             .then(response => {
                 let newState = this.state;
                 newState.attendants = response.data;

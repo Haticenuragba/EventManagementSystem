@@ -72,7 +72,8 @@ class AddEventForm extends Component {
     }
 
     fetchEventManagers(){
-        axios.get("/event-managers", {headers: headers})
+        let auth = headers;
+        axios.get("/event-managers", {headers: auth})
             .then(response => {
                 if (response.status === 200) {
                     let newState = this.state;
@@ -85,7 +86,8 @@ class AddEventForm extends Component {
     }
 
     saveNewEvent(e) {
-        axios.post("/events", e, {headers: headers})
+        let auth = headers;
+        axios.post("/events", e, {headers: auth})
             .then(response => {
                 console.log(response);
                 showSuccessDialog("Etkinlik başarıyla kaydedildi");
@@ -100,7 +102,8 @@ class AddEventForm extends Component {
     }
 
     updateExistingEvent(e) {
-        axios.put("/events/" + this.eventTitleToUpdate, e, {headers: headers})
+        let auth = headers;
+        axios.put("/events/" + this.eventTitleToUpdate, e, {headers: auth})
             .then(response => {
                 console.log(response);
                 showSuccessDialog("Etkinlik başarıyla güncellendi");

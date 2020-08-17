@@ -12,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import yte.intern.project.EventManagementSystem.common.exceptionhandling.CustomException;
+import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
+import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.EventRepository;
+import yte.intern.project.EventManagementSystem.usecases.managequestions.entity.Question;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Authority;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Users;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.repository.AuthorityRepository;
@@ -35,6 +38,7 @@ public class CustomUserDetailsManager implements UserDetailsManager {
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
     private final EmailService emailService;
+    private final EventRepository eventRepository;
 
     @Override
     public void createUser(final UserDetails user) {
@@ -110,6 +114,16 @@ public class CustomUserDetailsManager implements UserDetailsManager {
             Users addedUser = userRepository.save(new Users(null, username, passwordEncoder.encode(password),null, Set.of(authority)));
             emailService.sendMailWithPassword(email, addedUser.getUsername(), password);
             return addedUser;
+        }
+    }
+
+    public List<Question> getQuestionsOfEvent(String eventTitle){
+        Optional<Event> optionalEvent = eventRepository.findEventByTitle(eventTitle);
+        if(optionalEvent.isPresent()){
+            return new ArrayList<Question>(optionalEvent.get().getQuestions());
+        }
+        else{
+            throw new CustomException("Böyle bir etkinlik bulunamadı");
         }
     }
 

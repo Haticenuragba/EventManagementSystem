@@ -66,10 +66,10 @@ public class ManageApplicationService {
         Optional<Application> applicationOptional = applicationRepository.findFirstByOrderByCreatedDesc();
         if(applicationOptional.isPresent()){
             Application application = applicationOptional.get();
-            return new LatestApplication(application.getEvent().getTitle(), application.getIdNumber(), application.getName(), application.getSurname());
+            return new LatestApplication(application.getId(), application.getEvent().getTitle(), application.getIdNumber(), application.getName(), application.getSurname());
         }
         else{
-            return new LatestApplication(null, null, null, null);
+            return new LatestApplication(null,null, null, null, null);
         }
     }
 

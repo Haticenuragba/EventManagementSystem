@@ -65,7 +65,8 @@ class EventDetailForAdmin extends Component {
     }
 
     deleteEvent = (title) => {
-        axios.delete("/events/" + this.eventTitle, {headers: headers})
+        let auth = headers;
+        axios.delete("/events/" + this.eventTitle, {headers: auth})
             .then(response => {
                 if (response.status === 200) {
                    showSuccessDialog("Etkinlik başarıyla silindi");

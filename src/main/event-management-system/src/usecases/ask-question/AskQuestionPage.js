@@ -57,8 +57,9 @@ class AskQuestionPage extends Component {
 
 
     saveQuestion() {
+        let auth = headers;
         let question = this.state.question;
-        axios.post("/questions/" + this.state.eventTitle, question, {headers: headers})
+        axios.post("/questions/" + this.state.eventTitle, question, {headers: auth})
             .then(response => {
                 if (response.status === 200) {
                     showSuccessDialog("Sorunuz başarıyla iletildi")
