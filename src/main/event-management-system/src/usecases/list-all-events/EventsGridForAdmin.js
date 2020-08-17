@@ -74,7 +74,7 @@ class EventsGridForAdmin extends Component {
         this.props.history.push('/statistics');
     }
     navigateToAddManager = () => {
-
+        this.props.history.push('/add-manager');
     }
 
     filterByTitle(event) {
@@ -122,7 +122,7 @@ class EventsGridForAdmin extends Component {
                     </Grid>
                 </Box>
                 <Fab color="primary" aria-label="add" style={this.addManagerFabStyle}
-                     onClick={this.navigateToAddEvent}>
+                     onClick={this.navigateToAddManager}>
                     <PersonAddIcon/>
                 </Fab>
                 <Fab color="primary" aria-label="add" style={this.addFabStyle}

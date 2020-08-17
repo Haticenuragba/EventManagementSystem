@@ -16,6 +16,7 @@ import EventDetailForAdmin from "./usecases/event-detail/EventDetailForAdmin";
 import EventDetailForEventManager from "./usecases/event-detail/EventDetailForEventManager";
 import Unauthorized from "./common/Unauthorized";
 import EventStatistics from "./usecases/show-statistics/EventStatistics";
+import AddEventManager from "./usecases/add-event-manager/AddEventManager";
 
 
 const themeDark = createMuiTheme({
@@ -100,6 +101,8 @@ class App extends Component {
                            component={localStorage.getItem(ROLE) === EVENT_MANAGER ? withRouter(EventDetailForEventManager) : Unauthorized}/>
                     <Route path="/add-event"
                            component={localStorage.getItem(ROLE) === ADMIN ? withRouter(AddEventForm) : Unauthorized}/>
+                    <Route path="/add-manager"
+                           component={localStorage.getItem(ROLE) === ADMIN ? withRouter(AddEventManager) : Unauthorized}/>
                     <Route path="/statistics"
                            component={localStorage.getItem(ROLE) === ADMIN ? withRouter(EventStatistics) : Unauthorized}/>
                     <Route exact path="/events">

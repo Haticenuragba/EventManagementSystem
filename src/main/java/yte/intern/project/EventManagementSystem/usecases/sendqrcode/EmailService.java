@@ -8,14 +8,11 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.dto.ApplicationDTO;
-import yte.intern.project.EventManagementSystem.usecases.manageapplications.mapper.ApplicationMapper;
-import yte.intern.project.EventManagementSystem.usecases.sendqrcode.objects.Mail;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
