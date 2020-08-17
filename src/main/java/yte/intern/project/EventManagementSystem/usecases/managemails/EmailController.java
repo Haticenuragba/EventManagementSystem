@@ -1,4 +1,4 @@
-package yte.intern.project.EventManagementSystem.usecases.sendqrcode;
+package yte.intern.project.EventManagementSystem.usecases.managemails;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

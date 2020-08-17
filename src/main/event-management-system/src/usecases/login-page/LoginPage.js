@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import axios from "axios";
-import {ADMIN, EVENT_MANAGER, ROLE, showErrorDialog, TOKEN} from "../../common/Utils";
+import {ADMIN, EVENT_MANAGER, ROLE, showErrorDialog, TOKEN, USERNAME} from "../../common/Utils";
 
 const themeDark = createMuiTheme({
     palette: {
@@ -55,6 +55,7 @@ class LoginPage extends Component {
                 if(response.status === 200) {
                     localStorage.setItem(TOKEN, "Bearer " + response.data.token);
                     localStorage.setItem(ROLE, response.data.role.sort()[0]);
+                    localStorage.setItem(USERNAME, loginUser.username);
                     if(localStorage.getItem(ROLE) === ADMIN){
                         this.navigateToAdmin();
                     }

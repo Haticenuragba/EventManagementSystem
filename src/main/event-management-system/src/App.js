@@ -17,6 +17,7 @@ import EventDetailForEventManager from "./usecases/event-detail/EventDetailForEv
 import Unauthorized from "./common/Unauthorized";
 import EventStatistics from "./usecases/show-statistics/EventStatistics";
 import AddEventManager from "./usecases/add-event-manager/AddEventManager";
+import AskQuestionPage from "./usecases/ask-question/AskQuestionPage";
 
 
 const themeDark = createMuiTheme({
@@ -127,6 +128,7 @@ class App extends Component {
                         }
                     </Route>
                     <Route path="/login" component={withRouter(LoginPage)}/>
+                    <Route path={"/:questionUrl"} component={AskQuestionPage}/>
                     <Route exact path="/" component={withRouter(WelcomePage)}/>
 
                 </div>

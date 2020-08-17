@@ -1,6 +1,7 @@
 package yte.intern.project.EventManagementSystem.usecases.manageevents.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.hash.Hashing;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,6 +11,7 @@ import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.U
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +56,20 @@ public class EventDTO {
 
     private Integer attendantNumber = 0;
 
-    @JsonIgnoreProperties("event")
+    @JsonIgnoreProperties(value = "event", allowSetters = true)
     private List<ApplicationDTO> applications = new ArrayList<ApplicationDTO>();
 
     private String managerName;
+
+    private String questionUrl = generateQuestionUrl();
+
+    public String generateQuestionUrl() {
+        String stringToHash = this.title + "trybruteforcefirst";
+        String hashedString = Hashing.sha256()
+                .hashString(stringToHash, StandardCharsets.UTF_8)
+                .toString();
+        return "http://localhost:3000/" + hashedString;
+    }
 
     @AssertTrue
     public boolean isEndDateValid() {

@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +17,7 @@ import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.U
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.repository.AuthorityRepository;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.repository.UserRepository;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.util.RandomString;
-import yte.intern.project.EventManagementSystem.usecases.sendqrcode.EmailService;
+import yte.intern.project.EventManagementSystem.usecases.managemails.EmailService;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;

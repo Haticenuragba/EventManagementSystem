@@ -1,12 +1,18 @@
 package yte.intern.project.EventManagementSystem.usecases.manageevents.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.hash.Hashing;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import yte.intern.project.EventManagementSystem.common.entity.BaseEntity;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.entity.Application;
+import yte.intern.project.EventManagementSystem.usecases.managequestions.entity.Question;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Users;
 
 import javax.persistence.*;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -60,11 +66,19 @@ public class Event extends BaseEntity {
         }
     }
 
+    @OneToMany
+    @JoinColumn(name = "QUESTION_ID")
+    private Set<Question> questions = new HashSet<Question>();
+
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Application> applications;
 
+
     @Column(name = "MANAGER_NAME")
     private String managerName;
+
+    @Column(name = "QUESTION_URL")
+    private String questionUrl;
 
 
     public void addApplication(Application application) {
@@ -75,6 +89,11 @@ public class Event extends BaseEntity {
         }
     }
 
+    public void addQuestion(Question question) {
+        if (questions != null) {
+            this.questions.add(question);
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

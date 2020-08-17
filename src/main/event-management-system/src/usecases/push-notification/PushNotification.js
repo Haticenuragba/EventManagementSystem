@@ -26,7 +26,8 @@ export function startNotificationService() {
 }
 
 export function stopNotificationService() {
-    eventSource.close();
+    if(eventSource)
+         eventSource.close();
 }
 
 function generateText(newData) {

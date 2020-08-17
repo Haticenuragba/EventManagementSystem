@@ -136,6 +136,10 @@ class EventDetailForEventManager extends Component {
                                 </Typography>
                                 <br/>
                                 <Typography gutterBottom>
+                                    Etkinlik Sorumlusu: {this.state.event.managerName}
+                                </Typography>
+                                <br/>
+                                <Typography gutterBottom>
                                     Etkinlik {dateFormat(this.state.event.startDate, "dd/mm/yyyy")} - {dateFormat(this.state.event.endDate, "dd/mm/yyyy")} tarihleri
                                     arasında gerçekleşecektir.
                                 </Typography>

@@ -1,20 +1,13 @@
 import React, {Component} from "react";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
+import {createMuiTheme} from "@material-ui/core/styles";
 import axios from "axios";
-import {ADMIN, EVENT_MANAGER, headers, ROLE, showErrorDialog, showSuccessDialog, TOKEN} from "../../common/Utils";
+import {headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
-const themeDark = createMuiTheme({
-    palette: {
-        type: "dark"
-    },
-});
 
 
 class AddEventManager extends Component {

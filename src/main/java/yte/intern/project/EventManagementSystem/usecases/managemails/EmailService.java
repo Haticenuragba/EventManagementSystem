@@ -1,4 +1,4 @@
-package yte.intern.project.EventManagementSystem.usecases.sendqrcode;
+package yte.intern.project.EventManagementSystem.usecases.managemails;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -6,7 +6,6 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -33,7 +32,9 @@ public class EmailService {
         helper.setTo(applicationDTO.getEmail());
 
         helper.setText("Tebrikler, " + applicationDTO.getEvent().getTitle()
-                + " etkinliğine kaydınız başarıyla tamamlandı.\n"
+                + " etkinliğine kaydınız başarıyla tamamlandı.<br/>"
+                + "Etkinlik sırasında aşağıdaki linkten etkinlik sorumlusuna sorularınızı sorabilirsiniz<br/>"
+                + applicationDTO.getEvent().getQuestionUrl() + "<br/>"
                 + "Etkinlik detaylarına ekteki kare koddan ulaşabilirsiniz.", true);
         helper.setSubject(applicationDTO.getEvent().getTitle());
 

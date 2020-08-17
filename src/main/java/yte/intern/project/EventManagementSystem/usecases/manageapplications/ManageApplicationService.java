@@ -9,11 +9,8 @@ import yte.intern.project.EventManagementSystem.usecases.manageapplications.repo
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.repository.ApplicationRepository;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.EventRepository;
-import yte.intern.project.EventManagementSystem.usecases.sendqrcode.EmailService;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +39,7 @@ public class ManageApplicationService {
                             .get(0);
                 }
                 else{
-                    throw new CustomException("Etkinliğe zaten kaydoldunuz.");
+                    throw new CustomException("Bu etkinliğe zaten kaydoldunuz.");
                 }
             }
             else {
@@ -72,7 +69,7 @@ public class ManageApplicationService {
             return new LatestApplication(application.getEvent().getTitle(), application.getIdNumber(), application.getName(), application.getSurname());
         }
         else{
-            throw new EntityNotFoundException();
+            return null;
         }
     }
 

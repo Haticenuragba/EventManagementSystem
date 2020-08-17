@@ -7,7 +7,7 @@ import {withRouter} from "react-router";
 import {
     dateStringToObject,
     getDaysLaterInMilliseconds,
-    getDistanceFromLatLonInKm
+    getDistanceFromLatLonInKm, headers, USERNAME
 } from "../../common/Utils";
 
 class EventsGridForEventManager extends Component {
@@ -23,9 +23,10 @@ class EventsGridForEventManager extends Component {
     }
 
     componentDidMount() {
-        axios.get("/events")
+        let managerName = localStorage.getItem(USERNAME);
+        axios.get("/event-managers/" + managerName, {headers: headers})
             .then(response => {
-                this.setState({events: response.data})
+                this.setState({events: response.data.events});
             });
     }
 
