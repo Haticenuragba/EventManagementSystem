@@ -27,7 +27,7 @@ export default function MediaCard({event}) {
             history.push('/admin/events/' + title);
         }
         else if(localStorage.getItem(ROLE) === EVENT_MANAGER){
-            history.push('/event-manager/events/' + title);
+            history.push('/manager/events/' + title);
         }
         else{
             history.push('/events/' + title);

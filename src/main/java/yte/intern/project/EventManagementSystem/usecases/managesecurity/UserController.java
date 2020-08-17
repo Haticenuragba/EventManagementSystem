@@ -40,7 +40,7 @@ public class UserController {
         return customUserDetailsManager.addUser(eventManager.getUsername(), eventManager.getEmail());
     }
 
-    @GetMapping("event/{eventTitle}")
+    @GetMapping("/event/{eventTitle}")
     public List<QuestionDTO> getEventOfManagerByTitle(@PathVariable String eventTitle){
         return questionMapper.mapToDto(customUserDetailsManager.getQuestionsOfEvent(eventTitle));
     }

@@ -73,7 +73,7 @@ class App extends Component {
         if (localStorage.getItem("role") === "ADMIN") {
             this.props.history.push('/admin/events');
         } else if (localStorage.getItem("role") === "EVENT_MANAGER") {
-            this.props.history.push('/event-manager/events');
+            this.props.history.push('/manager/events');
         } else {
             this.props.history.push('/events');
         }
@@ -98,7 +98,7 @@ class App extends Component {
                     <Route path="/events/:eventTitle" component={withRouter(EventDetailForUser)}/>
                     <Route path="/admin/events/:eventTitle"
                            component={localStorage.getItem(ROLE) === ADMIN ? withRouter(EventDetailForAdmin) : Unauthorized}/>
-                    <Route path="/event-manager/events/:eventTitle"
+                    <Route path="/manager/events/:eventTitle"
                            component={localStorage.getItem(ROLE) === EVENT_MANAGER ? withRouter(EventDetailForEventManager) : Unauthorized}/>
                     <Route path="/add-event"
                            component={localStorage.getItem(ROLE) === ADMIN ? withRouter(AddEventForm) : Unauthorized}/>
@@ -119,7 +119,7 @@ class App extends Component {
                             : <Unauthorized/>
                         }
                     </Route>
-                    <Route exact path="/event-manager/events">
+                    <Route exact path="/manager/events">
                         {localStorage.getItem(ROLE) === EVENT_MANAGER ?
                             <EventsGridForEventManager textToSearch={this.state.textToSearch}
                                                        distanceToLook={this.state.distanceToLook}

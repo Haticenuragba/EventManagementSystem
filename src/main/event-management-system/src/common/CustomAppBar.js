@@ -104,10 +104,10 @@ export default function CustomAppBar(props) {
     const history = useHistory();
     const [state, setState] = React.useState({
         visibilityOfParams: window.location.pathname === '/events'
-        || window.location.pathname === '/event-manager/events'
+        || window.location.pathname === '/manager/events'
         || window.location.pathname === '/admin/events' ?
             "visible" : "hidden",
-        visibilityOfLogout: window.location.pathname === '/event-manager/events'
+        visibilityOfLogout: window.location.pathname === '/manager/events'
         || window.location.pathname === '/admin/events' ?
             "visible" : "hidden",
     });
@@ -132,8 +132,8 @@ export default function CustomAppBar(props) {
 
 
     history.listen((location, action) => {
-        let visibility = location.pathname === '/events' || location.pathname === '/event-manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden"
-        let visibilityOfLogout = location.pathname === '/event-manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden"
+        let visibility = location.pathname === '/events' || location.pathname === '/manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden"
+        let visibilityOfLogout = location.pathname === '/manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden"
         setState({
             visibilityOfParams: visibility,
             visibilityOfLogout: visibilityOfLogout

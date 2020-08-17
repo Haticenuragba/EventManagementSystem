@@ -45,7 +45,7 @@ class LoginPage extends Component {
     }
 
     navigateToManager(){
-        this.props.history.push('/event-manager/events');
+        this.props.history.push('/manager/events');
     }
 
 
