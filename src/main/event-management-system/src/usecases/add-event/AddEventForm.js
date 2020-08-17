@@ -278,6 +278,7 @@ class AddEventForm extends Component {
                                         <br/>
                                         <div>
                                             <Select
+                                                disabled={this.isUpdate}
                                                 name="managerName"
                                                 label={"Etkinlik sorumlusu seçin"}
                                                 fullWidth
