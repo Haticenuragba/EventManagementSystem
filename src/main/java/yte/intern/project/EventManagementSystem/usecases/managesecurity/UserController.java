@@ -1,10 +1,13 @@
 package yte.intern.project.EventManagementSystem.usecases.managesecurity;
 
+import com.google.zxing.WriterException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Users;
+import yte.intern.project.EventManagementSystem.usecases.managesecurity.objects.EventManager;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -12,8 +15,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
+private final CustomUserDetailsManager customUserDetailsManager;
     @GetMapping
-    public List<String> getAllEventManagers(){
-        return null;
+    public List<String> getAllEventManagers() {
+        return customUserDetailsManager.getAllEventManagers();
+
     }
+
+    @PostMapping
+    public Users addEventManager(@RequestBody EventManager eventManager) throws MessagingException, IOException, WriterException {
+        return customUserDetailsManager.addUser(eventManager.getUsername(), eventManager.getEmail());
+    }
+
 }

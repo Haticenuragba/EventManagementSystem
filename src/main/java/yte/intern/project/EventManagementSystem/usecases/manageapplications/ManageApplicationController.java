@@ -38,7 +38,7 @@ public class ManageApplicationController {
         Application addedApplication = manageApplicationService.addApplication(application, title);
         ApplicationDTO addedApplicationDTO = applicationMapper.mapToDto(addedApplication, new CycleAvoidingMappingContext());
         try {
-            return emailService.sendSimpleMessage(addedApplicationDTO);
+            return emailService.sendMailWithQrCode(addedApplicationDTO);
         } catch (MessagingException | WriterException | IOException e) {
             throw new CustomException("Etkinlik kaydı başarılı, fakat mail gönderilemedi.");
         }

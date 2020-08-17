@@ -28,7 +28,7 @@ public class EmailService {
 
     private final JavaMailSender emailSender;
 
-    public String sendSimpleMessage(ApplicationDTO applicationDTO) throws MessagingException, IOException, WriterException {
+    public String sendMailWithQrCode(ApplicationDTO applicationDTO) throws MessagingException, IOException, WriterException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -53,6 +53,22 @@ public class EmailService {
         return Base64Utils.encodeToString(image);
     }
 
+    public void sendMailWithPassword(String mail, String username, String password) throws MessagingException, IOException, WriterException {
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setFrom("trybruteforcefirst@gmail.com");
+        helper.setTo(mail);
+
+        helper.setText("Etkinlik yönetim sistemine etkinlik sorumlusu olarak kaydedildiniz." +
+                "\nKullanıcı adınız: " + username +
+                "\nŞifreniz: " + password);
+
+        helper.setSubject("Etkinlik Yönetim Sorumlusu Kayıt Bildirimi");
+
+        emailSender.send(message);
+    }
+
     private byte[] getQRCodeImage(String text, int width, int height) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
@@ -61,5 +77,6 @@ public class EmailService {
         byte[] pngData = pngOutputStream.toByteArray();
         return pngData;
     }
+
 
 }

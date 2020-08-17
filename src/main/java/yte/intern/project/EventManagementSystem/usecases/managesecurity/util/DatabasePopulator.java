@@ -21,13 +21,10 @@ public class DatabasePopulator {
     @Transactional
     public void populateDatabaseAfterInit() {
 
-        List<Authority> savedAuthorities = authorityRepository.saveAll(Set.of(new Authority(null, "ADMIN"), new Authority(null, "EVENT_MANAGER")));
-        Users adminUser = new Users(null, "admin", "1478963", Set.copyOf(savedAuthorities));
-        Users manager1 = new Users(null, "haticenuragba", "1478963", Set.of(new Authority(null, "EVENT_MANAGER")));
-        Users manager2 = new Users(null, "serhatyilmaz", "1478963", Set.of(new Authority(null, "EVENT_MANAGER")));
+
+        Authority adminAuthority = authorityRepository.save(new Authority(null, "ADMIN"));
+        Users adminUser = new Users(null, "admin", "1478963", Set.of(adminAuthority));
 
         customUserDetailsManager.createUser(adminUser);
-        customUserDetailsManager.createUser(manager1);
-        customUserDetailsManager.createUser(manager2);
     }
 }
