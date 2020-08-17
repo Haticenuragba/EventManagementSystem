@@ -22,6 +22,12 @@ private final CustomUserDetailsManager customUserDetailsManager;
 
     }
 
+    @GetMapping("/{managerName}")
+    public Users getAllEventManagers(@PathVariable String managerName) {
+        return customUserDetailsManager.getUserByUsername(managerName);
+
+    }
+
     @PostMapping
     public Users addEventManager(@RequestBody EventManager eventManager) throws MessagingException, IOException, WriterException {
         return customUserDetailsManager.addUser(eventManager.getUsername(), eventManager.getEmail());

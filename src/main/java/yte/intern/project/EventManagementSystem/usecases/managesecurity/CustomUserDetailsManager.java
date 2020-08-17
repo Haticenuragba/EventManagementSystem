@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -80,6 +81,16 @@ public class CustomUserDetailsManager implements UserDetailsManager {
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
+    public Users getUserByUsername(String username){
+        Optional<Users> usersOptional = userRepository.findByUsername(username);
+        if(usersOptional.isPresent()){
+            return usersOptional.get();
+        }
+        else{
+            throw new CustomException("Bu isimde bir etkinlik görevlisi bulanamadı");
+        }
+    }
+
     @Transactional
     public Users addUser(String username, String email) throws MessagingException, IOException, WriterException {
         Optional<Users> usersOptional = userRepository.findByUsername(username);
@@ -97,7 +108,7 @@ public class CustomUserDetailsManager implements UserDetailsManager {
             }
             RandomString randomString = new RandomString();
             String password = randomString.getAlphaNumericString(8);
-            Users addedUser = userRepository.save(new Users(null, username, passwordEncoder.encode(password), Set.of(authority)));
+            Users addedUser = userRepository.save(new Users(null, username, passwordEncoder.encode(password),null, Set.of(authority)));
             emailService.sendMailWithPassword(email, addedUser.getUsername(), password);
             return addedUser;
         }

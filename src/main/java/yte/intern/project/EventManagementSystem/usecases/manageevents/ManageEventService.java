@@ -11,6 +11,8 @@ import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.At
 import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.EventWithAttendantNumber;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.CustomAttributeRepository;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.EventRepository;
+import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Users;
+import yte.intern.project.EventManagementSystem.usecases.managesecurity.repository.UserRepository;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
@@ -26,12 +28,22 @@ import static java.util.stream.Collectors.toList;
 public class ManageEventService {
     private final EventRepository eventRepository;
     private final CustomAttributeRepository customAttributeRepository;
+    private final UserRepository userRepository;
 
     public Event addEvent(Event event) {
         if (eventRepository.existsByTitle(event.getTitle())) {
             throw new CustomException("Bu etkinlik adı zaten mevcut");
         }
-        return eventRepository.save(event);
+        Optional<Users> usersOptional = userRepository.findByUsername(event.getManagerName());
+        if(usersOptional.isPresent()){
+            Users managerFromDb = usersOptional.get();
+            event.setManagerName(managerFromDb.getUsername());
+            managerFromDb.addEvent(event);
+            return eventRepository.save(event);
+        }
+        else{
+            throw new CustomException("Böyle bir etkinlik sorumlussu bulunamadı.");
+        }
     }
 
     public Event getEventByTitle(String title) {

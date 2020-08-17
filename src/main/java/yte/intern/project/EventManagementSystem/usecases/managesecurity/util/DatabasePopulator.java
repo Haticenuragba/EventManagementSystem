@@ -23,7 +23,7 @@ public class DatabasePopulator {
 
 
         Authority adminAuthority = authorityRepository.save(new Authority(null, "ADMIN"));
-        Users adminUser = new Users(null, "admin", "1478963", Set.of(adminAuthority));
+        Users adminUser = new Users(null, "admin", "1478963", null, Set.of(adminAuthority));
 
         customUserDetailsManager.createUser(adminUser);
     }
