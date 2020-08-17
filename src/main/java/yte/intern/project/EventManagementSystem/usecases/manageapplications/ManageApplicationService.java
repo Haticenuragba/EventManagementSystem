@@ -69,7 +69,7 @@ public class ManageApplicationService {
             return new LatestApplication(application.getEvent().getTitle(), application.getIdNumber(), application.getName(), application.getSurname());
         }
         else{
-            return null;
+            return new LatestApplication(null, null, null, null);
         }
     }
 

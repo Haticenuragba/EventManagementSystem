@@ -6,6 +6,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import SendIcon from "@material-ui/icons/Send";
 import Typography from "@material-ui/core/Typography";
+import axios from "axios";
+import {headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";
 
 
 class AskQuestionPage extends Component {
@@ -24,26 +26,50 @@ class AskQuestionPage extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.location.pathname);
+        let url = this.props.location.pathname.substr(14);
+        axios.get("/questions/" + url)
+            .then(response => {
+                if (response.status === 200) {
+                    let newState = this.state;
+                    newState.eventTitle = response.data;
+                    this.setState({newState});
+                    console.log(this.state.eventTitle);
+                }
+            }).catch(error => {
+                if (error.response.data.status === 406)
+                    showErrorDialog(error.response.data.message);
+                else
+                    showErrorDialog("Bir hata oluştu.");
+            }
+        );
     }
 
     handleInputChange = e => {
         let newState = this.state;
         const name = e.target.name;
         const value = e.target.value;
-        newState.eventManager[name] = value;
+        newState.question[name] = value;
         this.setState({
             newState
         });
 
     }
 
-    navigateToHome() {
-        this.props.history.push('/admin/events');
-    }
 
-    saveEventManager(eventManager) {
-
+    saveQuestion() {
+        let question = this.state.question;
+        axios.post("/questions/" + this.state.eventTitle, question, {headers: headers})
+            .then(response => {
+                if (response.status === 200) {
+                    showSuccessDialog("Sorunuz başarıyla iletildi")
+                }
+            }).catch(error => {
+                if (error.response.data.status === 406)
+                    showErrorDialog(error.response.data.message);
+                else
+                    showErrorDialog("Bir hata oluştu.");
+            }
+        );
     }
 
     render() {
@@ -72,14 +98,14 @@ class AskQuestionPage extends Component {
                                 </Typography>
                                 <br/>
                                 <TextField name={"nickname"} onChange={this.handleInputChange} type={"text"}
-                                           fullWidth label={"Rumuz"}/>
+                                           fullWidth label={"Rumuzunuz"}/>
                                 <br/> <br/>
                                 <TextField name={"question"} onChange={this.handleInputChange} type={"text"}
                                            fullWidth label={"Sorunuz"}/>
                                 <br/><br/><br/>
                             </div>
                             <Button color="primary" variant={"contained"} endIcon={<SendIcon/>}
-                                    onClick={() => this.saveEventManager(this.state.eventManager)} size={"large"}>
+                                    onClick={() => this.saveQuestion()} size={"large"}>
                                 SORUYU GÖNDER
                             </Button>
                         </CardContent>

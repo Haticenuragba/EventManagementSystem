@@ -34,7 +34,7 @@ public class EmailService {
         helper.setText("Tebrikler, " + applicationDTO.getEvent().getTitle()
                 + " etkinliğine kaydınız başarıyla tamamlandı.<br/>"
                 + "Etkinlik sırasında aşağıdaki linkten etkinlik sorumlusuna sorularınızı sorabilirsiniz<br/>"
-                + applicationDTO.getEvent().getQuestionUrl() + "<br/>"
+                + "http://localhost:3000/ask-question/" + applicationDTO.getEvent().getQuestionUrl() + "<br/>"
                 + "Etkinlik detaylarına ekteki kare koddan ulaşabilirsiniz.", true);
         helper.setSubject(applicationDTO.getEvent().getTitle());
 

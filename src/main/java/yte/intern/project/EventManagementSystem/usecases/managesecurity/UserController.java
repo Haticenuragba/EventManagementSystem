@@ -23,7 +23,7 @@ private final CustomUserDetailsManager customUserDetailsManager;
     }
 
     @GetMapping("/{managerName}")
-    public Users getAllEventManagers(@PathVariable String managerName) {
+    public Users getEventManager(@PathVariable String managerName) {
         return customUserDetailsManager.getUserByUsername(managerName);
 
     }

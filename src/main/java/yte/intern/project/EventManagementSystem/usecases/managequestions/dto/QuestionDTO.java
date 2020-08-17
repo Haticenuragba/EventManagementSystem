@@ -1,8 +1,13 @@
 package yte.intern.project.EventManagementSystem.usecases.managequestions.dto;
 
+import lombok.*;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@Getter
+@Setter
+@ToString
 public class QuestionDTO {
     @NotBlank
     private String nickname;

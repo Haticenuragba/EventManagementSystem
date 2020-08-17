@@ -128,7 +128,7 @@ class App extends Component {
                         }
                     </Route>
                     <Route path="/login" component={withRouter(LoginPage)}/>
-                    <Route path={"/:questionUrl"} component={AskQuestionPage}/>
+                    <Route exact path={"/ask-question/:questionUrl"} component={AskQuestionPage}/>
                     <Route exact path="/" component={withRouter(WelcomePage)}/>
 
                 </div>

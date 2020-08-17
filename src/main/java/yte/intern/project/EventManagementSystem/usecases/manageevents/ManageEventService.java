@@ -1,5 +1,6 @@
 package yte.intern.project.EventManagementSystem.usecases.manageevents;
 
+import com.google.common.hash.Hashing;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import yte.intern.project.EventManagementSystem.common.exceptionhandling.CustomException;
@@ -17,6 +18,7 @@ import yte.intern.project.EventManagementSystem.usecases.managesecurity.reposito
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,6 +41,7 @@ public class ManageEventService {
             Users managerFromDb = usersOptional.get();
             event.setManagerName(managerFromDb.getUsername());
             managerFromDb.addEvent(event);
+            event.setQuestionUrl(generateQuestionUrl(event.getTitle()));
             return eventRepository.save(event);
         }
         else{
@@ -157,6 +160,13 @@ public class ManageEventService {
             attendants.add(new Attendant(a.getIdNumber(), a.getName(), a.getSurname(), a.getEmail()));
         }
         return attendants;
+    }
+
+    private String generateQuestionUrl(String title) {
+        String stringToHash = title + "trybruteforcefirst";
+        return Hashing.sha256()
+                .hashString(stringToHash, StandardCharsets.UTF_8)
+                .toString();
     }
 
 }

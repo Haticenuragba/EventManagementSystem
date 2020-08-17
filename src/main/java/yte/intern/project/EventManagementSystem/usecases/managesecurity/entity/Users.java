@@ -1,5 +1,6 @@
 package yte.intern.project.EventManagementSystem.usecases.managesecurity.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Users implements UserDetails, CredentialsContainer {
 
     @OneToMany
     @JoinColumn(name = "EVENT_ID")
+    @JsonIgnoreProperties("applications")
     private Set<Event> events;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

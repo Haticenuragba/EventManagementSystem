@@ -66,7 +66,7 @@ public class Event extends BaseEntity {
         }
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "QUESTION_ID")
     private Set<Question> questions = new HashSet<Question>();
 
@@ -92,6 +92,10 @@ public class Event extends BaseEntity {
     public void addQuestion(Question question) {
         if (questions != null) {
             this.questions.add(question);
+        }
+        else {
+           questions = new HashSet<Question>();
+           questions.add(question);
         }
     }
 
