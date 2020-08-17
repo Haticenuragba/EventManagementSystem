@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import yte.intern.project.EventManagementSystem.common.entity.BaseEntity;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.entity.Application;
+import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Users;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -61,6 +63,9 @@ public class Event extends BaseEntity {
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Application> applications;
 
+    @Column(name = "MANAGER_NAME")
+    private String managerName;
+
 
     public void addApplication(Application application) {
         if (applications != null) {
@@ -70,4 +75,19 @@ public class Event extends BaseEntity {
         }
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Event)) return false;
+        if (!super.equals(o)) return false;
+        Event event = (Event) o;
+        return title.equals(event.title) &&
+                description.equals(event.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), title, description);
+    }
 }

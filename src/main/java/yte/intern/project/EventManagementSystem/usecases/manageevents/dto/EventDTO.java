@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.URL;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.dto.ApplicationDTO;
+import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Users;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -55,6 +56,8 @@ public class EventDTO {
 
     @JsonIgnoreProperties("event")
     private List<ApplicationDTO> applications = new ArrayList<ApplicationDTO>();
+
+    private String managerName;
 
     @AssertTrue
     public boolean isEndDateValid() {

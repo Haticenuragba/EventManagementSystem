@@ -5,8 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.userdetails.UserDetails;
+import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,11 +24,19 @@ public class Users implements UserDetails, CredentialsContainer {
     private String username;
     private String password;
 
+    @OneToMany
+    @JoinColumn(name = "EVENT_ID")
+    private Set<Event> events;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_AUTHORITIES",
             joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "AUTHORITRY_ID"))
     private Set<Authority> authorities;
+
+    public void addEvent(Event e){
+        events.add(e);
+    }
 
     @Override
     public boolean isAccountNonExpired() {
