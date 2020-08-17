@@ -17,7 +17,7 @@ import Box from "@material-ui/core/Box";
 
 import 'sweetalert2/src/sweetalert2.scss'
 import {headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";
-
+import Select from "@material-ui/core/Select";
 
 
 class AddEventForm extends Component {
@@ -29,27 +29,31 @@ class AddEventForm extends Component {
 
     constructor(props) {
         super(props);
-            this.isUpdate = props.location.state.isUpdate;
-            this.eventTitleToUpdate = props.location.state.eventTitleToUpdate;
-            this.state = {
-                prevCount: 0,
-                event: {
-                    title: "",
-                    description: "",
-                    quota: 0,
-                    startDate: utils.getDateOfToday(),
-                    endDate: utils.getDateOfToday(),
-                    latitude: 37.022195,
-                    longitude: 35.293555,
-                    image: utils.defaultImageUrl,
-                    customAttributes: []
-                }
+        this.isUpdate = props.location.state.isUpdate;
+        this.eventTitleToUpdate = props.location.state.eventTitleToUpdate;
+        this.state = {
+            prevCount: 0,
+            managers: [""],
+            event: {
+                title: "",
+                description: "",
+                quota: 0,
+                startDate: utils.getDateOfToday(),
+                endDate: utils.getDateOfToday(),
+                latitude: 37.022195,
+                longitude: 35.293555,
+                image: utils.defaultImageUrl,
+                customAttributes: [],
+                managerName: ""
+            }
 
         }
 
     }
 
+
     componentDidMount() {
+      this.fetchEventManagers();
         if (this.isUpdate) {
             axios.get("/events/" + this.eventTitleToUpdate)
                 .then(response => {
@@ -65,6 +69,19 @@ class AddEventForm extends Component {
                     console.log(error.response);
                 })
         }
+    }
+
+    fetchEventManagers(){
+        axios.get("/event-managers", {headers: headers})
+            .then(response => {
+                if (response.status === 200) {
+                    let newState = this.state;
+                    newState.managers = response.data;
+                    this.setState({newState});
+                }
+            }).catch(error => {
+            showErrorDialog("Etkinlik görevli listesi yüklenemedi");
+        });
     }
 
     saveNewEvent(e) {
@@ -83,10 +100,6 @@ class AddEventForm extends Component {
     }
 
     updateExistingEvent(e) {
-        console.log("This is event in state  ")
-        console.log(this.state.event);
-        console.log("This is event in function  ")
-        console.log(e);
         axios.put("/events/" + this.eventTitleToUpdate, e, {headers: headers})
             .then(response => {
                 console.log(response);
@@ -263,6 +276,24 @@ class AddEventForm extends Component {
                                                      }}/>
                                         </div>
                                         <br/>
+                                        <div>
+                                            <Select
+                                                name="managerName"
+                                                label={"Etkinlik sorumlusu seçin"}
+                                                fullWidth
+                                                defaultValue={0}
+                                                required
+                                                onChange={this.handleInputChange}
+                                            >
+                                                <MenuItem value={0} disabled>Etkinlik sorumlusunu seçiniz</MenuItem>
+                                                {
+                                                    this.state.managers.map((manager, index) =>
+                                                    {
+                                                       return( <MenuItem key={index} value={manager}>{manager}</MenuItem>);
+                                                    })
+                                                }
+                                            </Select>
+                                        </div>
                                         <div>
                                             <TextField
                                                 type="number"
