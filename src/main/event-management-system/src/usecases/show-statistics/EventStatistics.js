@@ -144,7 +144,7 @@ class EventStatistics extends Component {
                                                     <TableRow>
                                                         <TableCell>T.C. Kimlik No</TableCell>
                                                         <TableCell align="right">İsim</TableCell>
-                                                        <TableCell align="right">Soyisim</TableCell>
+                                                        <TableCell align="right">Soy isim</TableCell>
                                                         <TableCell align="right">Email</TableCell>
                                                     </TableRow>
                                                 </TableHead>

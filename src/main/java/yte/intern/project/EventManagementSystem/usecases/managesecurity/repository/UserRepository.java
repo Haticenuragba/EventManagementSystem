@@ -1,8 +1,10 @@
 package yte.intern.project.EventManagementSystem.usecases.managesecurity.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Authority;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Users;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<Users, Long> {
@@ -12,5 +14,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 	void deleteByUsername(String username);
 
 	boolean existsByUsername(String username);
+
+	Optional<List<Users>> findByAuthorities(List<Authority> authorities);
 
 }
