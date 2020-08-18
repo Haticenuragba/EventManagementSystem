@@ -13,11 +13,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.dto.ApplicationDTO;
+import yte.intern.project.EventManagementSystem.usecases.manageapplications.entity.Application;
+import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.Event;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -94,6 +97,35 @@ public class EmailService {
 
 
     }
+
+    public void sendMailForEventCancel(Event event) throws MessagingException, IOException, WriterException {
+        for(Application a: event.getApplications()){
+            MimeMessage message = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom("trybruteforcefirst@gmail.com");
+            helper.setTo(a.getEmail());
+
+            helper.setText("Daha önce kaydolduğunuz " + event.getTitle() + " isimli etkinlik iptal edilmiştir.");
+
+            helper.setSubject("Etkinlik İptal Bildirimi");
+
+
+            taskExecutor.execute( new Runnable() {
+                public void run() {
+                    try {
+                        emailSender.send(message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        }
+
+
+    }
+
 
     private byte[] getQRCodeImage(String text, int width, int height) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();

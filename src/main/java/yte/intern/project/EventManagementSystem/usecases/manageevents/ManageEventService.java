@@ -1,8 +1,10 @@
 package yte.intern.project.EventManagementSystem.usecases.manageevents;
 
 import com.google.common.hash.Hashing;
+import com.google.zxing.WriterException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SerializationUtils;
 import yte.intern.project.EventManagementSystem.common.exceptionhandling.CustomException;
 import yte.intern.project.EventManagementSystem.usecases.manageapplications.entity.Application;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.entity.CustomAttribute;
@@ -12,12 +14,15 @@ import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.At
 import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.EventWithAttendantNumber;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.CustomAttributeRepository;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.repository.EventRepository;
+import yte.intern.project.EventManagementSystem.usecases.managemails.EmailService;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Users;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.repository.UserRepository;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,6 +36,7 @@ public class ManageEventService {
     private final EventRepository eventRepository;
     private final CustomAttributeRepository customAttributeRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
     public Event addEvent(Event event) {
         if (eventRepository.existsByTitle(event.getTitle())) {
@@ -99,9 +105,10 @@ public class ManageEventService {
     }
 
 
-    public void deleteEvent(String title) {
+    public void deleteEvent(String title) throws MessagingException, IOException, WriterException {
         Optional<Event> eventOptional = eventRepository.findEventByTitle(title);
         if (eventOptional.isPresent()) {
+            emailService.sendMailForEventCancel(eventOptional.get());
             eventRepository.delete(eventOptional.get());
         } else {
             throw new EntityNotFoundException();

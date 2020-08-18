@@ -1,5 +1,6 @@
 package yte.intern.project.EventManagementSystem.usecases.manageevents;
 
+import com.google.zxing.WriterException;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,10 @@ import yte.intern.project.EventManagementSystem.usecases.manageevents.mapper.Cus
 import yte.intern.project.EventManagementSystem.usecases.manageevents.mapper.EventMapper;
 import yte.intern.project.EventManagementSystem.usecases.manageevents.objects.EventWithAttendantNumber;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
@@ -69,7 +72,7 @@ public class ManageEventController {
     }
 
     @DeleteMapping("/{title}")
-    public ResponseEntity<String> deleteEvent(@PathVariable @Size(max = 255, min = 3) String title) {
+    public ResponseEntity<String> deleteEvent(@PathVariable @Size(max = 255, min = 3) String title) throws MessagingException, IOException, WriterException {
         manageEventService.deleteEvent(title);
         return  new ResponseEntity<String>("Etkinlik başarıyla silindi", HttpStatus.OK);
     }
