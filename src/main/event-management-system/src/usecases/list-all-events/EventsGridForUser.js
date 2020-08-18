@@ -9,6 +9,7 @@ import {
     getDaysLaterInMilliseconds,
     getDistanceFromLatLonInKm
 } from "../../common/Utils";
+import Typography from "@material-ui/core/Typography";
 
 class EventsGridForUser extends Component {
 
@@ -65,7 +66,10 @@ class EventsGridForUser extends Component {
             <div>
                 <Box m={2}>
                     <Grid container spacing={2}>
-                        {this.state.events.map((anEvent, index) => {
+                        {
+                            this.state.events.length > 0 ?
+
+                            this.state.events.map((anEvent, index) => {
                                 if (this.filterByTitle(anEvent) && this.filterByLocation(anEvent) && this.filterByDate(anEvent)) {
                                     return (
                                         <Grid item={true} xs={12} sm={6} md={3} key={index}>
@@ -77,6 +81,10 @@ class EventsGridForUser extends Component {
                                 }
                             }
                         )
+                                :
+                                <Grid container alignContent={"center"} justify={"center"}>
+                                    <Typography>Henüz hiç etkinlik yok</Typography>
+                                </Grid>
                         }
                     </Grid>
                 </Box>

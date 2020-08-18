@@ -9,6 +9,7 @@ import {
     getDaysLaterInMilliseconds,
     getDistanceFromLatLonInKm, headers, USERNAME
 } from "../../common/Utils";
+import Typography from "@material-ui/core/Typography";
 
 class EventsGridForEventManager extends Component {
 
@@ -45,11 +46,16 @@ class EventsGridForEventManager extends Component {
 
     filterByDate(event) {
         switch (this.props.dateToSeek) {
-            case 0: return true;
-            case 1: return getDaysLaterInMilliseconds(7) >= dateStringToObject(event.startDate).getTime();
-            case 2: return getDaysLaterInMilliseconds(30) >= dateStringToObject(event.startDate).getTime();
-            case 3: return true;
-            default: return true;
+            case 0:
+                return true;
+            case 1:
+                return getDaysLaterInMilliseconds(7) >= dateStringToObject(event.startDate).getTime();
+            case 2:
+                return getDaysLaterInMilliseconds(30) >= dateStringToObject(event.startDate).getTime();
+            case 3:
+                return true;
+            default:
+                return true;
         }
     }
 
@@ -59,19 +65,24 @@ class EventsGridForEventManager extends Component {
             <div>
                 <Box m={2}>
                     <Grid container spacing={2}>
-                        {this.state.events.map((anEvent, index) => {
-                                if (this.filterByTitle(anEvent) && this.filterByLocation(anEvent) && this.filterByDate(anEvent)) {
-                                    return (
-                                        <Grid item={true} xs={12} sm={6} md={3} key={index}>
-                                            <MediaCard event={anEvent}/>
-                                        </Grid>
-                                    );
+                        { this.state.events.length > 0 ?
+
+                            this.state.events.map((anEvent, index) => {
+                                    if (this.filterByTitle(anEvent) && this.filterByLocation(anEvent) && this.filterByDate(anEvent)) {
+                                        return (
+                                            <Grid item={true} xs={12} sm={6} md={3} key={index}>
+                                                <MediaCard event={anEvent}/>
+                                            </Grid>
+                                        );
+                                    } else {
+                                        return null;
+                                    }
                                 }
-                                else{
-                                    return null;
-                                }
-                            }
-                        )
+                            )
+                            :
+                            <Grid container alignContent={"center"} justify={"center"}>
+                             <Typography>Henüz hiç etkinlik yok</Typography>
+                            </Grid>
                         }
                     </Grid>
                 </Box>

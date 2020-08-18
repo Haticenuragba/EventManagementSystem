@@ -51,7 +51,9 @@ class EventDetailForEventManager extends Component {
                             <Card>
                                 <CardContent>
                                     <List component="nav" aria-label="mailbox folders">
-                                        {this.state.questions.map((q, index) => {
+
+                                        { this.state.questions.length > 0 ?
+                                            this.state.questions.map((q, index) => {
                                             return (
                                                 <div key={index}>
                                                 <ListItem button>
@@ -62,7 +64,13 @@ class EventDetailForEventManager extends Component {
                                         )
 
                                             ;
-                                        })}
+                                        }
+                                        )
+                                        :
+                                            <ListItem button>
+                                                <ListItemText primary={"Henüz hiç soru yok"}/>
+                                            </ListItem>
+                                        }
                                     </List>
                                 </CardContent>
                             </Card>
