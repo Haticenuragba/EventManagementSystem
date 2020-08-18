@@ -18,6 +18,7 @@ import Unauthorized from "./common/Unauthorized";
 import EventStatistics from "./usecases/show-statistics/EventStatistics";
 import AddEventManager from "./usecases/add-event-manager/AddEventManager";
 import AskQuestionPage from "./usecases/ask-question/AskQuestionPage";
+import ChangePassword from "./usecases/change-password/ChangePassword";
 
 
 const themeDark = createMuiTheme({
@@ -127,6 +128,8 @@ class App extends Component {
                             : <Unauthorized/>
                         }
                     </Route>
+                    <Route path="/manager/change-password"
+                           component={localStorage.getItem(ROLE) === EVENT_MANAGER ? withRouter(ChangePassword) : Unauthorized}/>
                     <Route path="/login" component={withRouter(LoginPage)}/>
                     <Route exact path={"/ask-question/:questionUrl"} component={AskQuestionPage}/>
                     <Route exact path="/" component={withRouter(WelcomePage)}/>

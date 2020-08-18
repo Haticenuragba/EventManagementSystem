@@ -17,6 +17,7 @@ import yte.intern.project.EventManagementSystem.usecases.manageevents.repository
 import yte.intern.project.EventManagementSystem.usecases.managequestions.entity.Question;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Authority;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.entity.Users;
+import yte.intern.project.EventManagementSystem.usecases.managesecurity.login.LoginRequest;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.repository.AuthorityRepository;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.repository.UserRepository;
 import yte.intern.project.EventManagementSystem.usecases.managesecurity.util.RandomString;

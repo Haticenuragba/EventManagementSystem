@@ -110,6 +110,8 @@ export default function CustomAppBar(props) {
         visibilityOfLogout: window.location.pathname === '/manager/events'
         || window.location.pathname === '/admin/events' ?
             "visible" : "hidden",
+        visibilityOfChangePassword: window.location.pathname === '/manager/events' ?
+            "visible" : "hidden",
     });
 
 
@@ -130,13 +132,19 @@ export default function CustomAppBar(props) {
         stopNotificationService();
     }
 
+    const navigateToChangePassword = () => {
+        history.push("/manager/change-password");
+    }
+
 
     history.listen((location, action) => {
-        let visibility = location.pathname === '/events' || location.pathname === '/manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden"
-        let visibilityOfLogout = location.pathname === '/manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden"
+        let visibility = location.pathname === '/events' || location.pathname === '/manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden";
+        let visibilityOfLogout = location.pathname === '/manager/events' || location.pathname === '/admin/events' ? "visible" : "hidden";
+        let visibilityOfChangePassword = location.pathname === '/manager/events' ? 'visible' : 'hidden';
         setState({
             visibilityOfParams: visibility,
-            visibilityOfLogout: visibilityOfLogout
+            visibilityOfLogout: visibilityOfLogout,
+            visibilityOfChangePassword: visibilityOfChangePassword
         });
     })
 
@@ -216,8 +224,10 @@ export default function CustomAppBar(props) {
                         </Select>
                     </div>
                     <div className={classes.dropdown}>
-                     <Button onClick={logout} style={{visibility: state.visibilityOfLogout}} color={"secondary"} variant={"contained"}>Çıkış Yap</Button>
+                     <Button onClick={logout} style={{visibility: state.visibilityOfLogout, marginRight: "1vh"}} color={"secondary"} variant={"contained"}>Çıkış Yap</Button>
+                        <Button onClick={navigateToChangePassword} style={{visibility: state.visibilityOfChangePassword}} color={"primary"} variant={"contained"}>Şifre Değiştir</Button>
                     </div>
+
                     <FormGroup className={classes.switch}>
                         <FormControlLabel
                             checked={getIsDark()}
