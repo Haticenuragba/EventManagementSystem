@@ -7,6 +7,7 @@ import axios from "axios";
 import {headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import {validateEmail} from "../../common/Validation";
 
 
 
@@ -55,6 +56,7 @@ class AddEventManager extends Component {
         });
     }
 
+
     render() {
         return (
 
@@ -79,8 +81,8 @@ class AddEventManager extends Component {
                                     <TextField name={"username"} onChange={this.handleInputChange} type={"text"}
                                                fullWidth label={"Etkinlik Sorumlusunun Adı"}/>
                                     <br/> <br/>
-                                    <TextField name={"email"} onChange={this.handleInputChange} type={"email"}
-                                               fullWidth label={"Etkinlik Sorumlusunun Email Adresi"}/>
+                                    <TextField
+                                        helperText={validateEmail(this.state.eventManager.email) ? "": "Email adresi geçersiz"} name={"email"} onChange={this.handleInputChange} type={"email"} fullWidth label={"Etkinlik Sorumlusunun Email Adresi"}/>
                                     <br/><br/> <br/>
                                 </div>
                                 <Button color="primary" variant={"contained"}

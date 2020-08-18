@@ -18,6 +18,7 @@ import Box from "@material-ui/core/Box";
 import 'sweetalert2/src/sweetalert2.scss'
 import {headers, showErrorDialog, showSuccessDialog} from "../../common/Utils";
 import Select from "@material-ui/core/Select";
+import {validateLength} from "../../common/Validation";
 
 
 class AddEventForm extends Component {
@@ -216,7 +217,8 @@ class AddEventForm extends Component {
                                             <TextField required name="title" label="Etkinlik Adı" type="text" fullWidth
                                                        value={this.state.event.title}
                                                        onChange={this.handleInputChange}
-                                                       validators={['required']}/>
+                                                       helperText={validateLength(this.state.event.title, 3, 64) ?
+                                                       "" : "Etkinlik ismi en az 3, en fazla 64 karakter olmalıdır."}/>
 
 
                                         </div>
@@ -247,6 +249,8 @@ class AddEventForm extends Component {
                                                 fullWidth
                                                 onChange={this.handleInputChange}
                                                 value={this.state.event.description}
+                                                helperText={validateLength(this.state.event.description, 16, 255) ?
+                                                    "" : "Etkinlik açıklaması en az 16 karakter olmalıdır"}
                                             />
                                         </div>
                                         <br/>
@@ -254,7 +258,8 @@ class AddEventForm extends Component {
 
                                             <TextField fullWidth required name="quota" label="Maksimum Katılımcı Sayısı"
                                                        type="number" value={this.state.event.quota}
-                                                       onChange={this.handleInputChange}/>
+                                                       onChange={this.handleInputChange}
+                                            helperText={this.state.event.quota <=0 ? "Etkinlik kontenjanı en az 1 olmalıdır." : ""}/>
                                         </div>
                                         <br/>
                                         <div>
@@ -277,7 +282,7 @@ class AddEventForm extends Component {
                                                          isConstant: false
                                                      }}/>
                                         </div>
-                                        <br/>
+                                        <br/><br/>
                                         <div>
                                             <Select
                                                 disabled={this.isUpdate}
@@ -297,13 +302,13 @@ class AddEventForm extends Component {
                                                 }
                                             </Select>
                                         </div>
+                                        <br/>
                                         <div>
                                             <TextField
                                                 type="number"
                                                 fullWidth
                                                 label="Eklemek istediğiniz soru sayısını seçin."
-                                                onChange={this.handleQuestionCountSelection}
-                                            />
+                                                onChange={this.handleQuestionCountSelection}/>
                                         </div>
                                         <br/>
                                         {this.state.event.customAttributes.map((customAttribute, index) => (

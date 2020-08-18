@@ -42,8 +42,6 @@ public class ManageApplicationController {
 
     }
 
-
-
     @GetMapping("/{idNumber}")
     public List<ApplicationDTO> getApplicationsByIdNumber(@PathVariable String idNumber) {
         return applicationMapper.mapToDto(manageApplicationService.getApplicationsByIdNumber(idNumber), new CycleAvoidingMappingContext());

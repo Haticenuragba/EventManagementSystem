@@ -13,6 +13,7 @@ import axios from "axios";
 import {showDialogWithImage, showErrorDialog} from "../../common/Utils";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Box from "@material-ui/core/Box";
+import {validateEmail, validateIdNumber, validateLength} from "../../common/Validation";
 
 const dateFormat = require('dateformat');
 
@@ -176,26 +177,28 @@ class EventDetailForUser extends Component {
                                                 <TextField name="name" onChange={this.handleInputChange} required
                                                            value={this.state.application.name}
                                                            label="Adınız"
-                                                           type="text" fullWidth/>
+                                                           type="text" fullWidth
+                                                           helperText={validateLength(this.state.application.name, 2, 255) ? "" : "Adınız 2-255 karakter arasında olmalıdır"}/>
                                             </Grid>
                                             <Grid item md={6}>
                                                 <TextField name="surname" onChange={this.handleInputChange} required
                                                            value={this.state.application.surname}
                                                            label="Soyadınız" type="text" fullWidth
-                                                />
+                                                           helperText={validateLength(this.state.application.surname, 2, 255) ? "" : "Soy adınız 2-255 karakter arasında olmalıdır"}/>
                                             </Grid>
                                         </Grid>
                                         <Grid spacing={4} container>
                                             <Grid item md={6}>
                                                 <TextField name="email" onChange={this.handleInputChange} required
                                                            value={this.state.application.email}
-                                                           label="Email Adresiniz" type="email" fullWidth/>
+                                                           label="Email Adresiniz" type="email" fullWidth
+                                                           helperText={validateEmail(this.state.application.email) ? "" : "Email adresi geçersiz"}/>
                                             </Grid>
                                             <Grid item md={6}>
                                                 <TextField name="idNumber" onChange={this.handleInputChange} required
                                                            value={this.state.application.idNumber}
                                                            label="T.C. Kimlik Numaranız" type="number" fullWidth
-                                                />
+                                                           helperText={validateIdNumber(this.state.application.idNumber) ? "" : "T.C. Kimlik numarası geçersiz"}/>
                                             </Grid>
                                         </Grid>
 
