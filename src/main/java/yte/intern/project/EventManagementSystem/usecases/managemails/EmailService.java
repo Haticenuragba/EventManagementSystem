@@ -7,6 +7,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,19 @@ import java.io.IOException;
 public class EmailService {
 
     private final JavaMailSender emailSender;
+    private final TaskExecutor taskExecutor;
 
     public String sendMailWithQrCode(ApplicationDTO applicationDTO) throws MessagingException, IOException, WriterException {
+
+        String qrCodeText = "Etkinlik İsmi: " + applicationDTO.getEvent().getTitle()
+                + "\nEtkinlik Açıklaması: " + applicationDTO.getEvent().getDescription()
+                + "\nEtkinlik Tarihi: " + applicationDTO.getEvent().getStartDate()
+                + " - " + applicationDTO.getEvent().getEndDate()
+                + "\nKatılımcı İsmi " + applicationDTO.getName() + " " + applicationDTO.getSurname()
+                + "\nKatılımcı T.C Kimlik Numarası: " + applicationDTO.getIdNumber();
+
+        byte[] image = this.getQRCodeImage(qrCodeText, 500, 500);
+
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -38,16 +50,21 @@ public class EmailService {
                 + "Etkinlik detaylarına ekteki kare koddan ulaşabilirsiniz.", true);
         helper.setSubject(applicationDTO.getEvent().getTitle());
 
-        String qrCodeText = "Etkinlik İsmi: " + applicationDTO.getEvent().getTitle()
-                + "\nEtkinlik Açıklaması: " + applicationDTO.getEvent().getDescription()
-                + "\nEtkinlik Tarihi: " + applicationDTO.getEvent().getStartDate()
-                + " - " + applicationDTO.getEvent().getEndDate()
-                + "\nKatılımcı İsmi " + applicationDTO.getName() + " " + applicationDTO.getSurname()
-                + "\nKatılımcı T.C Kimlik Numarası: " + applicationDTO.getIdNumber();
 
-        byte[] image = this.getQRCodeImage(qrCodeText, 500, 500);
         helper.addAttachment("qrCode.jpg", new ByteArrayResource(image));
-        emailSender.send(message);
+
+        taskExecutor.execute( new Runnable() {
+            public void run() {
+                try {
+                    emailSender.send(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
         return Base64Utils.encodeToString(image);
     }
 
@@ -64,7 +81,18 @@ public class EmailService {
 
         helper.setSubject("Etkinlik Yönetim Sorumlusu Kayıt Bildirimi");
 
-        emailSender.send(message);
+
+        taskExecutor.execute( new Runnable() {
+            public void run() {
+                try {
+                    emailSender.send(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
     }
 
     private byte[] getQRCodeImage(String text, int width, int height) throws WriterException, IOException {
