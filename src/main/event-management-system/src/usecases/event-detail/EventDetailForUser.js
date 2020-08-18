@@ -105,6 +105,13 @@ class EventDetailForUser extends Component {
         this.setState({newState});
     }
 
+    clearForm = () => {
+        let newState = this.state;
+        newState.application = {...this.emptyApplication};
+        newState.application.applicationCustomAttributes = [];
+        this.setState({newState});
+    }
+
     render() {
         return (
             <div>
@@ -226,7 +233,7 @@ class EventDetailForUser extends Component {
 
                                     <Grid>
                                         <Button color="secondary" variant={"contained"} endIcon={<ClearIcon/>}
-                                                size={"large"}>
+                                                size={"large"} onClick={this.clearForm}>
                                             Formu Temizle
                                         </Button>
                                     </Grid>

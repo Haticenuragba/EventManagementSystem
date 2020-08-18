@@ -191,7 +191,6 @@ class AddEventForm extends Component {
         console.log(this.state);
     }
 
-
     render() {
         return (
             <div style={{
