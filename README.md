@@ -52,4 +52,8 @@
   Also, when a user apply to an event, a notification is sent to admin. And event manager can list questions that are sent by users who registered an event.
   </p>
   
+    <p>
+For mobile app, please visit: https://github.com/Haticenuragba/event_management_system
+  </p>
+  
   
