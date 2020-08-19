@@ -17,7 +17,7 @@
   </p>
 
 <br>
-<pAdmin can add event and add custom questions to event to be asked to users who wish to apply that event</p>
+<p>Admin can add event and add custom questions to event to be asked to users who wish to apply that event</p>
 <br>
 <p float="left">
 <img src="https://github.com/Haticenuragba/EventManagementSystem/blob/master/screenshots/add-event-dark.PNG" width="600" height="300">
